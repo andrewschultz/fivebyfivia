@@ -176,20 +176,31 @@ quest-index is a number that varies. quest-index is 0.
 
 chapter calling
 
-calling is an action applying to nothing.
+calling is an action applying to one visible thing.
 
 understand the command "call" as something new.
 
-understand "call" as calling.
+understand "call [any piece]" as calling.
 
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
+	if noun is placed:
+		say "You already placed [the noun] at [location of the noun]." instead;
+	if noun is irrelevant:
+		say "Right now [the noun] is not part of your maneuver." instead;
+	if number of pieces in location of player > 0:
+		say "That would make things too crowded here. You already called [random piece in location of player] here." instead;
+	say "You call [the noun] to [location of player].";
+	now noun is placed;
+	move noun to location of player;
 	if number of reserved pieces is 0:
 		consider the checkmate processing rule;
 	if the rule failed, reset-the-board;
 	if the rule succeeded:
 		setup-next-puzzle;
 	the rule succeeds.
+
+does the player mean calling a reserved piece: it is very likely.
 
 to setup-next-puzzle:
 	increment quest-index;
@@ -235,6 +246,24 @@ definition: a room (called r) is surrounded:
 	if the room southeast of r is not checked, no;
 	if the room southwest of r is not checked, no;
 	yes;
+
+volume status
+
+chapter statsing
+
+statsing is an action applying to nothing.
+
+understand the command "stats" as something new.
+
+understand "stats" as statsing.
+
+carry out statsing:
+	say "Reserved pieces to (C)all: [list of reserved pieces].";
+	say "Pieces out on the board: [list of placed pieces].";
+	the rule succeeds.
+
+after printing the name of a placed piece (called p) when statsing:
+	say "[location of p]"
 
 volume testing - not for release
 
