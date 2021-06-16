@@ -298,6 +298,31 @@ after printing the name of a placed piece (called p) when statsing:
 
 volume testing - not for release
 
+when play begins:
+	now debug-state is true;
+
+chapter stupid stuff
+
+test q1 with "ssw/nnw/see/see/call kingside/nww/call queenside/sww".
+test q2 with "sse/call queen/nnw/ssw/call friendly king/nnw/call enemy king".
+test q3 with "sww/see/call rook/nnw/place friendly king/ssw/place enemy king".
+test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/ssw/sse/nww/sww".
+
+chapter trying
+
+trying is an action applying to one number.
+
+understand the command "try" as something new.
+
+understand "try [number]" as trying.
+
+carry out trying:
+	if number understood < 1 or number understood > 4:
+		say "You need a number between 1 and 4." instead;
+	now quest-index is number understood;
+	setup-next-puzzle;
+	the rule succeeds.
+
 chapter waysing
 
 waysing is an action out of world.
