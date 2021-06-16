@@ -8,7 +8,7 @@ chapter room info
 
 a room has a number called x. a room has a number called y.
 
-offsite is a room.
+offsite is a room. x of offsite is -3. y of offsite is -3.
 
 chapter direction info
 
@@ -132,8 +132,8 @@ when play begins:
 				now r0 is mapped south of rn1;
 			let rn2 be room_of xval and yval + 2;
 			let re2 be room_of xval + 2 and yval;
-			let re2n1 be room_of xval + 1 and yval + 2;
-			let rn2e1 be room_of xval + 2 and yval + 1;
+			let re2n1 be room_of xval + 2 and yval + 1;
+			let rn2e1 be room_of xval + 1 and yval + 2;
 			if re2n1 is not offsite:
 				now r0 is mapped southwestwest of re2n1;
 				now re2n1 is mapped northeasteast of r0;
