@@ -10,6 +10,8 @@ a room has a number called x. a room has a number called y.
 
 offsite is a room. x of offsite is -3. y of offsite is -3.
 
+a room can be circle-visited. a room is usually not circle-visited.
+
 chapter direction info
 
 a direction can be normal or weird. a direction is usually normal.
@@ -172,7 +174,7 @@ the queenside rook is a neuter piece.
 
 summon-list of queenside rook is { true, false, false, false }.
 
-quest-index is a number that varies. quest-index is 0.
+quest-index is a number that varies. quest-index is 1.
 
 chapter calling
 
@@ -197,14 +199,23 @@ carry out calling:
 		consider the checkmate processing rule;
 	if the rule failed, reset-the-board;
 	if the rule succeeded:
+		increment quest-index;
 		setup-next-puzzle;
 	the rule succeeds.
+
+after printing the locale description when quest-index is 4:
+	now location of player is circle-visited;
+	say "[number of circle-visited rooms] vs [number of not circle-visited rooms].";
+	if number of not circle-visited rooms < 5:
+		say "[list of not circle-visited rooms].";
+	if number of circle-visited rooms is 25:
+		say "You win! Sort of.";
+		end the story;
 
 does the player mean calling a reserved piece: it is very likely.
 
 to setup-next-puzzle:
 	reset-the-board;
-	increment quest-index;
 	repeat with P running through pieces:
 		if entry quest-index of summon-list of P is true:
 			now P is reserved;
