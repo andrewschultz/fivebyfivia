@@ -1,5 +1,7 @@
 "Knight's Errand" by Andrew Schultz
 
+debug-state is a truth state that varies.
+
 a room has a number called x. a room has a number called y.
 
 a1 is a room. x of a1 is 0. y of a1 is 0.
@@ -52,3 +54,20 @@ e4 is a room. x of e4 is 4. y of e4 is 3.
 
 e5 is a room. x of e5 is 4. y of e5 is 4.
 
+to decide which room is room_of (n1 - a number) and (n2 - a number):
+	repeat with Q running through rooms:
+		if x of Q is n1 and y of Q is n2:
+			decide on Q;
+	if debug-state is true:
+		say "Could not find room for [n1] and [n2].";
+
+when play begins:
+	repeat with xval running from 0 to 3:
+		repeat with yval running from 0 to 3:
+			let r1 be room_of xval and yval;
+			let r2 be room_of xval + 1 and yval;
+			let r3 be room_of xval and yval + 1;
+			now r1 is mapped west of r2;
+			now r2 is mapped east of r1;
+			now r3 is mapped north of r1;
+			now r1 is mapped south of r3;
