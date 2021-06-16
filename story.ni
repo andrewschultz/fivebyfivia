@@ -4,9 +4,47 @@ volume basics and definitions
 
 debug-state is a truth state that varies.
 
+chapter room info
+
 a room has a number called x. a room has a number called y.
 
 offsite is a room.
+
+chapter direction info
+
+southsoutheast is a direction. northnorthwest is a direction.
+
+the opposite of southsoutheast is northnorthwest. the opposite of northnorthwest is southsoutheast.
+
+understand "sse" and "ses" and "ess" as southsoutheast.
+
+understand "nnw" and "nwn" and "wnn" as northnorthwest.
+
+southeasteast is a direction. northwestwest is a direction.
+
+the opposite of southeasteast is northwestwest. the opposite of northwestwest is southeasteast.
+
+understand "see" and "ese" and "ees" as southeasteast.
+
+understand "nww" and "wnw" and "wwn" as northwestwest.
+
+southsouthwest is a direction. northnortheast is a direction.
+
+the opposite of southsouthwest is northnortheast. the opposite of northnortheast is southsouthwest.
+
+understand "ssw" and "sws" and "wss" as southsouthwest.
+
+understand "nne" and "nen" and "enn" as northnortheast.
+
+southwestwest is a direction. northeasteast is a direction.
+
+the opposite of southwestwest is northeasteast. the opposite of northeasteast is southwestwest.
+
+understand "sww" and "wsw" and "wws" as southwestwest.
+
+understand "nee" and "ene" and "een" as northeasteast.
+
+chapter direction verbs
 
 volume rooms
 
