@@ -146,16 +146,17 @@ when play begins:
 			if re2 is not offsite and rn1 is not offsite:
 				now re2 is mapped southeasteast of rn1;
 				now rn1 is mapped northwestwest of re2;
+	setup-next-puzzle;
 
 volume people
 
 a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list.
 
-the friendly king is a piece.
+the friendly king is a piece. understand "k" and "k1" as friendly king.
 
 summon-list of friendly king is { false, true, true, false }.
 
-the enemy king is a piece.
+the enemy king is a piece. understand "k" and "k2" as enemy king.
 
 summon-list of enemy king is { true, true, true, false }.
 
@@ -171,7 +172,69 @@ the queenside rook is a neuter piece.
 
 summon-list of queenside rook is { true, false, false, false }.
 
-quest-index is a number that varies. quest-index is 1.
+quest-index is a number that varies. quest-index is 0.
+
+chapter calling
+
+calling is an action applying to nothing.
+
+understand the command "call" as something new.
+
+understand "call" as calling.
+
+carry out calling:
+	if quest-index is 4, say "You're on your own now." instead;
+	if number of reserved pieces is 0:
+		consider the checkmate processing rule;
+	if the rule failed, reset-the-board;
+	if the rule succeeded:
+		setup-next-puzzle;
+	the rule succeeds.
+
+to setup-next-puzzle:
+	increment quest-index;
+	repeat with P running through pieces:
+		if entry quest-index of summon-list of P is true:
+			now P is reserved;
+		else:
+			now P is irrelevant;
+
+to reset-the-board:
+	now all pieces are off-stage;
+	now all placed pieces are reserved;
+
+this is the checkmate processing rule:
+	let b1 be whether or not the location of the enemy king is checked;
+	let b2 be whether or not the location of the enemy king is surrounded;
+	if b1 is false:
+		if b2 is true:
+			say "Stalemate!";
+		else:
+			say "The enemy king looks around and flees, unharmed.";
+		the rule fails;
+	if b2 is false:
+		say "The enemy king looks around, panicked. He realizes he's in a bit of trouble, but he manages to flee.";
+		the rule fails;
+	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
+	the rule succeeds;
+
+definition: a room (called r) is checked:
+	if r is nowhere, yes;
+	repeat with q running through on-stage pieces:
+		next;
+	no;
+	yes;
+
+definition: a room (called r) is surrounded:
+	if the room north of r is not checked, no;
+	if the room south of r is not checked, no;
+	if the room east of r is not checked, no;
+	if the room west of r is not checked, no;
+	if the room northwest of r is not checked, no;
+	if the room northeast of r is not checked, no;
+	if the room southeast of r is not checked, no;
+	if the room southwest of r is not checked, no;
+	yes;
 
 volume testing - not for release
 
