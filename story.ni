@@ -120,13 +120,29 @@ volume initialization
 when play begins:
 	repeat with xval running from 0 to 3:
 		repeat with yval running from 0 to 3:
-			let r1 be room_of xval and yval;
-			let r2 be room_of xval + 1 and yval;
-			let r3 be room_of xval and yval + 1;
-			if r1 is offsite, next;
-			if r2 is not offsite:
-				now r1 is mapped west of r2;
-				now r2 is mapped east of r1;
-			if r3 is not offsite:
-				now r3 is mapped north of r1;
-				now r1 is mapped south of r3;
+			let r0 be room_of xval and yval;
+			let re1 be room_of xval + 1 and yval;
+			let rn1 be room_of xval and yval + 1;
+			if r0 is offsite, next; [ shouldn't happen, but ... ]
+			if re1 is not offsite:
+				now r0 is mapped west of re1;
+				now re1 is mapped east of r0;
+			if rn1 is not offsite:
+				now rn1 is mapped north of r0;
+				now r0 is mapped south of rn1;
+			let rn2 be room_of xval and yval + 2;
+			let re2 be room_of xval + 2 and yval;
+			let re2n1 be room_of xval + 1 and yval + 2;
+			let rn2e1 be room_of xval + 2 and yval + 1;
+			if re2n1 is not offsite:
+				now r0 is mapped southwestwest of re2n1;
+				now re2n1 is mapped northeasteast of r0;
+			if rn2e1 is not offsite:
+				now r0 is mapped southsouthwest of rn2e1;
+				now re2n1 is mapped northnortheast of r0;
+			if rn2 is not offsite and re1 is not offsite:
+				now re1 is mapped southsoutheast of rn2;
+				now rn2 is mapped northnorthwest of re1;
+			if re2 is not offsite and rn1 is not offsite:
+				now re2 is mapped southeasteast of rn1;
+				now rn1 is mapped northwestwest of re2;
