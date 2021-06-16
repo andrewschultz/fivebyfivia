@@ -229,9 +229,30 @@ this is the checkmate processing rule:
 	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
 	the rule succeeds;
 
+to decide which number is absval of (n - a number):
+	if n > 0, decide on n;
+	decide on 0 - n;
+
 definition: a room (called r) is checked:
 	if r is nowhere, yes;
+	let x0 be x of r;
+	let y0 be y of r;
 	repeat with q running through on-stage pieces:
+		if q is irrelevant, next;
+		let x1 be x of location of q;
+		let y1 be y of location of q;
+		let xdelt be absval of x1 - x0;
+		let ydelt be absval of y1 - y0;
+		if q is friendly king:
+			if xdelt > 1 or ydelt > 1, yes;
+			next;
+		if q is kingside rook or q is queenside rook:
+			if xdelt > 0 or ydelt > 0, yes;
+			next;
+		if q is queen:
+			if xdelt is 0 or ydelt is 0, next;
+			if absval of xdelt is absval of ydelt, next;
+			no;
 		next;
 	no;
 	yes;
