@@ -12,7 +12,9 @@ offsite is a room.
 
 chapter direction info
 
-southsoutheast is a direction. northnorthwest is a direction.
+a direction can be normal or weird. a direction is usually normal.
+
+southsoutheast is a direction. it is weird. northnorthwest is a direction. it is weird.
 
 the opposite of southsoutheast is northnorthwest. the opposite of northnorthwest is southsoutheast.
 
@@ -20,7 +22,7 @@ understand "sse" and "ses" and "ess" as southsoutheast.
 
 understand "nnw" and "nwn" and "wnn" as northnorthwest.
 
-southeasteast is a direction. northwestwest is a direction.
+southeasteast is a direction. it is weird. northwestwest is a direction. it is weird.
 
 the opposite of southeasteast is northwestwest. the opposite of northwestwest is southeasteast.
 
@@ -28,7 +30,7 @@ understand "see" and "ese" and "ees" as southeasteast.
 
 understand "nww" and "wnw" and "wwn" as northwestwest.
 
-southsouthwest is a direction. northnortheast is a direction.
+southsouthwest is a direction. it is weird. northnortheast is a direction. it is weird.
 
 the opposite of southsouthwest is northnortheast. the opposite of northnortheast is southsouthwest.
 
@@ -36,7 +38,7 @@ understand "ssw" and "sws" and "wss" as southsouthwest.
 
 understand "nne" and "nen" and "enn" as northnortheast.
 
-southwestwest is a direction. northeasteast is a direction.
+southwestwest is a direction. it is weird. northeasteast is a direction. it is weird.
 
 the opposite of southwestwest is northeasteast. the opposite of northeasteast is southwestwest.
 
@@ -107,6 +109,11 @@ to decide which room is room_of (n1 - a number) and (n2 - a number):
 	if debug-state is true:
 		say "Could not find room for [n1] and [n2].";
 	decide on offsite
+
+check going a normal direction:
+	if noun is up, say "Your horse can fly across ground but not over it." instead;
+	if noun is down, say "Your horse isn't built for that." instead;
+	say "Your horse doesn't go in normal directions. It goes in diagonal ones. And not just southeast (SE). Southsoutheast (SSE, ESS, SES) and such." instead;
 
 volume initialization
 
