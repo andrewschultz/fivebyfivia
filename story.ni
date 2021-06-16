@@ -203,12 +203,14 @@ carry out calling:
 does the player mean calling a reserved piece: it is very likely.
 
 to setup-next-puzzle:
+	reset-the-board;
 	increment quest-index;
 	repeat with P running through pieces:
 		if entry quest-index of summon-list of P is true:
 			now P is reserved;
 		else:
 			now P is irrelevant;
+	move player to c3;
 
 to reset-the-board:
 	now all pieces are off-stage;
@@ -234,7 +236,8 @@ to decide which number is absval of (n - a number):
 	decide on 0 - n;
 
 definition: a room (called r) is checked:
-	if r is nowhere, yes;
+	if r is nothing, yes;
+	if r is offsite, yes;
 	let x0 be x of r;
 	let y0 be y of r;
 	repeat with q running through on-stage pieces:
@@ -258,14 +261,10 @@ definition: a room (called r) is checked:
 	yes;
 
 definition: a room (called r) is surrounded:
-	if the room north of r is not checked, no;
-	if the room south of r is not checked, no;
-	if the room east of r is not checked, no;
-	if the room west of r is not checked, no;
-	if the room northwest of r is not checked, no;
-	if the room northeast of r is not checked, no;
-	if the room southeast of r is not checked, no;
-	if the room southwest of r is not checked, no;
+	repeat with D running through not weird directions:
+		if the room D of r is nothing, next;
+		if the room north of r is checked, next;
+		no;
 	yes;
 
 volume status
