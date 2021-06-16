@@ -147,6 +147,32 @@ when play begins:
 				now re2 is mapped southeasteast of rn1;
 				now rn1 is mapped northwestwest of re2;
 
+volume people
+
+a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list.
+
+the friendly king is a piece.
+
+summon-list of friendly king is { false, true, true, false }.
+
+the enemy king is a piece.
+
+summon-list of enemy king is { true, true, true, false }.
+
+the queen is a female piece.
+
+summon-list of queen is { false, true, false, false }.
+
+the kingside rook is a neuter piece.
+
+summon-list of kingside rook is { true, false, true, false }.
+
+the queenside rook is a neuter piece.
+
+summon-list of queenside rook is { true, false, false, false }.
+
+quest-index is a number that varies. quest-index is 1.
+
 volume testing - not for release
 
 chapter waysing
