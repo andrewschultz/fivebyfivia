@@ -181,8 +181,10 @@ chapter calling
 calling is an action applying to one visible thing.
 
 understand the command "call" as something new.
+understand the command "place" as something new.
 
 understand "call [any piece]" as calling.
+understand "place [any piece]" as calling.
 
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
@@ -221,7 +223,8 @@ to setup-next-puzzle:
 			now P is reserved;
 		else:
 			now P is irrelevant;
-	move player to c3;
+	if location of player is not c3:
+		move player to c3;
 
 to reset-the-board:
 	now all pieces are off-stage;
@@ -303,10 +306,12 @@ when play begins:
 
 chapter stupid stuff
 
-test q1 with "ssw/nnw/see/see/call kingside/nww/call queenside/sww".
+test q1 with "ssw/nnw/see/see/call kingside/nww/call queenside/sww/call king".
 test q2 with "sse/call queen/nnw/ssw/call friendly king/nnw/call enemy king".
-test q3 with "sww/see/call rook/nnw/place friendly king/ssw/place enemy king".
+test q3 with "sww/see/call rook/nnw/call friendly king/ssw/call enemy king".
 test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/ssw/sse/nww/sww".
+
+test full with "test q1/test q2/test q3/test q4".
 
 chapter trying
 
@@ -319,6 +324,10 @@ understand "try [number]" as trying.
 carry out trying:
 	if number understood < 1 or number understood > 4:
 		say "You need a number between 1 and 4." instead;
+	if quest-index is number understood:
+		say "We're already on that quest.";
+	else:
+		say "Moving to quest [number understood].";
 	now quest-index is number understood;
 	setup-next-puzzle;
 	the rule succeeds.
