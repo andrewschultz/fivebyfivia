@@ -10,7 +10,13 @@ a room has a number called x. a room has a number called y.
 
 offsite is a room. x of offsite is -3. y of offsite is -3.
 
+section circle-visited
+
 a room can be circle-visited. a room is usually not circle-visited.
+
+after going to a circle-visited room:
+	say "A groan goes up. You've been here before. Your triumphant tour is cut short.";
+	reset-the-board;
 
 chapter direction info
 
@@ -229,6 +235,8 @@ to setup-next-puzzle:
 to reset-the-board:
 	now all pieces are off-stage;
 	now all placed pieces are reserved;
+	if quest-index is 4:
+		now all rooms are not circle-visited;
 
 this is the checkmate processing rule:
 	let b1 be whether or not the location of the enemy king is checked;
@@ -291,7 +299,20 @@ understand the command "stats" as something new.
 
 understand "stats" as statsing.
 
+to say vis of (r - a room):
+	say " [if location of player is r]+[else if r is circle-visited]*[else] [end if]";
+
 carry out statsing:
+	if quest-index is 4:
+		say "VISITED SO FAR:[line break]";
+		say "[fixed letter spacing]   a b c d e[line break]";
+		say "5[vis of a5][vis of b5][vis of c5][vis of d5][vis of e5] 5[line break]";
+		say "4[vis of a4][vis of b4][vis of c4][vis of d4][vis of e4] 4[line break]";
+		say "3[vis of a3][vis of b3][vis of c3][vis of d3][vis of e3] 3[line break]";
+		say "2[vis of a2][vis of b2][vis of c2][vis of d2][vis of e2] 2[line break]";
+		say "1[vis of a1][vis of b1][vis of c1][vis of d1][vis of e1] 1[line break]";
+		say "   a b c d e[variable letter spacing][line break]";
+		say "Visited so far: [number of circle-visited rooms] square[if location of player is not c3]s[end if].";
 	say "Reserved pieces to (C)all: [list of reserved pieces].";
 	say "Pieces out on the board: [list of placed pieces].";
 	the rule succeeds.
