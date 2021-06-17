@@ -1,4 +1,4 @@
-"Knight's Errand" by Andrew Schultz
+"Conquering Fivebyfivia" by Andrew Schultz
 
 volume basics and definitions
 
@@ -8,7 +8,26 @@ chapter room info
 
 a room has a number called x. a room has a number called y.
 
+a room has text called room-edge-text.
+
 offsite is a room. x of offsite is -3. y of offsite is -3.
+
+the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of Fivebyfivia.[paragraph break][room-detail].".
+
+to say room-color:
+	say "The ground is [if the remainder after dividing (x of location of player + y of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
+
+to say room-detail:
+	if location of player is c3:
+		say "From here, your horse can bolt in any of the crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for Fivebyfivia";
+		continue the action;
+	say "You can go [list of viable directions]";
+
+definition: a direction (called d) is viable:
+	if d is normal, no;
+	if the room d of location of player is offsite, no;
+	if the room d of location of player is nowhere, no;
+	yes;
 
 section circle-visited
 
@@ -58,15 +77,15 @@ chapter direction verbs
 
 volume rooms
 
-a1 is a room. x of a1 is 0. y of a1 is 0.
+a1 is a room. x of a1 is 0. y of a1 is 0. room-edge-text is "at the relatively inaccessible southwest corner".
 
-b1 is a room. x of b1 is 1. y of b1 is 0.
+b1 is a room. x of b1 is 1. y of b1 is 0. room-edge-text is "on the south edge and near the west edge".
 
-c1 is a room. x of c1 is 2. y of c1 is 0.
+c1 is a room. x of c1 is 2. y of c1 is 0. room-edge-text is "in the center of the south edge".
 
-d1 is a room. x of d1 is 3. y of d1 is 0.
+d1 is a room. x of d1 is 3. y of d1 is 0. room-edge-text is "on the south edge and near the east edge".
 
-e1 is a room. x of e1 is 4. y of e1 is 0.
+e1 is a room. x of e1 is 4. y of e1 is 0. room-edge-text is "at the relatively inaccessible southeast corner".
 
 a2 is a room. x of a2 is 0. y of a2 is 1.
 
@@ -82,7 +101,7 @@ a3 is a room. x of a3 is 0. y of a3 is 2.
 
 b3 is a room. x of b3 is 1. y of b3 is 2.
 
-c3 is a room. x of c3 is 2. y of c3 is 2.
+c3 is a room. x of c3 is 2. y of c3 is 2. room-edge-text is "smack in the center".
 
 d3 is a room. x of d3 is 3. y of d3 is 2.
 
@@ -98,15 +117,15 @@ d4 is a room. x of d4 is 3. y of d4 is 3.
 
 e4 is a room. x of e4 is 4. y of e4 is 3.
 
-d5 is a room. x of d5 is 3. y of d5 is 4.
-
-a5 is a room. x of a5 is 0. y of a5 is 4.
+a5 is a room. x of a5 is 0. y of a5 is 4. room-edge-text is "at the relatively inaccessible northwest corner".
 
 b5 is a room. x of b5 is 1. y of b5 is 4.
 
 c5 is a room. x of c5 is 2. y of c5 is 4.
 
-e5 is a room. x of e5 is 4. y of e5 is 4.
+d5 is a room. x of d5 is 3. y of d5 is 4.
+
+e5 is a room. x of e5 is 4. y of e5 is 4. room-edge-text is "at the relatively inaccessible northeast corner".
 
 the player is in c3.
 
@@ -121,7 +140,7 @@ to decide which room is room_of (n1 - a number) and (n2 - a number):
 check going a normal direction:
 	if noun is up, say "Your horse can fly across ground but not over it." instead;
 	if noun is down, say "Your horse isn't built for that." instead;
-	say "Your horse doesn't go in normal directions. It goes in diagonal ones. And not just southeast (SE). Southsoutheast (SSE, ESS, SES) and such." instead;
+	say "Your horse doesn't go in normal directions. It goes in diagonal ones. But not normal ones like southeast (SE). Southsoutheast (SSE, ESS, SES) and, well, 7 others. DIRS gives a full rundown." instead;
 
 volume initialization
 
