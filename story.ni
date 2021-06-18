@@ -1,4 +1,4 @@
-"Delanda Fivebyfivia Est" by Andrew Schultz
+"Fivebyfivia Delanda Est" by Andrew Schultz
 
 volume basics and definitions
 
@@ -17,12 +17,12 @@ quest-index is a number that varies. quest-index is 1.
 chapter start of play
 
 when play begins:
-	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [DELANDA FIVEBYFIVIA EST]. And you're off!";
+	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELANDA EST]. And you're off!";
 	now right hand status line is "[entry quest-index of quest-quick-desc]";
 
-chapter DELANDA FIVEBYFIVIA EST
+chapter FIVEBYFIVIA DELANDA EST
 
-DELANDA FIVEBYFIVIA EST is a thing. the player carries DELANDA FIVEBYFIVIA EST. description of DELANDA is "DELANDA FIVEBYFIVIA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
+FIVEBYFIVIA DELANDA EST is a thing. the player carries FIVEBYFIVIA DELANDA EST. description of DELANDA is "FIVEBYFIVIA DELANDA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
 
 understand "dfe" as delanda.
 understand "est" as delanda.
@@ -73,7 +73,7 @@ to say room-color:
 
 to say room-detail:
 	if location of player is c3:
-		say "From here, your horse can bolt in any of the crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
+		say "From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
 	say "You can go [list of viable directions]";
 
@@ -102,7 +102,7 @@ section timed-going
 
 after going when need-to-hurry is true:
 	increment current-turns-after-placing;
-	if debug-state is true, say  "[current-turns-after-placing] of [max-turns-after-placing].";
+	if debug-state is true, say "[current-turns-after-placing] of [max-turns-after-placing].";
 	if current-turns-after-placing > max-turns-after-placing:
 		if enemy king is placed:
 			say "You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
@@ -284,7 +284,6 @@ max-wait-times is a list of numbers variable. max-wait-times is { 3, 3, 3, 0 }.
 
 stalemated is a list of truth states variable. stalemated is { False, False, False, False }.
 
-
 quest-quick-desc is a list of text variable. quest-quick-desc is { "R & R", "K & Q vs K", "K & R vs K", "Tour" }
 
 chapter pieces
@@ -344,13 +343,24 @@ carry out calling:
 	now need-to-hurry is true;
 	now noun is placed;
 	move noun to location of player;
-	if number of reserved pieces is 0:
-		consider the checkmate processing rule;
+	if number of reserved pieces > 0, the rule succeeds;
+	consider the stalemate processing rule;
+	if the rule succeeded:
+		increment quest-index;
+		setup-next-puzzle;
+		the rule succeeds;
+	consider the checkmate processing rule;
 	if the rule failed, reset-the-board;
 	if the rule succeeded:
 		increment quest-index;
 		setup-next-puzzle;
 	the rule succeeds.
+
+to decide which number is stalemate-count:
+	let temp be 0;
+	repeat with S running through stalemated:
+		if S is True, increment temp;
+	decide on temp;
 
 after printing the locale description when quest-index is 4:
 	now location of player is circle-visited;
@@ -358,7 +368,12 @@ after printing the locale description when quest-index is 4:
 	if number of not circle-visited rooms < 5:
 		say "[list of not circle-visited rooms].";
 	if number of circle-visited rooms is 25:
-		say "You win! Sort of.";
+		say "Horns blare! Voices soar to the sky! You have trampled all of [5b], literally and figuratively! Now is time for your reward!";
+		let t be stalemate-count;
+		if stalemate-count is 3:
+			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. They delegate you to plan annexation of west, central and east Twelvebyfouria to the south. Each requires a slightly different solution: first, you take two knights, which people say couldn't be done -- but you did it! While they are shaking their heads in disbelief, you sweep in with a bishop and up-and-comer knight, then two bishops.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
+		else:
+			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an intenational medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on its own, before they could dissuade you. But on the bright side, your day of martyry is a national holiday every year.";
 		end the story;
 
 does the player mean calling a reserved piece: it is very likely.
@@ -391,16 +406,24 @@ to reset-the-board:
 	now current-turns-after-placing is 0;
 	now need-to-hurry is false.
 
+this is the stalemate processing rule:
+	unless the location of the enemy king is not checked and the location of the enemy king is surrounded, the rule fails;
+	say "The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.[paragraph break]Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny.";
+	now entry quest-index in stalemated is True;
+	the rule succeeds;
+
+definition: a room (called rm) is king-escape:
+	if (absval of x of rm - x of location of enemy king) > 1, no;
+	if (absval of y of rm - y of location of enemy king) > 1, no;
+	if rm is checked, no;
+	yes;
+
 this is the checkmate processing rule:
-	let b1 be whether or not the location of the enemy king is checked;
-	let b2 be whether or not the location of the enemy king is surrounded;
-	if b1 is false:
-		if b2 is true:
-			say "Stalemate!";
-			say "The enemy king looks around and flees, unharmed.";
+	if the location of the enemy king is not checked:
+		say "The enemy king looks at you funny. What did you bring him here for? Time's a-wasting. He shuffles off back to his palace.";
 		the rule fails;
-	if b2 is false:
-		say "The enemy king looks around, panicked. He realizes he's in a bit of trouble, but he manages to flee.";
+	if the location of the enemy king is not surrounded:
+		say "The enemy king regards you suspiciously. He knows something is up. But then he runs away via [a random king-escape room]!";
 		the rule fails;
 	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
 	the rule succeeds;
@@ -442,7 +465,7 @@ definition: a room (called r) is surrounded:
 volume meta
 
 rule for printing a parser error:
-	say "I didn't recognize that command. Type [b]V[r] to see the list of commands."
+	say "I didn't recognize that command. Type [b]V[r] or [b]VERB[r] or [b]VERBS[r] to see the list of commands."
 
 rule for printing a parser error when the latest parser error is the noun did not make sense in that context error:
 	say "The verb was okay, but I didn't understand the noun in that sentence. Please try again, or type [b]V[r] to see the list of commands."
@@ -481,7 +504,7 @@ understand the command "a" as something new.
 understand "a" as abouting.
 
 carry out abouting:
-	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where was the story?[paragraph break]I wasn't expecting one to pop up. The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]But one evening, something came into form. And as ParserComp's deadline came up, my bigger plan had stalled, so why not bail out?[paragraph break]I like parser games with weird directions. So I tried to make one.[paragraph break]Thankfully, I was able to find something that worked, technically, and it had the shell of a story, too.  And I hope you enjoy this, too, whether or not you play chess.";
+	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where was the story?[paragraph break]I wasn't expecting one to pop up. The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]But one evening, something came into form. And as ParserComp's deadline came up, my bigger plan had stalled, so why not bail out?[paragraph break]I like parser games with weird directions. So I tried to make one.[paragraph break]Thankfully, I was able to find something that worked, technically, and it had the shell of a story, too. And I hope you enjoy this, too, whether or not you play chess.";
 	the rule succeeds.
 
 chapter creditsing
@@ -552,9 +575,11 @@ verbsing is an action applying to nothing.
 
 understand the command "verbs" as something new.
 understand the command "verb" as something new.
+understand the command "v" as something new.
 
 understand "verbs" as verbsing.
 understand "verb" as verbsing.
+understand "v" as verbsing.
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
