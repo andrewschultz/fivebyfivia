@@ -22,18 +22,24 @@ when play begins:
 
 chapter DELANDA FIVEBYFIVIA EST
 
-DELANDA FIVEBYFIVIA EST is a thing. the player carries DELANDA FIVEBYFIVIA EST. "DELANDA FIVEBYFIVIA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text]."
+DELANDA FIVEBYFIVIA EST is a thing. the player carries DELANDA FIVEBYFIVIA EST. description of DELANDA is "DELANDA FIVEBYFIVIA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
+
+understand "dfe" as delanda.
+understand "est" as delanda.
+understand "del" as delanda.
+
+after examining DELANDA for the first time:
+	say "You may wish to shorten typing a long name for [delanda] with DFE, EST, or DEL. Save your thinking cells for the tough parts."
 
 to say current-quest-text:
 	if quest-index is 4:
 		say "Trample around all twenty-five precincts of [5b] without repeating twice";
-	else if quest-index is 3:
-		say "Entrap the young king of [5b] with your king and his rook";
-	else if quest-index is 2:
-		say "Entrap the middle-aged king of [5b] with your king and your queen";
-	else if quest-index is 1:
-		say "Entrap the old king of [5b] with the kingside and queenside rooks";
+		continue the action;
+	say "Entrap the [age-of] king of [5b] with [list of offensive pieces]"
 
+to say age-of:
+	say "[if quest-index is 1]old[else if quest-index is 2]middle-aged[else]young[end if]"
+	
 understand "scroll" as DELANDA. understand "def" as DELANDA.
 
 check dropping DELANDA:
@@ -280,6 +286,11 @@ chapter pieces
 
 a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list.
 
+definition: a piece (called p) is offensive:
+	if p is enemy king, no;
+	if p is irrelevant, no;
+	yes;
+
 the friendly king is a piece. understand "k" and "k1" as friendly king.
 
 summon-list of friendly king is { false, true, true, false }.
@@ -305,10 +316,14 @@ chapter calling
 calling is an action applying to one visible thing.
 
 understand the command "call" as something new.
+understand the command "c" as something new.
 understand the command "place" as something new.
+understand the command "p" as something new.
 
 understand "call [any piece]" as calling.
+understand "c [any piece]" as calling.
 understand "place [any piece]" as calling.
+understand "p [any piece]" as calling.
 
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
@@ -419,6 +434,12 @@ definition: a room (called r) is surrounded:
 
 volume meta
 
+rule for printing a parser error:
+	say "I didn't recognize that command. Type [b]V[r] to see the list of commands."
+
+rule for printing a parser error when the latest parser error is the noun did not make sense in that context error:
+	say "The verb was okay, but I didn't understand the noun in that sentence. Please try again, or type [b]V[r] to see the list of commands."
+
 section score trivia
 
 check requesting the score:
@@ -453,6 +474,7 @@ understand the command "a" as something new.
 understand "a" as abouting.
 
 carry out abouting:
+	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where was the story?[paragraph break]I wasn't expecting one to pop up. The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]But one evening, something came into form. And as ParserComp's deadline came up, my bigger plan had stalled, so why not bail out?[paragraph break]I like parser games with weird directions. So I tried to make one.[paragraph break]Thankfully, I was able to find something that worked, technically, and it had the shell of a story, too.  And I hope you enjoy this, too, whether or not you play chess.";
 	the rule succeeds.
 
 chapter creditsing
@@ -460,12 +482,11 @@ chapter creditsing
 creditsing is an action applying to nothing.
 
 understand the command "credits" as something new.
-understand the command "c" as something new.
 
 understand "credits" as creditsing.
-understand "c" as creditsing.
 
 carry out creditsing:
+	say "<fill in later>";
 	the rule succeeds.
 
 chapter dirsing
@@ -523,8 +544,10 @@ chapter verbsing
 verbsing is an action applying to nothing.
 
 understand the command "verbs" as something new.
+understand the command "verb" as something new.
 
 understand "verbs" as verbsing.
+understand "verb" as verbsing.
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
