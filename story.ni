@@ -1,5 +1,10 @@
 "Fivebyfivia Delenda Est" by Andrew Schultz
 
+[?? random rook placed for 1st]
+[??note kingside/queenside rook the same]
+[?? random rook for final?]
+[?? what if random flight square, a piece is on it. Have a capture.]
+
 the story headline is "Just Horsing Around".
 
 the story description is "Less impossible than beating Stockfish".
@@ -296,30 +301,30 @@ quest-quick-desc is a list of text variable. quest-quick-desc is { "R & R", "K &
 
 chapter pieces
 
-a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list.
+a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
 
 definition: a piece (called p) is offensive:
 	if p is enemy king, no;
 	if p is irrelevant, no;
 	yes;
 
-the friendly king is a piece. understand "k" and "k1" and "fk" as friendly king.
+the friendly king is a piece. understand "k" and "k1" and "fk" as friendly king. short-text of friendly king is "K".
 
 summon-list of friendly king is { false, true, true, false }.
 
-the enemy king is a piece. understand "k" and "k2" and "ek" as enemy king.
+the enemy king is a piece. understand "k" and "k2" and "ek" as enemy king. short-text of enemy king is "K".
 
 summon-list of enemy king is { true, true, true, false }.
 
-the queen is a female piece. understand "q" as queen.
+the queen is a female piece. understand "q" as queen. short-text of queen is "Q".
 
 summon-list of queen is { false, true, false, false }.
 
-the kingside rook is a neuter piece. understand "kr" as kingside rook. understand "r" as kingside rook.
+the kingside rook is a neuter piece. understand "kr" as kingside rook. understand "r" as kingside rook. short-text of kingside rook is "KR/R".
 
 summon-list of kingside rook is { true, false, true, false }.
 
-the queenside rook is a neuter piece. understand "qr" as queenside rook. understand "r" as queenside rook.
+the queenside rook is a neuter piece. understand "qr" as queenside rook. understand "r" as queenside rook. short-text of queenside rook is "QR/R".
 
 summon-list of queenside rook is { true, false, false, false }.
 
@@ -354,12 +359,12 @@ carry out calling:
 	if noun is enemy king:
 		abide by the enemy-placement rule;
 	say "You call [the noun] to [location of player].";
-	if in-beta is true:
-		say "(for beta testers) full position...";
-		show-the-board;
 	now need-to-hurry is true;
 	now noun is placed;
 	move noun to location of player;
+	if in-beta is true:
+		say "(for beta testers) full position...";
+		show-the-board;
 	if number of reserved pieces > 0, the rule succeeds;
 	consider the stalemate processing rule;
 	if the rule succeeded:
@@ -664,7 +669,12 @@ carry out statsing:
 	the rule succeeds.
 
 after printing the name of a placed piece (called p) when statsing:
-	say "[location of p]"
+	say " ([location of p])";
+	continue the action;
+
+after printing the name of a reserved piece (called p) when statsing:
+	say " ([short-text of p])";
+	continue the action;
 
 chapter verbsing
 
