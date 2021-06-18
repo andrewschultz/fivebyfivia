@@ -36,7 +36,7 @@ definition: a direction (called d) is viable:
 section going nowhere
 
 check going nowhere:
-	say "Your trusty steed won't budge. You grumble for a bit, then realize Fivebyfivia has no [file of noun][square of noun] area. Another direction, perhaps." instead;
+	say "Your trusty steed won't budge. You grumble for a bit, then realize Fivebyfivia has no [file of noun][square of noun] area. What a piffly country! They should've been taken over long before this. They should feel LUCKY a country as swell as Twelvebytwelvia is plotting to take them over.[paragraph break]Anyway. Another direction, perhaps." instead;
 
 to say file of (d - a direction):
 	let d2 be xness of d + x of location of player;
@@ -47,6 +47,18 @@ to say file of (d - a direction):
 
 to decide which number is square of (d - a direction):
 	decide on 1 + y of location of player + yness of d.
+
+section timed-going
+
+after going when need-to-hurry is true:
+	increment current-max-wait;
+	if this-quest-wait > current-max-wait:
+		if enemy king is placed:
+			say "You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
+		else:
+			say "You hear familiar moans. Your summoned compatriot [if number of placed pieces > 1]s have[else]has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
+		say "[line break]You have failed in your quest, and your king and queen will not be pleased ... unless we pretend this was just a practice run you planned in your head before the real thing. Yes, yes, let's do that. That's how it is.";
+		reset-the-board;
 
 section circle-visited
 
@@ -210,7 +222,7 @@ when play begins:
 				now rn1 is mapped northwestwest of re2;
 	setup-next-puzzle;
 
-volume people
+volume people and quests
 
 a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list.
 
@@ -236,6 +248,8 @@ summon-list of queenside rook is { true, false, false, false }.
 
 quest-index is a number that varies. quest-index is 1.
 
+max-wait-times is a list of numbers variable. max-wait-times is { 2, 3, 2, 0 }.
+
 chapter calling
 
 calling is an action applying to one visible thing.
@@ -255,6 +269,7 @@ carry out calling:
 	if number of pieces in location of player > 0:
 		say "That would make things too crowded here. You already called [random piece in location of player] here." instead;
 	say "You call [the noun] to [location of player].";
+	now need-to-hurry is false;
 	now noun is placed;
 	move noun to location of player;
 	if number of reserved pieces is 0:
@@ -283,14 +298,23 @@ to setup-next-puzzle:
 			now P is reserved;
 		else:
 			now P is irrelevant;
-	if location of player is not c3:
-		move player to c3;
+
+current-max-wait is a number that varies.
+
+this-quest-wait is a number that varies.
+
+need-to-hurry is a truth state that varies.
 
 to reset-the-board:
+	if location of player is not c3:
+		move player to c3;
 	now all pieces are off-stage;
 	now all placed pieces are reserved;
 	if quest-index is 4:
 		now all rooms are not circle-visited;
+	now current-max-wait is entry quest-index of max-wait-times;
+	now this-quest-wait is 0;
+	now need-to-hurry is false.
 
 this is the checkmate processing rule:
 	let b1 be whether or not the location of the enemy king is checked;
