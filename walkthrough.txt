@@ -1,0 +1,94 @@
+The solution is not meant to be hard. However, non-chessplayers may find some trickery. Note that you also have to be reasonably quick about checkmating your opponent. You only have three turns from placing the first piece to placing the opponent's king.
+
+Here is one solution for two rooks:
+
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | |R| | |
++-+-+-+-+-+
+|k| | | |R|
++-+-+-+-+-+
+
+For the queen, there are several possibilities. But 1) she doesn't like getting too close to the opponent's king and 2) if you do things a certain way, it disrupts the next plan.
+
+So this is chessically correct but wrong for the game:
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | |K| |
++-+-+-+-+-+
+| | |Q| | |
++-+-+-+-+-+
+| | |k| | |
++-+-+-+-+-+
+
+So is this:
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | |K| |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | |Q| |k|
++-+-+-+-+-+
+
+But this is the one that you want:
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | |K| |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+|Q| |k| | |
++-+-+-+-+-+
+
+The final quest is a traversal. You need to touch all the squares without going over one twice. This seems like there are so many possibilities, but process of elimination helps.
+
+Also notice movement from and to the corner squares is restricted. Note that the only way to reach a1, s5, e1, or e5 (corner squares,) you must be on c2, b3, c4 or d3 first.
+
+If you go from c2/d3/c4/b3 to a non-corner square, then, you won't be able to visit all the corner squares. But even if you do, the fourth corner square will have no way out.
+
+That simplifies our map a bit. We only have 17 squares to traverse now.
+
++-+-+-+-+-+
+|x| | |2|x|5
++-+-+-+-+-+
+| | |x| | |4
++-+-+-+-+-+
+| |x|1|x| |3
++-+-+-+-+-+
+| | |x| | |2
++-+-+-+-+-+
+|x| | | |x|1
++-+-+-+-+-+
+ a b c d e
+
+Square number 2 doesn't really matter. You can always rotate or flip the chessboard so 2 winds up at d5. From there the only viable squares are b4 and e3. Both work, but with e3, there's an interesting circular whirly motion as all further moves are, in fact, forced.
+
++-+-+-+-+-+
+|x|c|7|2|x|5
++-+-+-+-+-+
+|6|h|x|d|8|4
++-+-+-+-+-+
+|b|x|1|x|3|3
++-+-+-+-+-+
+|g|5|x|9|e|2
++-+-+-+-+-+
+|x|a|f|4|x|1
++-+-+-+-+-+
+ a b c d e
+
+From "h" you can then jump to d3 and then clean out the corner squares.
