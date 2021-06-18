@@ -10,7 +10,31 @@ to say 5b: say "Fivebyfivia"
 
 chapter DELANDA FIVEBYFIVIA EST
 
-DELANDA FIVEBYFIVIA EST is a thing. the player carries DELANDA FIVEBYFIVIA EST.
+DELANDA FIVEBYFIVIA EST is a thing. the player carries DELANDA FIVEBYFIVIA EST. "DELANDA FIVEBYFIVIA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text]."
+
+to say current-quest-text:
+	if quest-index is 4:
+		say "Trample around all twenty-five precincts of [5b] without repeating twice";
+	else if quest-index is 3:
+		say "Entrap the young king of [5b] with your king and his rook";
+	else if quest-index is 2:
+		say "Entrap the middle-aged king of [5b] with your king and your queen";
+	else if quest-index is 1:
+		say "Entrap the old king of [5b] with the kingside and queenside rooks";
+
+understand "scroll" as DELANDA. understand "def" as DELANDA.
+
+check dropping DELANDA:
+	say "And let such a valuable document fall into the wrong hands? Certainly not!" instead;
+
+instead of doing something with DELANDA:
+	if the current action is examining, continue the action;
+	say "You can really only examine [DELANDA].";
+
+your horse is a backdrop. Your horse is everywhere.
+
+instead of doing something with your horse:
+	say "You can really only ride your horse in one of eight directions. To get a refresher on that, type DIRS."
 
 chapter i6
 
@@ -413,7 +437,7 @@ after printing the name of a placed piece (called p) when statsing:
 	say "[location of p]"
 
 when play begins:
-	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapius when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you."
+	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [DELANDA FIVEBYFIVIA EST]. And you're off!"
 
 volume testing - not for release
 
