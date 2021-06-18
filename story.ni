@@ -1,5 +1,9 @@
 "Fivebyfivia Delenda Est" by Andrew Schultz
 
+the story headline is "Just Horsing Around".
+
+the story description is "Less impossible than beating Stockfish".
+
 volume basics and definitions
 
 include trivial niceties by Andrew Schultz
@@ -535,7 +539,7 @@ The print final score rule is not listed in the for printing the player's obitua
 
 chapter abbing
 
-abbing is an action applying to nothing.
+abbing is an action out of world.
 
 understand the command "abbrev" as something new.
 understand the command "abb" as something new.
@@ -552,7 +556,7 @@ show-short-dirs is a truth state that varies.
 
 chapter abouting
 
-abouting is an action applying to nothing.
+abouting is an action out of world.
 
 understand the command "about" as something new.
 understand the command "a" as something new.
@@ -565,7 +569,7 @@ carry out abouting:
 
 chapter chessing
 
-chessing is an action applying to nothing.
+chessing is an action out of world.
 
 understand the command "chess" as something new.
 understand the command "ch" as something new.
@@ -585,7 +589,7 @@ carry out chessing:
 
 chapter creditsing
 
-creditsing is an action applying to nothing.
+creditsing is an action out of world.
 
 understand the command "credits" as something new.
 
@@ -597,7 +601,7 @@ carry out creditsing:
 
 chapter dirsing
 
-dirsing is an action applying to nothing.
+dirsing is an action out of world.
 
 understand the command "dirs" as something new.
 understand the command "dir" as something new.
@@ -613,7 +617,7 @@ carry out dirsing:
 
 chapter helping
 
-helping is an action applying to nothing.
+helping is an action out of world.
 
 understand the command "help" as something new.
 understand the command "hint" as something new.
@@ -665,7 +669,7 @@ after printing the name of a placed piece (called p) when statsing:
 
 chapter verbsing
 
-verbsing is an action applying to nothing.
+verbsing is an action out of world.
 
 understand the command "verbs" as something new.
 understand the command "verb" as something new.
