@@ -1,10 +1,5 @@
 "Fivebyfivia Delenda Est" by Andrew Schultz
 
-[?? random rook placed for 1st]
-[??note kingside/queenside rook the same]
-[?? random rook for final?]
-[?? what if random flight square, a piece is on it. Have a capture.]
-
 the story headline is "Just Horsing Around".
 
 the story description is "Less impossible than beating Stockfish".
@@ -669,11 +664,11 @@ carry out statsing:
 	the rule succeeds.
 
 after printing the name of a placed piece (called p) when statsing:
-	say " ([location of p])";
+	say " ([b][location of p][r])";
 	continue the action;
 
 after printing the name of a reserved piece (called p) when statsing:
-	say " ([short-text of p])";
+	say " ([b][short-text of p][r])";
 	continue the action;
 
 chapter verbsing
