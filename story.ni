@@ -1,8 +1,16 @@
-"Conquering Fivebyfivia" by Andrew Schultz
+"Delanda Fivebyfivia Est" by Andrew Schultz
 
 volume basics and definitions
 
 debug-state is a truth state that varies.
+
+to say 12b: say "Twelvebytwelvia"
+
+to say 5b: say "Fivebyfivia"
+
+chapter DELANDA FIVEBYFIVIA EST
+
+DELANDA FIVEBYFIVIA EST is a thing. the player carries DELANDA FIVEBYFIVIA EST.
 
 chapter i6
 
@@ -16,14 +24,14 @@ a room has text called room-edge-text.
 
 offsite is a room. x of offsite is -3. y of offsite is -3.
 
-the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of Fivebyfivia.[paragraph break][room-detail].".
+the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of [5b].[paragraph break][room-detail].".
 
 to say room-color:
 	say "The ground is [if the remainder after dividing (x of location of player + y of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
 
 to say room-detail:
 	if location of player is c3:
-		say "From here, your horse can bolt in any of the crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for Fivebyfivia";
+		say "From here, your horse can bolt in any of the crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
 	say "You can go [list of viable directions]";
 
@@ -36,7 +44,7 @@ definition: a direction (called d) is viable:
 section going nowhere
 
 check going nowhere:
-	say "Your trusty steed won't budge. You grumble for a bit, then realize Fivebyfivia has no [file of noun][square of noun] area. What a piffly country! They should've been taken over long before this. They should feel LUCKY a country as swell as Twelvebytwelvia is plotting to take them over.[paragraph break]Anyway. Another direction, perhaps." instead;
+	say "Your trusty steed won't budge. You grumble for a bit, then realize [5b] has no [file of noun][square of noun] area. What a piffly country! They should've been taken over long before this. They should feel LUCKY a country as swell as [12b] is plotting to take them over.[paragraph break]Anyway. Another direction, perhaps." instead;
 
 to say file of (d - a direction):
 	let d2 be xness of d + x of location of player;
@@ -373,9 +381,15 @@ chapter statsing
 
 statsing is an action applying to nothing.
 
+understand the command "status" as something new.
 understand the command "stats" as something new.
+understand the command "stat" as something new.
+understand the command "st" as something new.
 
+understand "status" as statsing.
 understand "stats" as statsing.
+understand "st" as statsing.
+understand "stat" as statsing.
 
 to say vis of (r - a room):
 	say " [if location of player is r]+[else if r is circle-visited]*[else] [end if]";
@@ -397,6 +411,9 @@ carry out statsing:
 
 after printing the name of a placed piece (called p) when statsing:
 	say "[location of p]"
+
+when play begins:
+	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapius when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you."
 
 volume testing - not for release
 
