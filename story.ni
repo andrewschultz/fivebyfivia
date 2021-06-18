@@ -107,13 +107,13 @@ after going to a circle-visited room:
 
 chapter direction info
 
-a direction can be normal or weird. a direction is usually normal.
+a direction can be normal or weird. a direction is usually normal. a direction has text called vh-abbrev.
 
 a direction has a number called yness. yness of a direction is usually 0.
 
 a direction has a number called xness. xness of a direction is usually 0.
 
-southsoutheast is a direction. it is weird. northnorthwest is a direction. it is weird.
+southsoutheast is a direction. it is weird. vh-abbrev is "SSE". northnorthwest is a direction. it is weird. vh-abbrev is "NNW".
 
 xness of southsoutheast is 1. yness of southsoutheast is -2. xness of northnorthwest is -1. yness of northnorthwest is 2.
 
@@ -123,7 +123,7 @@ understand "sse" and "ses" and "ess" as southsoutheast.
 
 understand "nnw" and "nwn" and "wnn" as northnorthwest.
 
-southeasteast is a direction. it is weird. northwestwest is a direction. it is weird.
+southeasteast is a direction. it is weird. vh-abbrev is "SEE". northwestwest is a direction. it is weird. vh-abbrev is "NWW".
 
 xness of southeasteast is 2. yness of southeasteast is -1. xness of northwestwest is -2. yness of northwestwest is 1.
 
@@ -133,7 +133,7 @@ understand "see" and "ese" and "ees" as southeasteast.
 
 understand "nww" and "wnw" and "wwn" as northwestwest.
 
-southsouthwest is a direction. it is weird. northnortheast is a direction. it is weird.
+southsouthwest is a direction. it is weird. vh-abbrev is "SSW". northnortheast is a direction. it is weird. vh-abbrev is "NNE".
 
 xness of southsouthwest is -1. yness of southsouthwest is -2. xness of northnortheast is 1. yness of northnortheast is 2.
 
@@ -143,7 +143,7 @@ understand "ssw" and "sws" and "wss" as southsouthwest.
 
 understand "nne" and "nen" and "enn" as northnortheast.
 
-southwestwest is a direction. it is weird. northeasteast is a direction. it is weird.
+southwestwest is a direction. it is weird. vh-abbrev is "SWW". northeasteast is a direction. it is weird. vh-abbrev is "NEE".
 
 xness of southwestwest is -2. yness of southwestwest is -1. xness of northeasteast is 2. yness of northeasteast is 1.
 
@@ -152,6 +152,8 @@ the opposite of southwestwest is northeasteast. the opposite of northeasteast is
 understand "sww" and "wsw" and "wws" as southwestwest.
 
 understand "nee" and "ene" and "een" as northeasteast.
+
+for printing the name of a weird direction (called d) when show-short-dirs is true: say "[vh-abbrev of d]"
 
 section for posterity
 
@@ -417,7 +419,11 @@ understand "abbrev" as abbing.
 understand "abb" as abbing.
 
 carry out abbing:
+	now show-short-dirs is whether or not show-short-dirs is false;
+	say "Showing short directions is now [on-off of show-short-dirs].";
 	the rule succeeds.
+
+show-short-dirs is a truth state that varies.
 
 chapter abouting
 
