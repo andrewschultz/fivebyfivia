@@ -4,6 +4,10 @@ volume basics and definitions
 
 debug-state is a truth state that varies.
 
+chapter i6
+
+To say character number (N - a number): (- print (char) {N}; -)
+
 chapter room info
 
 a room has a number called x. a room has a number called y.
@@ -28,6 +32,21 @@ definition: a direction (called d) is viable:
 	if the room d of location of player is offsite, no;
 	if the room d of location of player is nowhere, no;
 	yes;
+
+section going nowhere
+
+check going nowhere:
+	say "Your trusty steed won't budge. You grumble for a bit, then realize Fivebyfivia has no [file of noun][square of noun] area. Another direction, perhaps." instead;
+
+to say file of (d - a direction):
+	let d2 be xness of d + x of location of player;
+	if d2 < 0:
+		say "[character number 123 + d2]";
+	else:
+		say "[character number 97 + d2]";
+
+to decide which number is square of (d - a direction):
+	decide on 1 + y of location of player + yness of d.
 
 section circle-visited
 
