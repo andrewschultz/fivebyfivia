@@ -41,7 +41,13 @@ chapter direction info
 
 a direction can be normal or weird. a direction is usually normal.
 
+a direction has a number called yness. yness of a direction is usually 0.
+
+a direction has a number called xness. xness of a direction is usually 0.
+
 southsoutheast is a direction. it is weird. northnorthwest is a direction. it is weird.
+
+xness of southsoutheast is 1. yness of southsoutheast is -2. xness of northnorthwest is -1. yness of northnorthwest is 2.
 
 the opposite of southsoutheast is northnorthwest. the opposite of northnorthwest is southsoutheast.
 
@@ -51,6 +57,8 @@ understand "nnw" and "nwn" and "wnn" as northnorthwest.
 
 southeasteast is a direction. it is weird. northwestwest is a direction. it is weird.
 
+xness of southeasteast is 2. yness of southeasteast is -1. xness of northwestwest is -2. yness of northwestwest is 1.
+
 the opposite of southeasteast is northwestwest. the opposite of northwestwest is southeasteast.
 
 understand "see" and "ese" and "ees" as southeasteast.
@@ -58,6 +66,8 @@ understand "see" and "ese" and "ees" as southeasteast.
 understand "nww" and "wnw" and "wwn" as northwestwest.
 
 southsouthwest is a direction. it is weird. northnortheast is a direction. it is weird.
+
+xness of southsouthwest is -1. yness of southsouthwest is -2. xness of northnortheast is 1. yness of northnortheast is 2.
 
 the opposite of southsouthwest is northnortheast. the opposite of northnortheast is southsouthwest.
 
@@ -67,11 +77,17 @@ understand "nne" and "nen" and "enn" as northnortheast.
 
 southwestwest is a direction. it is weird. northeasteast is a direction. it is weird.
 
+xness of southwestwest is -2. yness of southwestwest is -1. xness of northeasteast is 2. yness of northeasteast is 1.
+
 the opposite of southwestwest is northeasteast. the opposite of northeasteast is southwestwest.
 
 understand "sww" and "wsw" and "wws" as southwestwest.
 
 understand "nee" and "ene" and "een" as northeasteast.
+
+section for posterity
+
+xness of north is 0. yness of north is 1. xness of south is 0. yness of south is -1. xness of east is 1. yness of east is 0. xness of west is -1. yness of west is 0. xness of northwest is -1. yness of northwest is 1. xness of northeast is 1. yness of northeast is 1. xness of southwest is -1. yness of southwest is -1. xness of southeast is 1. yness of southeast is -1.
 
 chapter direction verbs
 
