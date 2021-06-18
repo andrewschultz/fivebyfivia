@@ -35,7 +35,7 @@ to say current-quest-text:
 	if quest-index is 4:
 		say "Trample around all twenty-five precincts of [5b] without repeating twice";
 		continue the action;
-	say "Entrap the [age-of] king of [5b] with [list of offensive pieces]"
+	say "entrap the [age-of] king of [5b] with [the list of offensive pieces]"
 
 to say age-of:
 	say "[if quest-index is 1]old[else if quest-index is 2]middle-aged[else]young[end if]"
@@ -101,14 +101,16 @@ to decide which number is square of (d - a direction):
 section timed-going
 
 after going when need-to-hurry is true:
-	increment current-max-wait;
-	if this-quest-wait > current-max-wait:
+	increment current-turns-after-placing;
+	if debug-state is true, say  "[current-turns-after-placing] of [max-turns-after-placing].";
+	if current-turns-after-placing > max-turns-after-placing:
 		if enemy king is placed:
 			say "You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
 		else:
 			say "You hear familiar moans. Your summoned compatriot [if number of placed pieces > 1]s have[else]has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
 		say "[line break]You have failed in your quest, and your king and queen will not be pleased ... unless we pretend this was just a practice run you planned in your head before the real thing. Yes, yes, let's do that. That's how it is.";
 		reset-the-board;
+	continue the action;
 
 section circle-visited
 
@@ -278,7 +280,10 @@ volume people and quests
 
 chapter general lists
 
-max-wait-times is a list of numbers variable. max-wait-times is { 2, 3, 2, 0 }.
+max-wait-times is a list of numbers variable. max-wait-times is { 3, 3, 3, 0 }.
+
+stalemated is a list of truth states variable. stalemated is { False, False, False, False }.
+
 
 quest-quick-desc is a list of text variable. quest-quick-desc is { "R & R", "K & Q vs K", "K & R vs K", "Tour" }
 
@@ -333,8 +338,10 @@ carry out calling:
 		say "Right now [the noun] is not part of your maneuver." instead;
 	if number of pieces in location of player > 0:
 		say "That would make things too crowded here. You already called [random piece in location of player] here." instead;
+	if noun is enemy king and number of reserved pieces > 1:
+		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
 	say "You call [the noun] to [location of player].";
-	now need-to-hurry is false;
+	now need-to-hurry is true;
 	now noun is placed;
 	move noun to location of player;
 	if number of reserved pieces is 0:
@@ -356,6 +363,8 @@ after printing the locale description when quest-index is 4:
 
 does the player mean calling a reserved piece: it is very likely.
 
+does the player mean calling the friendly king when friendly king is reserved: it is likely.
+
 to setup-next-puzzle:
 	reset-the-board;
 	repeat with P running through pieces:
@@ -364,9 +373,9 @@ to setup-next-puzzle:
 		else:
 			now P is irrelevant;
 
-current-max-wait is a number that varies.
+max-turns-after-placing is a number that varies.
 
-this-quest-wait is a number that varies.
+current-turns-after-placing is a number that varies.
 
 need-to-hurry is a truth state that varies.
 
@@ -377,8 +386,9 @@ to reset-the-board:
 	now all placed pieces are reserved;
 	if quest-index is 4:
 		now all rooms are not circle-visited;
-	now current-max-wait is entry quest-index of max-wait-times;
-	now this-quest-wait is 0;
+		now c3 is circle-visited;
+	now max-turns-after-placing is entry quest-index of max-wait-times;
+	now current-turns-after-placing is 0;
 	now need-to-hurry is false.
 
 this is the checkmate processing rule:
@@ -387,7 +397,6 @@ this is the checkmate processing rule:
 	if b1 is false:
 		if b2 is true:
 			say "Stalemate!";
-		else:
 			say "The enemy king looks around and flees, unharmed.";
 		the rule fails;
 	if b2 is false:
@@ -412,23 +421,21 @@ definition: a room (called r) is checked:
 		let xdelt be absval of x1 - x0;
 		let ydelt be absval of y1 - y0;
 		if q is friendly king:
-			if xdelt > 1 or ydelt > 1, yes;
+			if xdelt <= 1 and ydelt <= 1, yes;
 			next;
 		if q is kingside rook or q is queenside rook:
-			if xdelt > 0 or ydelt > 0, yes;
+			if xdelt is 0 or ydelt is 0, yes;
 			next;
 		if q is queen:
-			if xdelt is 0 or ydelt is 0, next;
-			if absval of xdelt is absval of ydelt, next;
-			no;
-		next;
+			if xdelt is 0 or ydelt is 0, yes;
+			if absval of xdelt is absval of ydelt, yes;
+			next;
 	no;
-	yes;
 
 definition: a room (called r) is surrounded:
 	repeat with D running through not weird directions:
 		if the room D of r is nothing, next;
-		if the room north of r is checked, next;
+		if the room D of r is checked, next;
 		no;
 	yes;
 
@@ -564,8 +571,14 @@ when play begins:
 chapter stupid stuff
 
 test q1 with "ssw/nnw/see/see/call kingside/nww/call queenside/sww/call king".
+test q1s with "nnw/call kingside/ssw/see/call queenside/sww/call king".
+
 test q2 with "sse/call queen/nnw/ssw/call friendly king/nnw/call enemy king".
+test q2s with "nne/call friendly king/sww/sse/call queen/sww/call king".
+
 test q3 with "sww/see/call rook/nnw/call friendly king/ssw/call enemy king".
+test q3s with "sww/call rook/see/call friendly king/nne/sse/call enemy king".
+
 test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/ssw/sse/nww/sww".
 
 test full with "test q1/test q2/test q3/test q4".
