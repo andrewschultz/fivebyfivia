@@ -87,43 +87,43 @@ d1 is a room. x of d1 is 3. y of d1 is 0. room-edge-text is "on the south edge a
 
 e1 is a room. x of e1 is 4. y of e1 is 0. room-edge-text is "at the relatively inaccessible southeast corner".
 
-a2 is a room. x of a2 is 0. y of a2 is 1.
+a2 is a room. x of a2 is 0. y of a2 is 1. room-edge-text is "on the west edge and near the south edge".
 
-b2 is a room. x of b2 is 1. y of b2 is 1.
+b2 is a room. x of b2 is 1. y of b2 is 1. room-edge-text is "in a southwest-ish area".
 
-c2 is a room. x of c2 is 2. y of c2 is 1.
+c2 is a room. x of c2 is 2. y of c2 is 1. room-edge-text is "just south of the center".
 
-d2 is a room. x of d2 is 3. y of d2 is 1.
+d2 is a room. x of d2 is 3. y of d2 is 1. room-edge-text is "in a southeast-ish area".
 
-e2 is a room. x of e2 is 4. y of e2 is 1.
+e2 is a room. x of e2 is 4. y of e2 is 1. room-edge-text is "on the east edge and near the south edge".
 
-a3 is a room. x of a3 is 0. y of a3 is 2.
+a3 is a room. x of a3 is 0. y of a3 is 2. room-edge-text is "at the center of the west edge".
 
-b3 is a room. x of b3 is 1. y of b3 is 2.
+b3 is a room. x of b3 is 1. y of b3 is 2. room-edge-text is "just west of the center".
 
 c3 is a room. x of c3 is 2. y of c3 is 2. room-edge-text is "smack in the center".
 
-d3 is a room. x of d3 is 3. y of d3 is 2.
+d3 is a room. x of d3 is 3. y of d3 is 2. room-edge-text is "just east of the center".
 
-e3 is a room. x of e3 is 4. y of e3 is 2.
+e3 is a room. x of e3 is 4. y of e3 is 2. room-edge-text is "at the center of the east edge".
 
-a4 is a room. x of a4 is 0. y of a4 is 3.
+a4 is a room. x of a4 is 0. y of a4 is 3. room-edge-text is "on the west edge and near the south edge".
 
-b4 is a room. x of b4 is 1. y of b4 is 3.
+b4 is a room. x of b4 is 1. y of b4 is 3. room-edge-text is "in a southeast-ish area".
 
-c4 is a room. x of c4 is 2. y of c4 is 3.
+c4 is a room. x of c4 is 2. y of c4 is 3. room-edge-text is "just north of the center".
 
-d4 is a room. x of d4 is 3. y of d4 is 3.
+d4 is a room. x of d4 is 3. y of d4 is 3. room-edge-text is "in a northeast-ish area".
 
-e4 is a room. x of e4 is 4. y of e4 is 3.
+e4 is a room. x of e4 is 4. y of e4 is 3. room-edge-text is "on the east edge and near the north edge".
 
 a5 is a room. x of a5 is 0. y of a5 is 4. room-edge-text is "at the relatively inaccessible northwest corner".
 
-b5 is a room. x of b5 is 1. y of b5 is 4.
+b5 is a room. x of b5 is 1. y of b5 is 4. room-edge-text is "on the north edge and near the west edge".
 
-c5 is a room. x of c5 is 2. y of c5 is 4.
+c5 is a room. x of c5 is 2. y of c5 is 4. room-edge-text is "in the center of the north edge".
 
-d5 is a room. x of d5 is 3. y of d5 is 4.
+d5 is a room. x of d5 is 3. y of d5 is 4. room-edge-text is "on the north edge and near the east edge".
 
 e5 is a room. x of e5 is 4. y of e5 is 4. room-edge-text is "at the relatively inaccessible northeast corner".
 
