@@ -16,6 +16,8 @@ max-quests is a number that varies. max-quests is 4.
 
 quest-index is a number that varies. quest-index is 1.
 
+description of the player is "Spiffy and knightly indeed."
+
 chapter start of play
 
 when play begins:
@@ -368,13 +370,13 @@ carry out calling:
 
 to show-the-board:
 	say "WHAT'S ON THE BOARD:[line break]";
-	say "[fixed letter spacing]   a b c d e[line break]";
+	say "[fixed letter spacing]  a b c d e[line break]";
 	say "5[pie of a5][pie of b5][pie of c5][pie of d5][pie of e5] 5[line break]";
 	say "4[pie of a4][pie of b4][pie of c4][pie of d4][pie of e4] 4[line break]";
 	say "3[pie of a3][pie of b3][pie of c3][pie of d3][pie of e3] 3[line break]";
 	say "2[pie of a2][pie of b2][pie of c2][pie of d2][pie of e2] 2[line break]";
 	say "1[pie of a1][pie of b1][pie of c1][pie of d1][pie of e1] 1[line break]";
-	say "   a b c d e[variable letter spacing][line break]";
+	say "  a b c d e[variable letter spacing][line break]";
 
 to say pie of (r - a room):
 	say " ";
@@ -609,6 +611,22 @@ carry out dirsing:
 	say "You can toggle how the directions appear (long or short) in room descriptions with ABB.";
 	the rule succeeds.
 
+chapter helping
+
+helping is an action applying to nothing.
+
+understand the command "help" as something new.
+understand the command "hint" as something new.
+understand the command "h" as something new.
+
+understand "hint" as helping.
+understand "help" as helping.
+understand "h" as helping.
+
+carry out helping:
+	say "This game should come with a walkthrough.";
+	the rule succeeds.
+
 chapter statsing
 
 statsing is an action applying to nothing.
@@ -629,13 +647,13 @@ to say vis of (r - a room):
 carry out statsing:
 	if quest-index is 4:
 		say "VISITED SO FAR:[line break]";
-		say "[fixed letter spacing]   a b c d e[line break]";
+		say "[fixed letter spacing]  a b c d e[line break]";
 		say "5[vis of a5][vis of b5][vis of c5][vis of d5][vis of e5] 5[line break]";
 		say "4[vis of a4][vis of b4][vis of c4][vis of d4][vis of e4] 4[line break]";
 		say "3[vis of a3][vis of b3][vis of c3][vis of d3][vis of e3] 3[line break]";
 		say "2[vis of a2][vis of b2][vis of c2][vis of d2][vis of e2] 2[line break]";
 		say "1[vis of a1][vis of b1][vis of c1][vis of d1][vis of e1] 1[line break]";
-		say "   a b c d e[variable letter spacing][line break]";
+		say "  a b c d e[variable letter spacing][line break]";
 		say "You've visited [number of circle-visited rooms] of [5b]'s twenty-five precincts.";
 	else:
 		say "Reserved pieces to (C)all: [list of reserved pieces].";
@@ -672,7 +690,6 @@ volume beta testing - not for release
 
 when play begins:
 	now in-beta is true;
-	say "(DEBUG ONLY NOTE: in-beta is true. The RR command may save time for the three machines.)[paragraph break]";
 
 chapter boarding
 
@@ -692,6 +709,7 @@ carry out boarding:
 volume testing - not for release
 
 when play begins:
+	say "This should not show up in beta mode. It is a rule to toggle the debug-state truth state.";
 	now debug-state is true;
 
 chapter stupid stuff
