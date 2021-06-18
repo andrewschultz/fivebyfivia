@@ -330,6 +330,12 @@ understand "c [any piece]" as calling.
 understand "place [any piece]" as calling.
 understand "p [any piece]" as calling.
 
+this is the enemy-placement rule:
+	if number of reserved pieces > 1:
+		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
+	if absval of (x of location of enemy king - x of location of enemy king) < 2 and absval of (y of location of enemy king - y of location of enemy king) < 2:
+		say "Wait, no, you can't put the enemy kings adjacent to each other, not even diagonally. Well, you could, but your king would be at risk, somehow." instead;
+
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
 	if noun is placed:
@@ -338,8 +344,8 @@ carry out calling:
 		say "Right now [the noun] is not part of your maneuver." instead;
 	if number of pieces in location of player > 0:
 		say "That would make things too crowded here. You already called [random piece in location of player] here." instead;
-	if noun is enemy king and number of reserved pieces > 1:
-		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
+	if noun is enemy king:
+		abide by the enemy-placement rule;
 	say "You call [the noun] to [location of player].";
 	if in-beta is true:
 		say "(for beta testers) full position...";
@@ -454,8 +460,24 @@ this is the checkmate processing rule:
 	if the location of the enemy king is not surrounded:
 		say "The enemy king regards you suspiciously. He knows something is up. But then he runs away via [a random king-escape room]!";
 		the rule fails;
+	if quest-index is 2:
+		let qx be absval of (x of location of queen - x of location of enemy king);
+		let qy be absval of (y of location of queen - y of location of enemy king);
+		if qx < 2 and qy < 2:
+			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid enemy king. You thought you had things planned out well, but--well, you didn't. You'll have to try another way to get people together.";
+			the rule fails;
+		if location of enemy king is cornery:
+			say "Before you can summon the enemy king over, though, your allies call you by. That's a good formation, but maybe you will use it better in the future. It won't be a surprise if you use it twice. You take notes.";
+			the rule fails;
 	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
 	the rule succeeds;
+
+[?? what if random flight square, a piece is on it]
+
+definition: a room (called r) is cornery:
+	unless x of r is 4 or x of r is 0, no;
+	unless y of r is 4 or y of r is 0, no;
+	yes;
 
 to decide which number is absval of (n - a number):
 	if n > 0, decide on n;
