@@ -539,6 +539,26 @@ carry out abouting:
 	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where was the story?[paragraph break]I wasn't expecting one to pop up. The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]But one evening, something came into form. And as ParserComp's deadline came up, my bigger plan had stalled, so why not bail out?[paragraph break]I like parser games with weird directions. So I tried to make one.[paragraph break]Thankfully, I was able to find something that worked, technically, and it had the shell of a story, too. And I hope you enjoy this, too, whether or not you play chess.";
 	the rule succeeds.
 
+chapter chessing
+
+chessing is an action applying to nothing.
+
+understand the command "chess" as something new.
+understand the command "ch" as something new.
+
+understand "chess" as chessing.
+understand "ch" as chessing.
+
+carry out chessing:
+	say "Pawns and bishops do not appear in this game, so don't worry about them.";
+	say "Knights (that's you) move one square vertically and two squares horizontally.";
+	say "Rooks can move vertically or horizontally until there is an obstruction.";
+	say "Queens can move vertically or horizontally or diagonally until there is an obstruction.";
+	say "Kings can move one square adjacent, vertically or horizontally or diagonally, unless there is an obstruction.";
+	say "Check occurs when one piece is attacking your king.";
+	say "Checkmate is when you attack the enemy's king and he has no safe squares.";
+	the rule succeeds.
+
 chapter creditsing
 
 creditsing is an action applying to nothing.
@@ -620,6 +640,7 @@ carry out verbsing:
 	say "You can also [b]CALL[r] allies or the [5b]n king.";
 	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]C[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
+	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
 	if in-beta is true:
 		say "Beta testers also have the option to see the [b]BOARD[r] at any time.";
 	say "Also, you can often use abbreviations for nouns, e.g. Q for the queen or KR for the kingside rook.";
