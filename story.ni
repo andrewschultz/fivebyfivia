@@ -4,6 +4,8 @@ volume basics and definitions
 
 include trivial niceties by Andrew Schultz
 
+in-beta is a truth state that varies.
+
 debug-state is a truth state that varies.
 
 to say 12b: say "Twelvebytwelvia"
@@ -340,6 +342,9 @@ carry out calling:
 	if noun is enemy king and number of reserved pieces > 1:
 		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
 	say "You call [the noun] to [location of player].";
+	if in-beta is true:
+		say "(for beta testers) full position...";
+		show-the-board;
 	now need-to-hurry is true;
 	now noun is placed;
 	move noun to location of player;
@@ -355,6 +360,31 @@ carry out calling:
 		increment quest-index;
 		setup-next-puzzle;
 	the rule succeeds.
+
+to show-the-board:
+	say "WHAT'S ON THE BOARD:[line break]";
+	say "[fixed letter spacing]   a b c d e[line break]";
+	say "5[pie of a5][pie of b5][pie of c5][pie of d5][pie of e5] 5[line break]";
+	say "4[pie of a4][pie of b4][pie of c4][pie of d4][pie of e4] 4[line break]";
+	say "3[pie of a3][pie of b3][pie of c3][pie of d3][pie of e3] 3[line break]";
+	say "2[pie of a2][pie of b2][pie of c2][pie of d2][pie of e2] 2[line break]";
+	say "1[pie of a1][pie of b1][pie of c1][pie of d1][pie of e1] 1[line break]";
+	say "   a b c d e[variable letter spacing][line break]";
+
+to say pie of (r - a room):
+	say " ";
+	if kingside rook is in r or queenside rook is in r:
+		say "R";
+	else if queen is in r:
+		say "Q";
+	else if friendly king is in r:
+		say "K";
+	else if enemy king is in r:
+		say "k";
+	else if r is location of player:
+		say "*";
+	else:
+		say "-"
 
 to decide which number is stalemate-count:
 	let temp be 0;
@@ -560,7 +590,7 @@ carry out statsing:
 		say "2[vis of a2][vis of b2][vis of c2][vis of d2][vis of e2] 2[line break]";
 		say "1[vis of a1][vis of b1][vis of c1][vis of d1][vis of e1] 1[line break]";
 		say "   a b c d e[variable letter spacing][line break]";
-		say "The count, then, is [number of circle-visited rooms] square[if location of player is not c3]s[end if].";
+		say "You've visited [number of circle-visited rooms] of [5b]'s twenty-five precincts.";
 	else:
 		say "Reserved pieces to (C)all: [list of reserved pieces].";
 		say "Pieces out on the board: [list of placed pieces].";
@@ -586,6 +616,27 @@ carry out verbsing:
 	say "You can also [b]CALL[r] allies or the [5b]n king.";
 	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r] and [b]CREDITS[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
+	the rule succeeds.
+
+volume beta testing - not for release
+
+when play begins:
+	now in-beta is true;
+	say "(DEBUG ONLY NOTE: in-beta is true. The RR command may save time for the three machines.)[paragraph break]";
+
+chapter boarding
+
+boarding is an action applying to nothing.
+
+understand the command "board" as something new.
+understand the command "b" as something new.
+
+understand "board" as boarding.
+understand "b" as boarding.
+
+carry out boarding:
+	if quest-index is 4, try statsing instead;
+	show-the-board;
 	the rule succeeds.
 
 volume testing - not for release
