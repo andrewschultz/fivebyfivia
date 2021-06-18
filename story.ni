@@ -1,4 +1,4 @@
-"Fivebyfivia Delanda Est" by Andrew Schultz
+"Fivebyfivia Delenda Est" by Andrew Schultz
 
 volume basics and definitions
 
@@ -19,19 +19,20 @@ quest-index is a number that varies. quest-index is 1.
 chapter start of play
 
 when play begins:
-	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELANDA EST]. And you're off!";
+	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELENDA EST]. And you're off!";
 	now right hand status line is "[entry quest-index of quest-quick-desc]";
 
-chapter FIVEBYFIVIA DELANDA EST
+chapter FIVEBYFIVIA DELENDA EST
 
-FIVEBYFIVIA DELANDA EST is a thing. the player carries FIVEBYFIVIA DELANDA EST. description of DELANDA is "FIVEBYFIVIA DELANDA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
+FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. description of DELENDA is "FIVEBYFIVIA DELENDA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
 
-understand "dfe" as delanda.
-understand "est" as delanda.
-understand "del" as delanda.
+understand "fde" as DELENDA.
+understand "est" as DELENDA.
+understand "del" as DELENDA.
+understand "scroll" as DELENDA.
 
-after examining DELANDA for the first time:
-	say "You may wish to shorten typing a long name for [delanda] with DFE, EST, or DEL. Save your thinking cells for the tough parts."
+after examining DELENDA for the first time:
+	say "You may wish to shorten typing a long name for [delenda] with DFE, EST, or DEL. Save your thinking cells for the tough parts."
 
 to say current-quest-text:
 	if quest-index is 4:
@@ -42,14 +43,12 @@ to say current-quest-text:
 to say age-of:
 	say "[if quest-index is 1]old[else if quest-index is 2]middle-aged[else]young[end if]"
 	
-understand "scroll" as DELANDA. understand "def" as DELANDA.
-
-check dropping DELANDA:
+check dropping DELENDA:
 	say "And let such a valuable document fall into the wrong hands? Certainly not!" instead;
 
-instead of doing something with DELANDA:
+instead of doing something with DELENDA:
 	if the current action is examining, continue the action;
-	say "You can really only examine [DELANDA].";
+	say "You can really only examine [DELENDA].";
 
 your horse is a backdrop. Your horse is everywhere. understand "steed" as horse.
 
@@ -297,23 +296,23 @@ definition: a piece (called p) is offensive:
 	if p is irrelevant, no;
 	yes;
 
-the friendly king is a piece. understand "k" and "k1" as friendly king.
+the friendly king is a piece. understand "k" and "k1" and "fk" as friendly king.
 
 summon-list of friendly king is { false, true, true, false }.
 
-the enemy king is a piece. understand "k" and "k2" as enemy king.
+the enemy king is a piece. understand "k" and "k2" and "ek" as enemy king.
 
 summon-list of enemy king is { true, true, true, false }.
 
-the queen is a female piece.
+the queen is a female piece. understand "q" as queen.
 
 summon-list of queen is { false, true, false, false }.
 
-the kingside rook is a neuter piece.
+the kingside rook is a neuter piece. understand "kr" as kingside rook. understand "r" as kingside rook.
 
 summon-list of kingside rook is { true, false, true, false }.
 
-the queenside rook is a neuter piece.
+the queenside rook is a neuter piece. understand "qr" as queenside rook. understand "r" as queenside rook.
 
 summon-list of queenside rook is { true, false, false, false }.
 
@@ -500,10 +499,13 @@ rule for printing a parser error:
 rule for printing a parser error when the latest parser error is the noun did not make sense in that context error:
 	say "The verb was okay, but I didn't understand the noun in that sentence. Please try again, or type [b]V[r] to see the list of commands."
 
+rule for printing a parser error when the latest parser error is the only understood as far as error:
+	say "You only needed the first word of that command. You can use the up arrow and backspace so you don't have to retype."
+
 section score trivia
 
 check requesting the score:
-	say "You're on quest [quest-index] of [max-quests] right now." instead;
+	say "This game doesn't keep track of scores, but you're on quest [quest-index] of [max-quests] right now." instead;
 
 The print final score rule is not listed in the for printing the player's obituary rulebook.
 
@@ -554,8 +556,10 @@ chapter dirsing
 dirsing is an action applying to nothing.
 
 understand the command "dirs" as something new.
+understand the command "dir" as something new.
 
 understand "dirs" as dirsing.
+understand "dir" as dirsing.
 
 carry out dirsing:
 	say "The eight directions are, clockwise from north, northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
@@ -614,8 +618,11 @@ understand "v" as verbsing.
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
 	say "You can also [b]CALL[r] allies or the [5b]n king.";
-	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r] and [b]CREDITS[r] for general game information and thanks.";
+	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]C[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
+	if in-beta is true:
+		say "Beta testers also have the option to see the [b]BOARD[r] at any time.";
+	say "Also, you can often use abbreviations for nouns, e.g. Q for the queen or KR for the kingside rook.";
 	the rule succeeds.
 
 volume beta testing - not for release
