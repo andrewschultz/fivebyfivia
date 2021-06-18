@@ -38,7 +38,7 @@ understand "del" as DELENDA.
 understand "scroll" as DELENDA.
 
 after examining DELENDA for the first time:
-	say "You may wish to shorten typing a long name for [delenda] with DFE, EST, or DEL. Save your thinking cells for the tough parts."
+	say "You may wish to shorten typing a long name for [delenda] with [b]DFE[r], [b]EST[r], or [b]DEL[r]. Save your thinking cells for the tough parts."
 
 to say current-quest-text:
 	if quest-index is 4:
@@ -56,9 +56,10 @@ instead of doing something with DELENDA:
 	if the current action is examining, continue the action;
 	say "You can really only examine [DELENDA].";
 
-your horse is a backdrop. Your horse is everywhere. understand "steed" as horse.
+your horse is a backdrop. Your horse is everywhere. understand "steed" as horse. description is "It has a zigzag-patterned coat. Like it was tiled with checkmarks. There are few like it.[paragraph break]You can't see this so well when it moves. To see which ways it can move, type [b]DIRS[r]."
 
 instead of doing something with your horse:
+	if the current action is examining, continue the action;
 	say "You can really only ride your horse in one of eight directions. To get a refresher on that, type DIRS."
 
 chapter i6
@@ -248,7 +249,7 @@ to decide which room is room_of (n1 - a number) and (n2 - a number):
 check going a normal direction:
 	if noun is up, say "Your horse can fly across ground but not over it." instead;
 	if noun is down, say "Your horse isn't built for that." instead;
-	say "Your horse doesn't go in normal directions. It goes in diagonal ones. But not normal ones like southeast (SE). Southsoutheast (SSE, ESS, SES) and, well, 7 others. DIRS gives a full rundown." instead;
+	say "Your horse doesn't go in normal directions. It goes in diagonal ones. But not normal ones like southeast ([b]SE[r]). There's southsoutheast ([b]SSE, ESS, SES[r]) and, well, 7 others you may be able to extrapolate.[paragraph break][b]DIRS[r] gives a full rundown." instead;
 
 volume initialization
 
@@ -373,7 +374,7 @@ carry out calling:
 	the rule succeeds.
 
 to show-the-board:
-	say "WHAT'S ON THE BOARD:[line break]";
+	say "(BETA FEATURE ONLY) WHAT'S ON THE BOARD:[line break]";
 	say "[fixed letter spacing]  a b c d e[line break]";
 	say "5[pie of a5][pie of b5][pie of c5][pie of d5][pie of e5] 5[line break]";
 	say "4[pie of a4][pie of b4][pie of c4][pie of d4][pie of e4] 4[line break]";
@@ -478,8 +479,6 @@ this is the checkmate processing rule:
 	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
 	the rule succeeds;
 
-[?? what if random flight square, a piece is on it]
-
 definition: a room (called r) is cornery:
 	unless x of r is 4 or x of r is 0, no;
 	unless y of r is 4 or y of r is 0, no;
@@ -533,7 +532,7 @@ rule for printing a parser error when the latest parser error is the only unders
 section score trivia
 
 check requesting the score:
-	say "This game doesn't keep track of scores, but you're on quest [quest-index] of [max-quests] right now." instead;
+	say "This game doesn't keep track of scores, but to give you an idea of your progress, you're on quest [quest-index] of [max-quests] right now." instead;
 
 The print final score rule is not listed in the for printing the player's obituary rulebook.
 
@@ -610,8 +609,8 @@ understand "dirs" as dirsing.
 understand "dir" as dirsing.
 
 carry out dirsing:
-	say "The eight directions are, clockwise from north, northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
-	say "That's a bit long, so you can abbreviate them NNE, NEE, SEE, SSE, SSW, SWW, NWW NNW or any possible permutations. The game will recognize them.";
+	say "The eight directions your horse can travel are, clockwise from north, northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
+	say "That's a bit long, so you can abbreviate them [b]NNE, NEE, SEE, SSE, SSW, SWW, NWW NNW[r] or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between [b]NNE[r], [b]NEN[r] and [b]ENN[r].";
 	say "You can toggle how the directions appear (long or short) in room descriptions with ABB.";
 	the rule succeeds.
 
