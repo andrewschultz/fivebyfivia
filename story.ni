@@ -686,6 +686,17 @@ carry out verbsing:
 	say "Also, you can often use abbreviations for nouns, e.g. Q for the queen or KR for the kingside rook.";
 	the rule succeeds.
 
+chapter xyzzying
+
+xyzzying is an action out of world.
+
+understand the command "xyzzy" as something new.
+
+understand "xyzzy" as xyzzying.
+
+carry out xyzzying:
+	say "On the very east side of the world lie such repositories of hooliganism and pointless chance-taking as Backgammonton, Pokersfield or, worse, Yahtzeeburg. You dream of helping conquer them one day, but it is only a dream.";
+
 volume beta testing - not for release
 
 when play begins:
