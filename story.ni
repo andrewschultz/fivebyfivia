@@ -8,6 +8,11 @@ to say 12b: say "Twelvebytwelvia"
 
 to say 5b: say "Fivebyfivia"
 
+chapter start of play
+
+when play begins:
+	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [DELANDA FIVEBYFIVIA EST]. And you're off!"
+
 chapter DELANDA FIVEBYFIVIA EST
 
 DELANDA FIVEBYFIVIA EST is a thing. the player carries DELANDA FIVEBYFIVIA EST. "DELANDA FIVEBYFIVIA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text]."
@@ -31,7 +36,7 @@ instead of doing something with DELANDA:
 	if the current action is examining, continue the action;
 	say "You can really only examine [DELANDA].";
 
-your horse is a backdrop. Your horse is everywhere.
+your horse is a backdrop. Your horse is everywhere. understand "steed" as horse.
 
 instead of doing something with your horse:
 	say "You can really only ride your horse in one of eight directions. To get a refresher on that, type DIRS."
@@ -399,7 +404,59 @@ definition: a room (called r) is surrounded:
 		no;
 	yes;
 
-volume status
+volume meta
+
+chapter abbing
+
+abbing is an action applying to nothing.
+
+understand the command "abbrev" as something new.
+understand the command "abb" as something new.
+
+understand "abbrev" as abbing.
+understand "abb" as abbing.
+
+carry out abbing:
+	the rule succeeds.
+
+chapter abouting
+
+abouting is an action applying to nothing.
+
+understand the command "about" as something new.
+understand the command "a" as something new.
+
+understand "a" as abouting.
+
+carry out abouting:
+	the rule succeeds.
+
+chapter creditsing
+
+creditsing is an action applying to nothing.
+
+understand the command "credits" as something new.
+understand the command "c" as something new.
+
+understand "credits" as creditsing.
+understand "c" as creditsing.
+
+carry out creditsing:
+	the rule succeeds.
+
+chapter dirsing
+
+dirsing is an action applying to nothing.
+
+understand the command "dirs" as something new.
+
+understand "dirs" as dirsing.
+
+carry out dirsing:
+	say "The eight directions are, clockwise from north, northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
+	say "That's a bit long, so you can abbreviate them NNE, NEE, SEE, SSE, SSW, SWW, NWW NNW or any possible permutations. The game will recognize them.";
+	say "You can toggle how the directions appear (long or short) in room descriptions with ABB.";
+	the rule succeeds.
 
 chapter statsing
 
@@ -428,16 +485,29 @@ carry out statsing:
 		say "2[vis of a2][vis of b2][vis of c2][vis of d2][vis of e2] 2[line break]";
 		say "1[vis of a1][vis of b1][vis of c1][vis of d1][vis of e1] 1[line break]";
 		say "   a b c d e[variable letter spacing][line break]";
-		say "Visited so far: [number of circle-visited rooms] square[if location of player is not c3]s[end if].";
-	say "Reserved pieces to (C)all: [list of reserved pieces].";
-	say "Pieces out on the board: [list of placed pieces].";
+		say "The count, then, is [number of circle-visited rooms] square[if location of player is not c3]s[end if].";
+	else:
+		say "Reserved pieces to (C)all: [list of reserved pieces].";
+		say "Pieces out on the board: [list of placed pieces].";
 	the rule succeeds.
 
 after printing the name of a placed piece (called p) when statsing:
 	say "[location of p]"
 
-when play begins:
-	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [DELANDA FIVEBYFIVIA EST]. And you're off!"
+chapter verbsing
+
+verbsing is an action applying to nothing.
+
+understand the command "verbs" as something new.
+
+understand "verbs" as verbsing.
+
+carry out verbsing:
+	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
+	say "You can also [b]CALL[r] allies or the [5b]n king.";
+	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r] and [b]CREDITS[r] for general game information and thanks.";
+	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
+	the rule succeeds.
 
 volume testing - not for release
 
