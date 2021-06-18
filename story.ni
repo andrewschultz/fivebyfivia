@@ -2,16 +2,23 @@
 
 volume basics and definitions
 
+include trivial niceties by Andrew Schultz
+
 debug-state is a truth state that varies.
 
 to say 12b: say "Twelvebytwelvia"
 
 to say 5b: say "Fivebyfivia"
 
+max-quests is a number that varies. max-quests is 4.
+
+quest-index is a number that varies. quest-index is 1.
+
 chapter start of play
 
 when play begins:
-	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [DELANDA FIVEBYFIVIA EST]. And you're off!"
+	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b].  And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [DELANDA FIVEBYFIVIA EST]. And you're off!";
+	now right hand status line is "[entry quest-index of quest-quick-desc]";
 
 chapter DELANDA FIVEBYFIVIA EST
 
@@ -263,6 +270,14 @@ when play begins:
 
 volume people and quests
 
+chapter general lists
+
+max-wait-times is a list of numbers variable. max-wait-times is { 2, 3, 2, 0 }.
+
+quest-quick-desc is a list of text variable. quest-quick-desc is { "R & R", "K & Q vs K", "K & R vs K", "Tour" }
+
+chapter pieces
+
 a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list.
 
 the friendly king is a piece. understand "k" and "k1" as friendly king.
@@ -284,10 +299,6 @@ summon-list of kingside rook is { true, false, true, false }.
 the queenside rook is a neuter piece.
 
 summon-list of queenside rook is { true, false, false, false }.
-
-quest-index is a number that varies. quest-index is 1.
-
-max-wait-times is a list of numbers variable. max-wait-times is { 2, 3, 2, 0 }.
 
 chapter calling
 
@@ -407,6 +418,13 @@ definition: a room (called r) is surrounded:
 	yes;
 
 volume meta
+
+section score trivia
+
+check requesting the score:
+	say "You're on quest [quest-index] of [max-quests] right now." instead;
+
+The print final score rule is not listed in the for printing the player's obituary rulebook.
 
 chapter abbing
 
