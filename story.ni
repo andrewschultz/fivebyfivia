@@ -38,7 +38,7 @@ understand "del" as DELENDA.
 understand "scroll" as DELENDA.
 
 after examining DELENDA for the first time:
-	say "You may wish to shorten typing a long name for [delenda] with [b]DFE[r], [b]EST[r], or [b]DEL[r]. Save your thinking cells for the tough parts."
+	say "You may wish to shorten typing a long name for [delenda] with [b]DFE[r], [b]EST[r], or [b]DEL[r]. Or you can just [b]X[r]. Save your thinking cells for the tough parts."
 
 to say current-quest-text:
 	if quest-index is 4:
@@ -340,8 +340,9 @@ understand "p [any piece]" as calling.
 this is the enemy-placement rule:
 	if number of reserved pieces > 1:
 		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
+	if enemy king is off-stage, continue the action;
 	if absval of (x of location of enemy king - x of location of enemy king) < 2 and absval of (y of location of enemy king - y of location of enemy king) < 2:
-		say "Wait, no, you can't put the enemy kings adjacent to each other, not even diagonally. Well, you could, but your king would be at risk, somehow." instead;
+		say "Wait, no, you can't put the enemy kings adjacent to each other, not even diagonally. They operate through intermediaries, apparently." instead;
 
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
@@ -744,7 +745,8 @@ test q3s with "sww/call rook/see/call friendly king/nne/sse/call enemy king".
 
 test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/ssw/sse/nww/sww".
 
-test full with "test q1/test q2/test q3/test q4".
+test win1 with "test q1/test q2/test q3/test q4".
+test win2 with "test q1s/test q2s/test q3s/test q4".
 
 chapter trying
 
