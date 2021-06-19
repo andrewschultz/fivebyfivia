@@ -1,12 +1,12 @@
 "Fivebyfivia Delenda Est" by Andrew Schultz
 
-the story headline is "Just Horsing Around".
+the story headline is "Flagrant Horsing Around".
 
 the story description is "Less impossible than beating Stockfish".
 
 volume basics and definitions
 
-include trivial niceties by Andrew Schultz
+include Trivial Niceties by Andrew Schultz.
 
 in-beta is a truth state that varies.
 
@@ -30,7 +30,9 @@ when play begins:
 
 chapter FIVEBYFIVIA DELENDA EST
 
-FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. description of DELENDA is "FIVEBYFIVIA DELENDA EST contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
+FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. description of DELENDA is "[DELENDA] contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
+
+printed name of DELENDA is "[i]FIVEBYFIVIA DELENDA EST[r]".
 
 understand "fde" as DELENDA.
 understand "est" as DELENDA.
@@ -38,7 +40,7 @@ understand "del" as DELENDA.
 understand "scroll" as DELENDA.
 
 after examining DELENDA for the first time:
-	say "You may wish to shorten typing a long name for [delenda] with [b]DFE[r], [b]EST[r], or [b]DEL[r]. Or you can just [b]X[r]. Save your thinking cells for the tough parts."
+	say "You may wish to shorten typing [delenda]'s long name to [b]DFE[r], [b]EST[r], or [b]DEL[r]. Or you can just [b]X[r]. Pedantically proper typing of long words is no quick way to fame and glory for an ambitious knight such as yourself!"
 
 to say current-quest-text:
 	if quest-index is 4:
@@ -364,15 +366,23 @@ carry out calling:
 	if number of reserved pieces > 0, the rule succeeds;
 	consider the stalemate processing rule;
 	if the rule succeeded:
-		increment quest-index;
-		setup-next-puzzle;
+		quest-prologue;
 		the rule succeeds;
 	consider the checkmate processing rule;
 	if the rule failed, reset-the-board;
 	if the rule succeeded:
-		increment quest-index;
-		setup-next-puzzle;
+		quest-prologue;
 	the rule succeeds.
+
+to quest-prologue:
+	if quest-index is 1:
+		say "The old king is dead! Long live the middle-aged king. He's going to be a bit sneakier. And he knows his father died in a corner -- so you may not be able to sucker him there. However, he makes indications he wants a diplomatic meeting with your king and queen.";
+	 else if quest-index is 2:
+		say "The king in the prime of his life is dead! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
+	else if quest-index is 3:
+		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.";
+	increment quest-index;
+	setup-next-puzzle;
 
 to show-the-board:
 	say "(BETA FEATURE ONLY) WHAT'S ON THE BOARD:[line break]";
@@ -584,7 +594,7 @@ carry out chessing:
 	say "Queens can move vertically or horizontally or diagonally until there is an obstruction.";
 	say "Kings can move one square adjacent, vertically or horizontally or diagonally, unless there is an obstruction.";
 	say "Check occurs when one piece is attacking your king.";
-	say "Checkmate is when you attack the enemy's king and he has no safe squares.";
+	say "Checkmate is when you attack the enemy's king and he has no safe square nearby to flee to.";
 	the rule succeeds.
 
 chapter creditsing
@@ -611,8 +621,8 @@ understand "dir" as dirsing.
 
 carry out dirsing:
 	say "The eight directions your horse can travel are, clockwise from north, northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
-	say "That's a bit long, so you can abbreviate them [b]NNE, NEE, SEE, SSE, SSW, SWW, NWW NNW[r] or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between [b]NNE[r], [b]NEN[r] and [b]ENN[r].";
-	say "You can toggle how the directions appear (long or short) in room descriptions with ABB.";
+	say "That's a bit long, so you can abbreviate them [b]NNE[r], [b] NEE[r], [b] SEE[r], [b] SSE[r], [b] SSW[r], [b] SWW[r], [b]NWW[r], [b]NNW[r] or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between [b]NNE[r], [b]NEN[r] and [b]ENN[r].";
+	say "You can toggle how the directions appear (long or short) in room descriptions with [b]ABB[r].";
 	the rule succeeds.
 
 chapter helping
@@ -686,13 +696,13 @@ understand "v" as verbsing.
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
-	say "You can also [b]CALL[r] allies or the [5b]n king.";
+	say "You can also [b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king.";
 	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]C[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
 	if in-beta is true:
 		say "Beta testers also have the option to see the [b]BOARD[r] at any time.";
-	say "Also, you can often use abbreviations for nouns, e.g. Q for the queen or KR for the kingside rook.";
+	say "Also, you can often use abbreviations for nouns, e.g. [b]Q[r] for the queen or [b]KR[r] for the kingside rook.";
 	the rule succeeds.
 
 chapter xyzzying
