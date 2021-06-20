@@ -66,7 +66,35 @@ instead of doing something with your horse:
 
 chapter i6
 
+section char nums
+
 To say character number (N - a number): (- print (char) {N}; -)
+
+section what did you mean to
+
+volume i6 modification(s)
+
+section What Do You Want to X
+
+Include (-
+Replace LanguageVerb;
+-) after "Definitions.i6t".
+
+Include (-
+[ LanguageVerb i;
+	switch (i) {
+	'i//','inv','inventory': print "take inventory";
+	'l//':   print "look";
+	'x//':   print "examine";
+	'z//':   print "wait";
+	'about':  print "see info about the game";
+	'c//', 'credit', 'credits': print "see the credits";
+	'c//', 'p//', 'call', 'place': print "place";
+	default: rfalse;
+	}
+	rtrue;
+];
+-) after "Language.i6t".
 
 chapter room info
 
@@ -110,15 +138,15 @@ to decide which number is square of (d - a direction):
 
 section timed-going
 
-after going when need-to-hurry is true:
+after printing the locale description when need-to-hurry is true:
 	increment current-turns-after-placing;
 	if debug-state is true, say "[current-turns-after-placing] of [max-turns-after-placing].";
 	if current-turns-after-placing > max-turns-after-placing:
 		if enemy king is placed:
 			say "You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
 		else:
-			say "You hear familiar moans. Your summoned compatriot [if number of placed pieces > 1]s have[else]has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
-		say "[line break]You have failed in your quest, and your king and queen will not be pleased ... unless we pretend this was just a practice run you planned in your head before the real thing. Yes, yes, let's do that. That's how it is.";
+			say "You hear familiar moans. Your summoned compatriot[if number of placed pieces > 1]s have[else] has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
+		say "[line break]You did not succeed in your quest, and your king and queen will not be pleased ... unless we pretend this was just a practice run you planned in your head before the real thing. Yes, yes, let's do that. That's how it is.";
 		reset-the-board;
 	continue the action;
 
@@ -218,9 +246,9 @@ d3 is a room. x of d3 is 3. y of d3 is 2. room-edge-text is "just east of the ce
 
 e3 is a room. x of e3 is 4. y of e3 is 2. room-edge-text is "at the center of the east edge".
 
-a4 is a room. x of a4 is 0. y of a4 is 3. room-edge-text is "on the west edge and near the south edge".
+a4 is a room. x of a4 is 0. y of a4 is 3. room-edge-text is "on the west edge and near the north edge".
 
-b4 is a room. x of b4 is 1. y of b4 is 3. room-edge-text is "in a southeast-ish area".
+b4 is a room. x of b4 is 1. y of b4 is 3. room-edge-text is "in a northwest-ish area".
 
 c4 is a room. x of c4 is 2. y of c4 is 3. room-edge-text is "just north of the center".
 
@@ -353,7 +381,7 @@ carry out calling:
 	if noun is irrelevant:
 		say "Right now [the noun] is not part of your maneuver." instead;
 	if number of pieces in location of player > 0:
-		say "That would make things too crowded here. You already called [random piece in location of player] here." instead;
+		say "That would make things too crowded here. You already called [the random piece in location of player] here." instead;
 	if noun is enemy king:
 		abide by the enemy-placement rule;
 	say "You call [the noun] to [location of player].";
@@ -448,6 +476,7 @@ current-turns-after-placing is a number that varies.
 need-to-hurry is a truth state that varies.
 
 to reset-the-board:
+	say "begin reset.";
 	if location of player is not c3:
 		move player to c3;
 	now all pieces are off-stage;
@@ -457,6 +486,7 @@ to reset-the-board:
 		now c3 is circle-visited;
 	now max-turns-after-placing is entry quest-index of max-wait-times;
 	now current-turns-after-placing is 0;
+	say "end reset.";
 	now need-to-hurry is false.
 
 this is the stalemate processing rule:
@@ -571,6 +601,7 @@ abouting is an action out of world.
 understand the command "about" as something new.
 understand the command "a" as something new.
 
+understand "about" as abouting.
 understand "a" as abouting.
 
 carry out abouting:
@@ -638,7 +669,7 @@ understand "help" as helping.
 understand "h" as helping.
 
 carry out helping:
-	say "This game should come with a walkthrough.";
+	say "This game should come with a walkthrough. However, if you need a refresher on your quest, simply [b]X[r] [delenda] or just [b]X[r]. It's a bit short on details -- of course it is! Royalty tends to delegate like that.";
 	the rule succeeds.
 
 chapter statsing
@@ -700,9 +731,8 @@ carry out verbsing:
 	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]C[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
-	if in-beta is true:
-		say "Beta testers also have the option to see the [b]BOARD[r] at any time.";
-	say "Also, you can often use abbreviations for nouns, e.g. [b]Q[r] for the queen or [b]KR[r] for the kingside rook.";
+	say "You can also say [b]M[r] or [b]MAP[r] to see the map at any time, withe all the squares your allies are guarding. [b]B[r] or [b]BOARD[r] also works.";
+	say "Also, you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook.";
 	the rule succeeds.
 
 chapter xyzzying
@@ -714,7 +744,7 @@ understand the command "xyzzy" as something new.
 understand "xyzzy" as xyzzying.
 
 carry out xyzzying:
-	say "On the very east side of the world lie such repositories of hooliganism and pointless chance-taking as Backgammonton, Pokersfield or, worse, Yahtzeeburg. You dream of helping conquer them one day, but it is only a dream.";
+	say "On the very east side of the world lie such repositories of hooliganism and pointless chance-taking as Backgammonton, Pokersfield or, worse, Yahtzeeburg. You dream of helping conquer them one day, but it is only a dream. A too-risky one at that.";
 
 volume beta testing - not for release
 
@@ -727,9 +757,13 @@ boarding is an action applying to nothing.
 
 understand the command "board" as something new.
 understand the command "b" as something new.
+understand the command "map" as something new.
+understand the command "m" as something new.
 
 understand "board" as boarding.
 understand "b" as boarding.
+understand "map" as boarding.
+understand "m" as boarding.
 
 carry out boarding:
 	if quest-index is 4, try statsing instead;
