@@ -20,7 +20,17 @@ max-quests is a number that varies. max-quests is 4.
 
 quest-index is a number that varies. quest-index is 1.
 
+moves-this-quest is a number that varies. moves-this-quest is 0.
+
 description of the player is "Spiffy and knightly indeed."
+
+chapter rooms
+
+a room can be circle-visited. a room is usually not circle-visited.
+
+a room can be guarded. a room is usually not guarded.
+
+to reset-guard: now all rooms are not guarded.
 
 chapter start of play
 
@@ -150,9 +160,13 @@ after printing the locale description when need-to-hurry is true:
 		reset-the-board;
 	continue the action;
 
-section circle-visited
+after printing the locale description when quest-index is 1:
+	increment moves-this-quest;
+	if remainder after dividing moves-this-quest by 7 is 0:
+		say "You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. But just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry.";
+	continue the action;
 
-a room can be circle-visited. a room is usually not circle-visited.
+section circle-visited
 
 after going to a circle-visited room:
 	say "A groan goes up. You've been here before. Your triumphant tour is cut short.";
@@ -207,6 +221,24 @@ understand "sww" and "wsw" and "wws" as southwestwest.
 understand "nee" and "ene" and "een" as northeasteast.
 
 for printing the name of a weird direction (called d) when show-short-dirs is true: say "[vh-abbrev of d]"
+
+section for seeing what's attacking who
+
+xness of northwest is -1. yness of northwest is 1.
+
+xness of northeast is 1. yness of northeast is 1.
+
+xness of southwest is -1. yness of southwest is -1.
+
+xness of southeast is 1. yness of southeast is -1.
+
+xness of east is 1. yness of east is 0.
+
+xness of west is -1. yness of west is 0.
+
+xness of north is 0. yness of north is 1.
+
+xness of south is 0. yness of south is -1.
 
 section for posterity
 
@@ -290,6 +322,13 @@ when play begins:
 			let re1 be room_of xval + 1 and yval;
 			let rn1 be room_of xval and yval + 1;
 			if r0 is offsite, next; [ shouldn't happen, but ... ]
+			let rne be room_of xval + 1 and yval + 1;
+			if rne is not offsite: [northeast]
+				now rne is mapped northeast of r0;
+				now r0 is mapped southwest of rne;
+			if re1 is not offsite and rn1 is not offsite: [northwest]
+				now rn1 is mapped northwest of re1;
+				now re1 is mapped southeast of rn1;
 			if re1 is not offsite:
 				now r0 is mapped west of re1;
 				now re1 is mapped east of r0;
@@ -388,19 +427,55 @@ carry out calling:
 	now need-to-hurry is true;
 	now noun is placed;
 	move noun to location of player;
-	if in-beta is true:
-		say "(for beta testers) full position...";
-		show-the-board;
+	if noun is not enemy king, update-guarded;
+	show-the-board;
 	if number of reserved pieces > 0, the rule succeeds;
+	consider the takeit processing rule;
+	if the rule succeeded:
+		reset-the-board instead;
 	consider the stalemate processing rule;
 	if the rule succeeded:
 		quest-prologue;
 		the rule succeeds;
 	consider the checkmate processing rule;
-	if the rule failed, reset-the-board;
+	if the rule failed, reset-the-board instead;
 	if the rule succeeded:
 		quest-prologue;
 	the rule succeeds.
+
+to update-guarded:
+	now all rooms are not guarded;
+	if friendly king is placed:
+		place-king;
+	if queenside rook is placed:
+		place-range queenside rook and list of all cardinal directions;
+	if kingside rook is placed:
+		place-range kingside rook and list of all cardinal directions;
+	if queen is placed:
+		place-range queen and list of all planar directions;
+
+to place-range (p - a piece) and (myl - a list of directions):
+	let myx be x of location of p;
+	let myy be y of location of p;
+	repeat with dir running through myl:
+		let temp-x be myx;
+		let temp-y be myy;
+		while 1 is 1:
+			increase temp-x by xness of dir;
+			increase temp-y by yness of dir;
+			if temp-x > 4 or temp-x < 0, break;
+			if temp-y > 4 or temp-y < 0, break;
+			let myrm be room_of temp-x and temp-y;
+			now myrm is guarded;
+			if number of pieces in myrm > 0, break;
+
+to place-king:
+	let myx be x of location of friendly king;
+	let myy be y of location of friendly king;
+	repeat with mydir running through planar directions:
+		let rm be room_of (x + xness of mydir) and (y + yness of mydir);
+		now rm is guarded;
+		
 
 to quest-prologue:
 	if quest-index is 1:
@@ -413,14 +488,15 @@ to quest-prologue:
 	setup-next-puzzle;
 
 to show-the-board:
-	say "(BETA FEATURE ONLY) WHAT'S ON THE BOARD:[line break]";
+	say "STRATEGIC MAP OF FIVEBYFIVIA SO FAR:[line break]";
 	say "[fixed letter spacing]  a b c d e[line break]";
 	say "5[pie of a5][pie of b5][pie of c5][pie of d5][pie of e5] 5[line break]";
 	say "4[pie of a4][pie of b4][pie of c4][pie of d4][pie of e4] 4[line break]";
 	say "3[pie of a3][pie of b3][pie of c3][pie of d3][pie of e3] 3[line break]";
 	say "2[pie of a2][pie of b2][pie of c2][pie of d2][pie of e2] 2[line break]";
 	say "1[pie of a1][pie of b1][pie of c1][pie of d1][pie of e1] 1[line break]";
-	say "  a b c d e[variable letter spacing][line break]";
+	say "  a b c d e[variable letter spacing][paragraph break]";
+	say "* = you, + = square is guarded[if friendly king is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
 
 to say pie of (r - a room):
 	say " ";
@@ -434,6 +510,8 @@ to say pie of (r - a room):
 		say "k";
 	else if r is location of player:
 		say "*";
+	else if r is guarded:
+		say "+";
 	else:
 		say "-"
 
@@ -476,18 +554,26 @@ current-turns-after-placing is a number that varies.
 need-to-hurry is a truth state that varies.
 
 to reset-the-board:
-	say "begin reset.";
 	if location of player is not c3:
 		move player to c3;
 	now all pieces are off-stage;
 	now all placed pieces are reserved;
+	now all rooms are not guarded;
 	if quest-index is 4:
 		now all rooms are not circle-visited;
 		now c3 is circle-visited;
 	now max-turns-after-placing is entry quest-index of max-wait-times;
 	now current-turns-after-placing is 0;
-	say "end reset.";
 	now need-to-hurry is false.
+
+this is the takeit processing rule:
+	let ek be the location of the enemy king;
+	repeat with mydir running through planar directions:
+		let newrm be the room mydir of ek;
+		if newrm is nowhere, next;
+		if newrm is not guarded and number of pieces in newrm > 0:
+			say "Oh dear! The enemy king walks up to [the random piece in newrm] on [mydir] and gives it a good thwacking. Looks like your plans failed somewhere.[paragraph break]Oops. But don't worry. We'll pretend that never happened. For [12b]. And, yes, your own health and standing there.";
+			the rule succeeds;
 
 this is the stalemate processing rule:
 	unless the location of the enemy king is not checked and the location of the enemy king is surrounded, the rule fails;
