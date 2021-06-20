@@ -150,7 +150,7 @@ section timed-going
 
 after printing the locale description when need-to-hurry is true:
 	increment current-turns-after-placing;
-	if debug-state is true, say "[current-turns-after-placing] of [max-turns-after-placing].";
+	if debug-state is true, say "DEBUG turn count track: [current-turns-after-placing] of [max-turns-after-placing].";
 	if current-turns-after-placing > max-turns-after-placing:
 		if enemy king is placed:
 			say "You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
@@ -367,6 +367,10 @@ chapter pieces
 
 a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
 
+preferred-rook is a piece that varies.
+
+does the player mean calling preferred-rook when quest-index is 1: it is likely.
+
 definition: a piece (called p) is offensive:
 	if p is enemy king, no;
 	if p is irrelevant, no;
@@ -405,6 +409,26 @@ understand "call [any piece]" as calling.
 understand "c [any piece]" as calling.
 understand "place [any piece]" as calling.
 understand "p [any piece]" as calling.
+
+understand "call" as calling.
+understand "c" as calling.
+understand "place" as calling.
+understand "p" as calling.
+
+definition: a piece (called p) is not-last:
+	if p is enemy king, no;
+	if p is reserved, yes;
+
+rule for supplying a missing noun when calling:
+	if number of not-last pieces is 1:
+		now noun is a random not-last piece;
+	else if number of reserved pieces is 1:
+		now noun is a random reserved piece;
+	else if quest-index is 1:
+		now noun is preferred-rook;
+	else:
+		say "You need to specify which ally to summon of [the list of not-last pieces].";
+		reject the player's command.
 
 this is the enemy-placement rule:
 	if number of reserved pieces > 1:
@@ -475,7 +499,6 @@ to place-king:
 	repeat with mydir running through planar directions:
 		let rm be room_of (x + xness of mydir) and (y + yness of mydir);
 		now rm is guarded;
-		
 
 to quest-prologue:
 	if quest-index is 1:
@@ -546,6 +569,12 @@ to setup-next-puzzle:
 			now P is reserved;
 		else:
 			now P is irrelevant;
+	if quest-index is 1:
+		if a random chance of 1 in 2 succeeds:
+			now preferred-rook is queenside rook;
+		else:
+			now preferred-rook is kingside rook;
+		say "[preferred-rook].";
 
 max-turns-after-placing is a number that varies.
 
