@@ -40,7 +40,7 @@ when play begins:
 
 chapter FIVEBYFIVIA DELENDA EST
 
-FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. description of DELENDA is "[DELENDA] contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].".
+FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. description of DELENDA is "[DELENDA] contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].[paragraph break]There are also some general notes about not calling the enemy king until your allies are all set, or he'll get suspicious.".
 
 printed name of DELENDA is "[i]FIVEBYFIVIA DELENDA EST[r]".
 
@@ -723,7 +723,8 @@ understand the command "credits" as something new.
 understand "credits" as creditsing.
 
 carry out creditsing:
-	say "<fill in later>";
+	say "Thanks to Arthur DiBianca for testing.";
+	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all was especially nice during the pandemic.";
 	the rule succeeds.
 
 chapter dirsing
@@ -813,8 +814,8 @@ understand "v" as verbsing.
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
-	say "You can also [b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king.";
-	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]C[r] for general game information and thanks.";
+	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king.";
+	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
 	say "You can also say [b]M[r] or [b]MAP[r] to see the map at any time, withe all the squares your allies are guarding. [b]B[r] or [b]BOARD[r] also works.";
