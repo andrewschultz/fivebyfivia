@@ -50,7 +50,7 @@ understand "del" as DELENDA.
 understand "scroll" as DELENDA.
 
 after examining DELENDA for the first time:
-	say "You may wish to shorten typing [delenda]'s long name to [b]DFE[r], [b]EST[r], or [b]DEL[r]. Or you can just [b]X[r]. Pedantically proper typing of long words is no quick way to fame and glory for an ambitious knight such as yourself!"
+	say "You may wish to shorten typing [delenda]'s long name to [b]DFE[r], [b]EST[r], or [b]DEL[r]. Or you can just type [b]X[r]. You're an ambitious knight, not some boring old scribe who shows off writing fancy words out. You have much more exciting ways to show off!"
 
 to say current-quest-text:
 	if quest-index is 4:
@@ -60,7 +60,7 @@ to say current-quest-text:
 
 to say age-of:
 	say "[if quest-index is 1]old[else if quest-index is 2]middle-aged[else]young[end if]"
-	
+
 check dropping DELENDA:
 	say "And let such a valuable document fall into the wrong hands? Certainly not!" instead;
 
@@ -73,7 +73,7 @@ your horse is a backdrop. Your horse is everywhere. understand "steed" as horse.
 instead of doing something with your horse:
 	if the current action is examining, continue the action;
 	say "You can really only ride your horse in one of eight directions. To get a refresher on that, type [b]DIRS[r]."
-
+	
 chapter i6
 
 section char nums
@@ -244,8 +244,6 @@ section for posterity
 
 xness of north is 0. yness of north is 1. xness of south is 0. yness of south is -1. xness of east is 1. yness of east is 0. xness of west is -1. yness of west is 0. xness of northwest is -1. yness of northwest is 1. xness of northeast is 1. yness of northeast is 1. xness of southwest is -1. yness of southwest is -1. xness of southeast is 1. yness of southeast is -1.
 
-chapter direction verbs
-
 volume rooms
 
 a1 is a room. x of a1 is 0. y of a1 is 0. room-edge-text is "at the relatively inaccessible southwest corner".
@@ -367,6 +365,8 @@ chapter pieces
 
 a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
 
+description of a piece is usually "Right now, [the item described] looks ready to go chase an enemy king. But they may not wait too long. Better [if number of reserved pieces is 1]call your other allies and then [end if]call the enemy king soon."
+
 check taking a piece:
 	say "No, you put [the noun] here. But don't worry, if you did things wrong, you can try again." instead;
 	
@@ -399,6 +399,16 @@ the queenside rook is a neuter piece. understand "qr" as queenside rook. underst
 
 summon-list of queenside rook is { true, false, false, false }.
 
+section bogus pices
+
+a quasipiece is a kind of thing.
+
+the pawn is a quasipiece. understand "p" as pawn.
+
+the bishop is a quasipiece. understand "b/kb/qb" as bishop.
+
+the knight is a quasipiece. understand "n/kn/qn" as knight.
+
 chapter calling
 
 calling is an action applying to one visible thing.
@@ -408,10 +418,10 @@ understand the command "c" as something new.
 understand the command "place" as something new.
 understand the command "p" as something new.
 
-understand "call [any piece]" as calling.
-understand "c [any piece]" as calling.
-understand "place [any piece]" as calling.
-understand "p [any piece]" as calling.
+understand "call [any thing]" as calling.
+understand "c [any thing]" as calling.
+understand "place [any thing]" as calling.
+understand "p [any thing]" as calling.
 
 understand "call" as calling.
 understand "c" as calling.
@@ -442,6 +452,9 @@ this is the enemy-placement rule:
 
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
+	if noun is a quasipiece, say "You don't need to sumomon [the noun] in [5b]. Only kings, queens and rooks." instead;
+	if noun is horse or noun is delenda or noun is the player, say "You're already here, with your horse and [delenda]." instead;
+	if noun is not a piece, say "You can only summon (other) chess pieces." instead;
 	if noun is placed:
 		say "You already placed [the noun] at [location of the noun]." instead;
 	if noun is irrelevant:
@@ -677,13 +690,21 @@ definition: a room (called r) is surrounded:
 		no;
 	yes;
 
+volume regular verbs to reject
+
+check pushing: say "You're not some boring old woodpusher who sits crouched over a board for hours on end. Besides, your allies can push themselves well enough. They're motivated enough." instead;
+
+check pulling: say "You already pulled [the noun] away." instead;
+
 volume meta
 
+to say verbs: say "[b]V[r] or [b]VERB[r] or [b]VERBS[r]"
+
 rule for printing a parser error:
-	say "I didn't recognize that command. Type [b]V[r] or [b]VERB[r] or [b]VERBS[r] to see the full list of commands. If you're confused what to do, [b]X[r] [delenda] again, or refer to the game [b]MAP[r]."
+	say "I didn't recognize that command. Type [verbs] to see the full list of commands. If you're confused what to do, [b]X[r] [delenda] again, or refer to the game [b]MAP[r]."
 
 rule for printing a parser error when the latest parser error is the noun did not make sense in that context error:
-	say "The verb was okay, but I didn't understand the noun in that sentence. Please try again, or type [b]V[r] to see the list of commands."
+	say "The verb was okay, but I didn't understand the noun in that sentence. You can type [verbs] to see how to use verbs with a subject."
 
 rule for printing a parser error when the latest parser error is the only understood as far as error:
 	say "You only needed the first word of that command. You can use the up arrow and backspace so you don't have to retype."
@@ -691,7 +712,7 @@ rule for printing a parser error when the latest parser error is the only unders
 section inventory trivia
 
 check taking inventory:
-	say "You don't have much on you other than [delenda]. Your horse is built for speed and not for hauling stuff.";
+	say "You don't have much on you other than [delenda]. Your horse is built for speed and not for hauling stuff.[paragraph break][if delenda is unexamined]You probably want to [b]X[r] [delenda][else]If you need a refresher, no shame in trying to [b]X[r] [delenda] again." instead;
 
 section score trivia
 
@@ -760,7 +781,7 @@ understand the command "credits" as something new.
 understand "credits" as creditsing.
 
 carry out creditsing:
-	say "Thanks to Arthur DiBianca for testing.";
+	say "Thanks to Wade Clarke and Arthur DiBianca for testing.";
 	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all was especially nice during the pandemic.";
 	the rule succeeds.
 
