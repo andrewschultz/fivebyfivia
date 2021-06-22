@@ -68,11 +68,11 @@ instead of doing something with DELENDA:
 	if the current action is examining, continue the action;
 	say "You can really only examine [DELENDA].";
 
-your horse is a backdrop. Your horse is everywhere. understand "steed" as horse. description is "It has a zigzag-patterned coat. Like it was tiled with checkmarks. There are few like it.[paragraph break]You can't see this so well when it moves. To see which ways it can move, type [b]DIRS[r]."
+your horse is a backdrop. Your horse is everywhere. understand "steed" as horse. description is "It has a zigzag-patterned coat. Like it was tiled with checkmarks. There are few like it.[paragraph break]You don't really notice the zigzags when you move. It really bucks around. To see which ways it can move, type [b]DIRS[r]."
 
 instead of doing something with your horse:
 	if the current action is examining, continue the action;
-	say "You can really only ride your horse in one of eight directions. To get a refresher on that, type DIRS."
+	say "You can really only ride your horse in one of eight directions. To get a refresher on that, type [b]DIRS[r]."
 
 chapter i6
 
@@ -123,7 +123,7 @@ to say room-detail:
 	if location of player is c3:
 		say "From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
-	say "You can go [list of viable directions]";
+	say "You can go [list of viable directions][if number of placed pieces is 0] to search for the best place to CALL your first allies[end if]";
 
 definition: a direction (called d) is viable:
 	if d is normal, no;
@@ -367,6 +367,9 @@ chapter pieces
 
 a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
 
+check taking a piece:
+	say "No, you put [the noun] here. But don't worry, if you did things wrong, you can try again." instead;
+	
 preferred-rook is a piece that varies.
 
 does the player mean calling preferred-rook when quest-index is 1: it is likely.
@@ -677,13 +680,18 @@ definition: a room (called r) is surrounded:
 volume meta
 
 rule for printing a parser error:
-	say "I didn't recognize that command. Type [b]V[r] or [b]VERB[r] or [b]VERBS[r] to see the list of commands."
+	say "I didn't recognize that command. Type [b]V[r] or [b]VERB[r] or [b]VERBS[r] to see the full list of commands. If you're confused what to do, [b]X[r] [delenda] again, or refer to the game [b]MAP[r]."
 
 rule for printing a parser error when the latest parser error is the noun did not make sense in that context error:
 	say "The verb was okay, but I didn't understand the noun in that sentence. Please try again, or type [b]V[r] to see the list of commands."
 
 rule for printing a parser error when the latest parser error is the only understood as far as error:
 	say "You only needed the first word of that command. You can use the up arrow and backspace so you don't have to retype."
+
+section inventory trivia
+
+check taking inventory:
+	say "You don't have much on you other than [delenda]. Your horse is built for speed and not for hauling stuff.";
 
 section score trivia
 
@@ -843,12 +851,13 @@ understand "v" as verbsing.
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
-	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king.";
-	say "There's also this one, [b]VERBS[r], of course, and you can type [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
+	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. These are all the commands you need to win. [b]X[r] [delenda] for your current quest.";
+	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
+	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
-	say "You can also say [b]M[r] or [b]MAP[r] to see the map at any time, withe all the squares your allies are guarding. [b]B[r] or [b]BOARD[r] also works.";
-	say "Also, you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook.";
+	say "Of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
+	say "[line break]Also, you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook.";
 	the rule succeeds.
 
 chapter xyzzying
@@ -866,6 +875,7 @@ volume beta testing - not for release
 
 when play begins:
 	now in-beta is true;
+	say "This is just a check for myself that this is, indeed, the beta version. It won't appear in the release.";
 
 chapter boarding
 
