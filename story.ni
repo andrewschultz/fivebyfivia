@@ -24,6 +24,14 @@ moves-this-quest is a number that varies. moves-this-quest is 0.
 
 description of the player is "Spiffy and knightly indeed."
 
+a thing can be examined. a thing is usually not examined.
+
+after examining a thing (called th):
+	now th is examined;
+	continue the action;
+
+got-rook-for-queen is a truth state that varies.
+
 chapter rooms
 
 a room can be circle-visited. a room is usually not circle-visited.
@@ -54,7 +62,7 @@ after examining DELENDA for the first time:
 
 to say current-quest-text:
 	if quest-index is 4:
-		say "Trample around all twenty-five precincts of [5b] without repeating twice";
+		say "trample around all twenty-five precincts of [5b] without repeating twice";
 		continue the action;
 	say "entrap the [age-of] king of [5b] with [the list of offensive pieces]"
 
@@ -73,7 +81,7 @@ your horse is a backdrop. Your horse is everywhere. understand "steed" as horse.
 instead of doing something with your horse:
 	if the current action is examining, continue the action;
 	say "You can really only ride your horse in one of eight directions. To get a refresher on that, type [b]DIRS[r]."
-	
+
 chapter i6
 
 section char nums
@@ -355,7 +363,7 @@ volume people and quests
 
 chapter general lists
 
-max-wait-times is a list of numbers variable. max-wait-times is { 3, 3, 3, 0 }.
+max-wait-times is a list of numbers variable. max-wait-times is { 3, 4, 3, 0 }.
 
 stalemated is a list of truth states variable. stalemated is { False, False, False, False }.
 
@@ -369,7 +377,7 @@ description of a piece is usually "Right now, [the item described] looks ready t
 
 check taking a piece:
 	say "No, you put [the noun] here. But don't worry, if you did things wrong, you can try again." instead;
-	
+
 preferred-rook is a piece that varies.
 
 does the player mean calling preferred-rook when quest-index is 1: it is likely.
@@ -475,12 +483,12 @@ carry out calling:
 		reset-the-board instead;
 	consider the stalemate processing rule;
 	if the rule succeeded:
-		quest-prologue;
+		quest-conclusion;
 		the rule succeeds;
 	consider the checkmate processing rule;
 	if the rule failed, reset-the-board instead;
 	if the rule succeeded:
-		quest-prologue;
+		quest-conclusion;
 	the rule succeeds.
 
 to update-guarded:
@@ -513,14 +521,15 @@ to place-king:
 	let myx be x of location of friendly king;
 	let myy be y of location of friendly king;
 	repeat with mydir running through planar directions:
-		let rm be room_of (x + xness of mydir) and (y + yness of mydir);
+		let rm be room_of (myx + xness of mydir) and (myy + yness of mydir);
 		now rm is guarded;
 
-to quest-prologue:
+to quest-conclusion:
+	say "[line break]";
 	if quest-index is 1:
 		say "The old king is dead! Long live the middle-aged king. He's going to be a bit sneakier. And he knows his father died in a corner -- so you may not be able to sucker him there. However, he makes indications he wants a diplomatic meeting with your king and queen.";
 	 else if quest-index is 2:
-		say "The king in the prime of his life is dead! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
+		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
 		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.";
 	increment quest-index;
@@ -576,7 +585,7 @@ after printing the locale description when quest-index is 4:
 
 does the player mean calling a reserved piece: it is very likely.
 
-does the player mean calling the friendly king when friendly king is reserved: it is likely.
+does the player mean calling the enemy king when friendly king is reserved: it is very unlikely.
 
 to setup-next-puzzle:
 	reset-the-board;
@@ -599,17 +608,17 @@ current-turns-after-placing is a number that varies.
 need-to-hurry is a truth state that varies.
 
 to reset-the-board:
-	if location of player is not c3:
-		move player to c3;
 	now all pieces are off-stage;
 	now all placed pieces are reserved;
 	now all rooms are not guarded;
+	now max-turns-after-placing is entry quest-index of max-wait-times;
+	now current-turns-after-placing is 0;
+	now need-to-hurry is false;
+	if location of player is not c3:
+		move player to c3;
 	if quest-index is 4:
 		now all rooms are not circle-visited;
 		now c3 is circle-visited;
-	now max-turns-after-placing is entry quest-index of max-wait-times;
-	now current-turns-after-placing is 0;
-	now need-to-hurry is false.
 
 this is the takeit processing rule:
 	let ek be the location of the enemy king;
@@ -643,10 +652,11 @@ this is the checkmate processing rule:
 		let qx be absval of (x of location of queen - x of location of enemy king);
 		let qy be absval of (y of location of queen - y of location of enemy king);
 		if qx < 2 and qy < 2:
-			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid enemy king. You thought you had things planned out well, but--well, you didn't. You'll have to try another way to get people together.";
+			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid enemy king. You thought you had things planned out well, but--well, maybe there is another way to get people together. But not too close.";
 			the rule fails;
 		if location of enemy king is cornery:
 			say "Before you can summon the enemy king over, though, your allies call you by. That's a good formation, but maybe you will use it better in the future. It won't be a surprise if you use it twice. You take notes.";
+			now got-rook-for-queen is true;
 			the rule fails;
 	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
 	the rule succeeds;
@@ -712,7 +722,7 @@ rule for printing a parser error when the latest parser error is the only unders
 section inventory trivia
 
 check taking inventory:
-	say "You don't have much on you other than [delenda]. Your horse is built for speed and not for hauling stuff.[paragraph break][if delenda is unexamined]You probably want to [b]X[r] [delenda][else]If you need a refresher, no shame in trying to [b]X[r] [delenda] again." instead;
+	say "You don't have much on you other than [delenda]. Your horse is built for speed and not for hauling stuff.[paragraph break][if delenda is not examined]You probably want to [b]X[r] [delenda][else]If you need a refresher, no shame in trying to [b]X[r] [delenda] again." instead;
 
 section score trivia
 
@@ -848,6 +858,8 @@ carry out statsing:
 	else:
 		say "Reserved pieces to (C)all: [list of reserved pieces].";
 		say "Pieces out on the board: [list of placed pieces].";
+	if quest-index is 3 and got-rook-for-queen is true:
+		say "[line break]You remember how you almost trapped the enemy king before: him in the corner, your king a knight-move away, your queen another knight-move away. That would work here, too.";
 	the rule succeeds.
 
 after printing the name of a placed piece (called p) when statsing:
@@ -928,7 +940,8 @@ chapter stupid stuff
 test q1 with "ssw/nnw/see/see/call kingside/nww/call queenside/sww/call king".
 test q1s with "nnw/call kingside/ssw/see/call queenside/sww/call king".
 
-test q2 with "sse/call queen/nnw/ssw/call friendly king/nnw/call enemy king".
+test q2n with "ssw/nee/call queen/sww/nne/call king/sse/call king".
+test q2 with "sse/call queen/nnw/ssw/nnw/call friendly king/sse/call enemy king".
 test q2s with "nne/call friendly king/sww/sse/call queen/sww/call king".
 
 test q3 with "sww/see/call rook/nnw/call friendly king/ssw/call enemy king".
