@@ -171,7 +171,7 @@ after printing the locale description when need-to-hurry is true:
 after printing the locale description when quest-index is 1:
 	increment moves-this-quest;
 	if remainder after dividing moves-this-quest by 7 is 0:
-		say "You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. But just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry.";
+		say "You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. It's worth scouting around, but just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry. It's worth experimenting.";
 	continue the action;
 
 section circle-visited
@@ -527,7 +527,7 @@ to place-king:
 to quest-conclusion:
 	say "[line break]";
 	if quest-index is 1:
-		say "The old king is dead! Long live the middle-aged king. He's going to be a bit sneakier. And he knows his father died in a corner -- so you may not be able to sucker him there. However, he makes indications he wants a diplomatic meeting with your king and queen.";
+		say "The old king is dead! Long live the middle-aged king. He's going to be a bit sneakier. And he knows his father died in a corner -- so you may not be able to sucker him there. However, he makes indications he wants a diplomatic meeting with your king and queen.[paragraph break]NOTE: you will be able to see technical details of completed quest with [b]R[r] or [b]REVIEW[r].";
 	 else if quest-index is 2:
 		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
@@ -571,9 +571,10 @@ to decide which number is stalemate-count:
 
 after printing the locale description when quest-index is 4:
 	now location of player is circle-visited;
-	say "[number of circle-visited rooms] vs [number of not circle-visited rooms].";
-	if number of not circle-visited rooms < 5:
-		say "[list of not circle-visited rooms].";
+	if debug-state is true:
+		say "(DEBUG) [number of circle-visited rooms] visited, [number of not circle-visited rooms] unvisited.";
+		if number of not circle-visited rooms < 5:
+			say "(DEBUG) [list of not circle-visited rooms].";
 	if number of circle-visited rooms is 25:
 		say "Horns blare! Voices soar to the sky! You have trampled all of [5b], literally and figuratively! Now is time for your reward!";
 		let t be stalemate-count;
@@ -827,6 +828,37 @@ carry out helping:
 	say "This game should come with a walkthrough. However, if you need a refresher on your quest, simply [b]X[r] [delenda] or just [b]X[r]. It's a bit short on details -- of course it is! Royalty tends to delegate like that.";
 	the rule succeeds.
 
+chapter reviewing
+
+reviewing is an action applying to nothing.
+
+understand the command "review" as something new.
+understand the command "rev" as something new.
+understand the command "re" as something new.
+understand the command "r" as something new.
+
+understand "review" as reviewing.
+understand "rev" as reviewing.
+understand "re" as reviewing.
+understand "r" as reviewing.
+
+carry out reviewing:
+	if quest-index is 1, say "Nothing to review yet." instead;
+	say "Here's what you've got so far:[paragraph break]";
+	repeat with x running from 1 to quest-index - 1:
+		choose row x in table of notes;
+		if entry x in stalemated is true:
+			say "You stalemated the enemy king with [stalemate-notes entry].";
+		else:
+			say "[checkmate-notes entry].";
+	the rule succeeds.
+
+table of notes
+stalemate-notes	checkmate-notes
+"two rooks--in practical play, the most likely stalemate is one rook being diagonal from the corner, guarded by the other rook"	"You pinned the enemy king into the corner using the two rooks: one covering the side, one covering the row/column next to it. The process of cornering a king is known as a rook roll--the rooks start at . Once you learn it, you're never gonna give it up."
+"king and queen--there are so many ways to do this! The queen can force the king in the corner, or you don't move the king the right way"	"You trapped the enemy king with a queen and king. In practical play, the queen alone can drive the enemy king into the corner where he only has two squares to move, then your king walks in. Your queen just sits three squares up and one square left (or some rotation/mirroring) from the corner."
+"king and rook--in practical play you probably won't see the position you got, and the only likely way is to have the rook, guarded by a king, diagonal from the corner"	"You trapped the king in the corner with your own king and rook. It's possible to trap the king on the side--your king is two squares away, off the edge, and the rook gives check. It's trickier for the king and rook to corner an enemy king, though. You have to make semi-waiting moves to slowly make the enemy king's rectangle smaller and smaller."
+
 chapter statsing
 
 statsing is an action applying to nothing.
@@ -889,8 +921,9 @@ carry out verbsing:
 	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
 	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
-	say "Of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
-	say "[line break]Also, you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook.";
+	if quest-index > 1, say "You can also [b]REVIEW[r] or [b]R[r] what you've done so far, though that's more for general chess endgame knowledge.";
+	say "And of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
+	say "[line break]While this is more nouns than vertbs, note you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook or [b]CALL K[r] for the king.";
 	the rule succeeds.
 
 chapter xyzzying
