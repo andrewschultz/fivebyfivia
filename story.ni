@@ -171,7 +171,7 @@ after printing the locale description when need-to-hurry is true:
 after printing the locale description when quest-index is 1:
 	increment moves-this-quest;
 	if remainder after dividing moves-this-quest by 7 is 0:
-		say "You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. It's worth scouting around, but just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry. It's worth experimenting.";
+		say "You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. It's worth scouting around, but just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry. It's worth experimenting.[paragraph break]Oh, and if you want to seriously plan things out, every other square is reachable in four moves from the center.";
 	continue the action;
 
 section circle-visited
@@ -653,7 +653,7 @@ this is the checkmate processing rule:
 		let qx be absval of (x of location of queen - x of location of enemy king);
 		let qy be absval of (y of location of queen - y of location of enemy king);
 		if qx < 2 and qy < 2:
-			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid enemy king. You thought you had things planned out well, but--well, maybe there is another way to get people together. But not too close.";
+			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid enemy king. You thought you had things planned out well, but--well, maybe there is another way to get people together. But not too close. Perhaps using your horse's quick movements will help find a properly spacious arrangement.";
 			the rule fails;
 		if location of enemy king is cornery:
 			say "Before you can summon the enemy king over, though, your allies call you by. That's a good formation, but maybe you will use it better in the future. It won't be a surprise if you use it twice. You take notes.";

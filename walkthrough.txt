@@ -1,4 +1,8 @@
-The solution is not meant to be hard. However, non-chessplayers may find some trickery. Note that you also have to be reasonably quick about checkmating your opponent. You only have three turns from placing the first piece to placing the opponent's king.
+The solution is not meant to be hard. However, non-chessplayers may find things tricky. Note that you also have to be reasonably quick about checkmating your opponent. You only have three turns from placing the first piece to placing the opponent's king.
+
+You may also note there is more than one solution. Every other solution should be a rotation or mirroring of the ones listed below.
+
+I've included, first, diagrams, then move-by-move solutions.
 
 Here is one solution for two rooks:
 
@@ -55,6 +59,8 @@ But this is the one that you want:
 |Q| |k| | |
 +-+-+-+-+-+
 
+Note that this could also have each piece shifted over one column.
+
 The final quest is a traversal. You need to touch all the squares without going over one twice. This seems like there are so many possibilities, but process of elimination helps.
 
 Also notice movement from and to the corner squares is restricted. Note that the only way to reach a1, s5, e1, or e5 (corner squares,) you must be on c2, b3, c4 or d3 first.
@@ -92,3 +98,58 @@ Square number 2 doesn't really matter. You can always rotate or flip the chessbo
  a b c d e
 
 From "h" you can then jump to d3 and then clean out the corner squares.
+
+===================================================================
+
+Here are the move-by-move solutions, with whitespace, so they're not spoiled.
+
+
+
+
+
+
+
+
+
+
+
+
+SSE.NNE.SWW.SEE.CALL ROOK (it doesn't matter which).NWW.CALL ROOK.SWW.CALL KING
+
+
+
+
+
+
+
+
+
+
+
+SSE.CALL QUEEN.NNW.SSW.NNW.CALL KING (if you can summon your own king, the game gives him preference).SSE.CALL KING
+
+
+
+
+
+
+
+
+
+
+
+SWW.SEE.CALL ROOK.NNW.CALL KING.SSW.CALL KING
+
+
+
+
+
+
+
+
+
+
+
+NNE.SSE.SSW.NWW.NNW.NEE.SEE.SSW.SWW.NNW.NNE.SEE.SSE.SWW.NWW.NNE (all but the corners and corner-adjacent points done).SEE.SSE.NWW.SWW.NNE.NNW.SEE.NEE
+
+Congratulations! You have won.
