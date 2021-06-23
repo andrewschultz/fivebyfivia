@@ -763,6 +763,25 @@ carry out abouting:
 	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where was the story?[paragraph break]I wasn't expecting one to pop up. The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]But one evening, something came into form. And as ParserComp's deadline came up, my bigger plan had stalled, so why not bail out?[paragraph break]I like parser games with weird directions. So I tried to make one.[paragraph break]Thankfully, I was able to find something that worked, technically, and it had the shell of a story, too. And I hope you enjoy this, too, whether or not you play chess.";
 	the rule succeeds.
 
+chapter boarding
+
+boarding is an action applying to nothing.
+
+understand the command "board" as something new.
+understand the command "b" as something new.
+understand the command "map" as something new.
+understand the command "m" as something new.
+
+understand "board" as boarding.
+understand "b" as boarding.
+understand "map" as boarding.
+understand "m" as boarding.
+
+carry out boarding:
+	if quest-index is 4, try statsing instead;
+	show-the-board;
+	the rule succeeds.
+
 chapter chessing
 
 chessing is an action out of world.
@@ -941,26 +960,7 @@ volume beta testing - not for release
 
 when play begins:
 	now in-beta is true;
-	say "This is just a check for myself that this is, indeed, the beta version. It won't appear in the release.";
-
-chapter boarding
-
-boarding is an action applying to nothing.
-
-understand the command "board" as something new.
-understand the command "b" as something new.
-understand the command "map" as something new.
-understand the command "m" as something new.
-
-understand "board" as boarding.
-understand "b" as boarding.
-understand "map" as boarding.
-understand "m" as boarding.
-
-carry out boarding:
-	if quest-index is 4, try statsing instead;
-	show-the-board;
-	the rule succeeds.
+	say "This is just a check for myself that this is, indeed, the beta version. It won't appear in the release. There may not actually be anything special in the Beta. But it is still there,";
 
 volume testing - not for release
 
