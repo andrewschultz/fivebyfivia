@@ -255,6 +255,11 @@ xness of north is 0. yness of north is 1. xness of south is 0. yness of south is
 
 volume rooms
 
+definition: a room (called r) is edgy:
+	if x of r is 4 or y of r is 4, yes;
+	if x of r is 0 or y of r is 0, yes;
+	no;
+
 a1 is a room. x of a1 is 0. y of a1 is 0. room-edge-text is "at the relatively inaccessible southwest corner".
 
 b1 is a room. x of b1 is 1. y of b1 is 0. room-edge-text is "on the south edge and near the west edge".
@@ -491,20 +496,23 @@ carry out calling:
 		quest-conclusion;
 		the rule succeeds;
 	consider the checkmate processing rule;
-	if the rule failed, reset-the-board instead;
+	if the rule failed:
+		if location of enemy king is not edgy:
+			say "The enemy king had a lot of places to run. Maybe you should've summoned him to an edge, instead.";
+		reset-the-board instead;
 	if the rule succeeded:
 		quest-conclusion;
 	the rule succeeds.
 
 to update-guarded:
 	now all rooms are not guarded;
-	if friendly king is placed:
+	if friendly king is placed and in-tutorial is false:
 		place-king;
-	if queenside rook is placed:
+	if queenside rook is placed or in-tutorial is true:
 		place-range queenside rook and list of all cardinal directions;
-	if kingside rook is placed:
+	if kingside rook is placed and in-tutorial is false:
 		place-range kingside rook and list of all cardinal directions;
-	if queen is placed:
+	if queen is placed or in-tutorial is true:
 		place-range queen and list of all planar directions;
 
 to place-range (p - a piece) and (myl - a list of directions):
@@ -541,7 +549,7 @@ to quest-conclusion:
 	setup-next-puzzle;
 
 to show-the-board:
-	say "STRATEGIC MAP OF FIVEBYFIVIA SO FAR:[line break]";
+	if in-tutorial is false, say "STRATEGIC MAP OF FIVEBYFIVIA SO FAR:[line break]";
 	say "[fixed letter spacing]  a b c d e[line break]";
 	say "5[pie of a5][pie of b5][pie of c5][pie of d5][pie of e5] 5[line break]";
 	say "4[pie of a4][pie of b4][pie of c4][pie of d4][pie of e4] 4[line break]";
@@ -549,7 +557,10 @@ to show-the-board:
 	say "2[pie of a2][pie of b2][pie of c2][pie of d2][pie of e2] 2[line break]";
 	say "1[pie of a1][pie of b1][pie of c1][pie of d1][pie of e1] 1[line break]";
 	say "  a b c d e[variable letter spacing][paragraph break]";
-	say "* = you, + = square is guarded[if friendly king is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
+	if in-tutorial is true:
+		say "Q = queen, R = queenside rook, k = enemy king, + = guarded square.";
+		continue the action;
+	say "[if in-tutorial is false]* = you, [end if]+ = square is guarded[if friendly king is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
 
 to say pie of (r - a room):
 	say " ";
@@ -850,6 +861,8 @@ understand "h" as helping.
 
 carry out helping:
 	say "This game should come with a walkthrough. However, if you need a refresher on your quest, simply [b]X[r] [delenda] or just [b]X[r]. It's a bit short on details -- of course it is! Royalty tends to delegate like that.";
+	if quest-index is 1:
+		say "[line break]There is, however, the option for help with [b]TUT[r] for the first quest.";
 	the rule succeeds.
 
 chapter reviewing
@@ -944,21 +957,27 @@ carry out tuting:
 	repeat with X running through pieces:
 		now cached-position of X is location of X;
 		move X to offsite;
+	let my-row be 0;
 	repeat through table of tutorial stuff:
+		increment my-row;
 		move queen to queen-pos entry;
 		move queenside rook to rook-pos entry;
 		move enemy king to king-pos entry;
 		update-guarded;
-		say "[blather entry]";
+		show-the-board;
+		say "[blather entry][line break]";
+		say "Type any key to continue[if my-row < 4] or Q to quit[end if].";
+		let Q be the chosen letter;
+		if Q is 81 or Q is 113, the rule succeeds;
 	now in-tutorial is false;
 	the rule succeeds.
 
 table of tutorial stuff
 queen-pos	rook-pos	king-pos	blather
-a5	b4	b1	"Blather."
-c5	b4	c1	"Blather."
-c5	d4	d1	"Blather."
-e5	d4	e1	"Blather."
+a5	b4	b1	"Here the rook attacks the king, who has to move to the c-file."
+c5	b4	c1	"Here the rook attacks the king, who has to move to the d-file."
+c5	d4	d1	"Again the rook attacks the king, who has to move to the e-file."
+e5	d4	e1	"The enemy king is trapped, since it can't move over. Maybe you can do the same with [if quest-index is 1]the two rooks[else]less material, but with the idea of pushing the enemy king against the edge."
 
 chapter verbsing
 
@@ -979,7 +998,10 @@ carry out verbsing:
 	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
 	say "You also have the option of toggling abbreviations of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
-	if quest-index > 1, say "You can also [b]REVIEW[r] or [b]R[r] what you've done so far, though that's more for general chess endgame knowledge.";
+	if quest-index > 1:
+		say "You can also [b]REVIEW[r] or [b]R[r] what you've done so far, though that's more for general chess endgame knowledge.";
+	else:
+		say "[b]TUT[r] provides a tutorial on how pieces move and how a queen and rook can trap the king, which may help you.";
 	say "And of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
 	say "[line break]While this is more nouns than vertbs, note you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook or [b]CALL K[r] for the king.";
 	the rule succeeds.
