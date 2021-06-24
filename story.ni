@@ -53,12 +53,13 @@ FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. 
 printed name of DELENDA is "[i]FIVEBYFIVIA DELENDA EST[r]".
 
 understand "fde" as DELENDA.
+understand "dfe" as DELENDA.
 understand "est" as DELENDA.
 understand "del" as DELENDA.
 understand "scroll" as DELENDA.
 
 after examining DELENDA for the first time:
-	say "You may wish to shorten typing [delenda]'s long name to [b]DFE[r], [b]EST[r], or [b]DEL[r]. Or you can just type [b]X[r]. You're an ambitious knight, not some boring old scribe who shows off writing fancy words out. You have much more exciting ways to show off!"
+	say "You may wish to shorten typing [delenda]'s long name to [b]FDE[r], [b]EST[r], or [b]DEL[r]. Or you can just type [b]X[r]. You're an ambitious knight, not some boring old scribe who shows off writing fancy words out. You have much more exciting ways to show off!"
 
 to say current-quest-text:
 	if quest-index is 4:
@@ -371,7 +372,11 @@ quest-quick-desc is a list of text variable. quest-quick-desc is { "R & R", "K &
 
 chapter pieces
 
-a piece is a kind of person. a piece can be reserved, irrelevant, or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
+a piece is a kind of person. a piece can be reserved, irrelevant or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
+
+a piece has a room called cached-position.
+
+a piece can be tutorial-held. a piece is usually not tutorial-held.
 
 description of a piece is usually "Right now, [the item described] looks ready to go chase an enemy king. But they may not wait too long. Better [if number of reserved pieces is 1]call your other allies and then [end if]call the enemy king soon."
 
@@ -811,7 +816,7 @@ understand the command "credits" as something new.
 understand "credits" as creditsing.
 
 carry out creditsing:
-	say "Thanks to Wade Clarke and Arthur DiBianca for testing.";
+	say "Thanks to Wade Clarke and Arthur DiBianca and Garry Francis for testing.";
 	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all was especially nice during the pandemic.";
 	the rule succeeds.
 
@@ -863,9 +868,10 @@ understand "r" as reviewing.
 
 carry out reviewing:
 	if quest-index is 1, say "Nothing to review yet." instead;
-	say "Here's what you've got so far:[paragraph break]";
+	say "Here's what you've got so far:[line break]";
 	repeat with x running from 1 to quest-index - 1:
 		choose row x in table of notes;
+		say "[line break]";
 		if entry x in stalemated is true:
 			say "You stalemated the enemy king with [stalemate-notes entry].";
 		else:
@@ -874,7 +880,7 @@ carry out reviewing:
 
 table of notes
 stalemate-notes	checkmate-notes
-"two rooks--in practical play, the most likely stalemate is one rook being diagonal from the corner, guarded by the other rook"	"You pinned the enemy king into the corner using the two rooks: one covering the side, one covering the row/column next to it. The process of cornering a king is known as a rook roll--the rooks start at . Once you learn it, you're never gonna give it up."
+"two rooks--in practical play, the most likely stalemate is one rook being diagonal from the corner, guarded by the other rook"	"You pinned the enemy king into the corner using the two rooks: one covering the side, one covering the row/column next to it. The process of cornering a king is known as a rook roll--the rooks start in adjacent rows, then one moves two over across the other, and so forth to the edge. Once you learn it, you're never gonna give it up."
 "king and queen--there are so many ways to do this! The queen can force the king in the corner, or you don't move the king the right way"	"You trapped the enemy king with a queen and king. In practical play, the queen alone can drive the enemy king into the corner where he only has two squares to move, then your king walks in. Your queen just sits three squares up and one square left (or some rotation/mirroring) from the corner."
 "king and rook--in practical play you probably won't see the position you got, and the only likely way is to have the rook, guarded by a king, diagonal from the corner"	"You trapped the king in the corner with your own king and rook. It's possible to trap the king on the side--your king is two squares away, off the edge, and the rook gives check. It's trickier for the king and rook to corner an enemy king, though. You have to make semi-waiting moves to slowly make the enemy king's rectangle smaller and smaller."
 
@@ -921,6 +927,39 @@ after printing the name of a reserved piece (called p) when statsing:
 	say " ([b][short-text of p][r])";
 	continue the action;
 
+chapter tuting
+
+in-tutorial is a truth state that varies.
+
+tuting is an action applying to nothing.
+
+understand the command "tut" as something new.
+
+understand "tut" as tuting.
+
+carry out tuting:
+	now in-tutorial is true;
+	now queenside rook is tutorial-held;
+	now queen is tutorial-held;
+	repeat with X running through pieces:
+		now cached-position of X is location of X;
+		move X to offsite;
+	repeat through table of tutorial stuff:
+		move queen to queen-pos entry;
+		move queenside rook to rook-pos entry;
+		move enemy king to king-pos entry;
+		update-guarded;
+		say "[blather entry]";
+	now in-tutorial is false;
+	the rule succeeds.
+
+table of tutorial stuff
+queen-pos	rook-pos	king-pos	blather
+a5	b4	b1	"Blather."
+c5	b4	c1	"Blather."
+c5	d4	d1	"Blather."
+e5	d4	e1	"Blather."
+
 chapter verbsing
 
 verbsing is an action out of world.
@@ -938,7 +977,7 @@ carry out verbsing:
 	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. These are all the commands you need to win. [b]X[r] [delenda] for your current quest.";
 	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
 	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
-	say "You also have the option of toggling abbrevation of long directions with [b]ABB[r].";
+	say "You also have the option of toggling abbreviations of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
 	if quest-index > 1, say "You can also [b]REVIEW[r] or [b]R[r] what you've done so far, though that's more for general chess endgame knowledge.";
 	say "And of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
