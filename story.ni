@@ -123,13 +123,20 @@ a room has text called room-edge-text.
 
 offsite is a room. x of offsite is -3. y of offsite is -3.
 
-the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of [5b][commentary].[paragraph break][room-detail].".
+the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of [5b][commentary].".
 
 to say commentary:
 	let n be number of normal-viable directions;
 
 to say room-color:
 	say "The ground is [if the remainder after dividing (x of location of player + y of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
+
+rule for printing the locale description:
+	if quest-index is 4 and show-tour-view is true:
+		show-visited;
+		the rule succeeds;
+	say "[room-detail].";
+	continue the action;
 
 to say room-detail:
 	if quest-index is 4:
@@ -204,7 +211,9 @@ after printing the locale description when quest-index is 1:
 section circle-visited
 
 after going to a circle-visited room:
-	say "A groan goes up. You've been here before. Your triumphant tour is cut short. [if number of circle-visited cornery rooms > 0]You seemed to get trapped in the corner squares[else if number of circle-visited rooms < 10]Perhaps a bit of planning might help you get more places[else]You wonder if starting from the end -- any end -- might help you find a path through. You note that since c3 is a light square, and you move from light to dark squares and back, you will have to end on a light square after 24 moves--maybe cutting down the possibilities by starting on a less accessible light square would help[end if].";
+	say "A groan goes up across the land. You've been here before. Your triumphant tour is cut short. [if number of circle-visited cornery rooms > 0]You seemed to get trapped in the corner squares[else if number of circle-visited rooms < 10]Perhaps a bit of planning might help you get more places[else]You wonder if starting from the end -- any end -- might help you find a path through. You note that since c3 is a light square, and you move from light to dark squares and back, you will have to end on a light square after 24 moves--maybe cutting down the possibilities by starting on a less accessible light square would help[end if].";
+	now final-failed-yet is true;
+	say "[line break]";
 	reset-the-board;
 
 chapter direction info
@@ -486,6 +495,9 @@ definition: a piece (called p) is not-last:
 	if p is reserved, yes;
 
 rule for supplying a missing noun when calling:
+	if quest-index is 4:
+		say "You're on your own.";
+		reject the player's command;
 	if number of not-last pieces is 1:
 		now noun is a random not-last piece;
 	else if number of reserved pieces is 1:
@@ -580,7 +592,7 @@ to quest-conclusion:
 	 else if quest-index is 2:
 		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
-		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.";
+		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.[paragraph break]By the way, there is a new meta-verb. You may wish to type [b]T[r] or [b]TOUR[r] to toggle tour view mode.";
 	increment quest-index;
 	setup-next-puzzle;
 
@@ -633,8 +645,14 @@ after printing the locale description when quest-index is 4:
 		if stalemate-count is 3:
 			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. They delegate you to plan annexation of west, central and east Twelvebyfouria to the south. Each requires a slightly different solution: first, you take two knights, which people say couldn't be done -- but you did it! While they are shaking their heads in disbelief, you sweep in with a bishop and up-and-comer knight, then two bishops.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
 		else:
-			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an intenational medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on its own, before they could dissuade you. But on the bright side, your day of martyry is a national holiday every year.";
+			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an intenational medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.";
 		end the story;
+	if number of circle-visited rooms is random-parchment-number and final-failed-yet is true and parchmente is off-stage:
+		say "[one of]A small parchment flutters into view. It is labeled [parchmente][or][parchmente] flutters into view again[stopping]. It'd be so tempting to read it, and yet, your adventurous spirit has trouble balancing duty to country with the pure personal satisfaction of solving everything on your own."
+
+final-failed-yet is a truth state that varies.
+
+random-parchment-number is a number that varies.
 
 does the player mean calling a reserved piece: it is very likely.
 
@@ -676,8 +694,11 @@ to reset-the-board:
 	now current-turns-after-placing is 0;
 	now need-to-hurry is false;
 	if quest-index is 4:
+		now parchmente is off-stage;
 		now all rooms are not circle-visited;
 		now c3 is circle-visited;
+		now random-parchment-number is a random number between 12 and 16;
+		if debug-state is true, say "[random-parchment-number].";
 	if past-intro is true:
 		if location of player is not c3:
 			say "You go back to c3 in the center to start again.";
@@ -767,6 +788,41 @@ definition: a room (called r) is surrounded:
 		no;
 	yes;
 
+volume clues
+
+YE OLDE HINTE PARCHMENTE is a thing. printed name is "[i]YE OLDE HINTE PARCHMENTE[r]". "[parchmente] has fluttered to the ground here[if parch-take-count > 0]. It looks slightly worse for the wear than before. Perhaps it absorbed a bit of water, so it's not flying around as fast as it used to[end if].".
+
+parch-take-count is a number that varies.
+
+check taking PARCHMENTE:
+	increment parch-take-count;
+	say "[one of]It blows away before you can get close! Well, that's a bit of temptation resisted by default. Perhaps it will fly back into view later[or]This time, you snag the parchment[stopping].";
+	if parch-take-count is 2:
+		now player has PARCHMENTE;
+	the rule succeeds;
+
+description of YE OLDE HINTE PARCHMENTE is "[if player does not have parchmente]It's too far to read. You'll have to TAKE it to read it[else][parchment-tips][end if]."
+
+read-so-far is a number that varies. read-so-far is 1.
+
+this is the theres-more rule:
+	say "There's more. Read it (Y, any other letter is N)?";
+	let Q be the chosen letter;
+	if Q is 89 or Q is 115, the rule succeeds;
+	the rule fails;
+
+to say parchment-tips:
+	say "1. Ye must save the CORNER SQUARES for last.";
+	if read-so-far < 2:
+		consider the theres-more rule;
+		unless the rule succeeded, continue the action;
+		now read-so-far is 3;
+	say "2. Ye have but one route to and from each CORNER SQUARE.";
+	if read-so-far < 3:
+		consider the theres-more rule;
+		unless the rule succeeded, continue the action;
+	say "3. If ye avoid such squares, you may soon find the next move is FORCED, saving thee considerable brain work."
+
 volume regular verbs to reject
 
 check pushing: say "You're not some boring old woodpusher who sits crouched over a board for hours on end. Besides, your allies can push themselves well enough. They're motivated enough." instead;
@@ -789,7 +845,7 @@ rule for printing a parser error when the latest parser error is the only unders
 section inventory trivia
 
 check taking inventory:
-	say "You don't have much on you other than [delenda]. Your horse is built for speed and not for hauling stuff.[paragraph break][if delenda is not examined]You probably want to [b]X[r] [delenda][else]If you need a refresher, no shame in trying to [b]X[r] [delenda] again." instead;
+	say "You don't have much on you other than [delenda]. Your horse is built for speed and not for hauling stuff.[paragraph break][if delenda is not examined]You probably want to [b]X[r] [delenda][else]If you need a refresher, no shame in trying to [b]X[r] [delenda] again[end if]." instead;
 
 section score trivia
 
@@ -844,7 +900,7 @@ understand "map" as boarding.
 understand "m" as boarding.
 
 carry out boarding:
-	if quest-index is 4, try statsing instead;
+	if quest-index is 4, show-visited instead;
 	show-the-board;
 	the rule succeeds.
 
@@ -964,17 +1020,20 @@ understand "stat" as statsing.
 to say vis of (r - a room):
 	say " [if location of player is r]+[else if r is circle-visited]*[else] [end if]";
 
+to show-visited:
+	say "VISITED SO FAR:[line break]";
+	say "[fixed letter spacing]  a b c d e[line break]";
+	say "5[vis of a5][vis of b5][vis of c5][vis of d5][vis of e5] 5[line break]";
+	say "4[vis of a4][vis of b4][vis of c4][vis of d4][vis of e4] 4[line break]";
+	say "3[vis of a3][vis of b3][vis of c3][vis of d3][vis of e3] 3[line break]";
+	say "2[vis of a2][vis of b2][vis of c2][vis of d2][vis of e2] 2[line break]";
+	say "1[vis of a1][vis of b1][vis of c1][vis of d1][vis of e1] 1[line break]";
+	say "  a b c d e[variable letter spacing][line break]";
+	say "You've visited [number of circle-visited rooms] of [5b]'s twenty-five precincts.";
+
 carry out statsing:
 	if quest-index is 4:
-		say "VISITED SO FAR:[line break]";
-		say "[fixed letter spacing]  a b c d e[line break]";
-		say "5[vis of a5][vis of b5][vis of c5][vis of d5][vis of e5] 5[line break]";
-		say "4[vis of a4][vis of b4][vis of c4][vis of d4][vis of e4] 4[line break]";
-		say "3[vis of a3][vis of b3][vis of c3][vis of d3][vis of e3] 3[line break]";
-		say "2[vis of a2][vis of b2][vis of c2][vis of d2][vis of e2] 2[line break]";
-		say "1[vis of a1][vis of b1][vis of c1][vis of d1][vis of e1] 1[line break]";
-		say "  a b c d e[variable letter spacing][line break]";
-		say "You've visited [number of circle-visited rooms] of [5b]'s twenty-five precincts.";
+		show-visited;
 	else:
 		say "Reserved pieces to (C)all: [list of reserved pieces].";
 		say "Pieces out on the board: [list of placed pieces].";
@@ -989,6 +1048,23 @@ after printing the name of a placed piece (called p) when statsing:
 after printing the name of a reserved piece (called p) when statsing:
 	say " ([b][short-text of p][r])";
 	continue the action;
+
+chapter ting
+
+ting is an action applying to nothing.
+
+understand the command "t" as something new.
+understand the command "tour" as something new.
+
+understand "t" as ting when quest-index is 4.
+understand "tour" as ting when quest-index is 4.
+
+carry out ting:
+	now show-tour-view is whether or not show-tour-view is false;
+	say "Tour view is now [on-off of show-tour-view].";
+	the rule succeeds.
+
+show-tour-view is a truth state that varies.
 
 chapter tuting
 
@@ -1050,8 +1126,10 @@ carry out verbsing:
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
 	if quest-index > 1:
 		say "You can also [b]REVIEW[r] or [b]R[r] what you've done so far, though that's more for general chess endgame knowledge.";
-	else:
+	else if quest-index < 4:
 		say "[b]TUT[r] provides a tutorial on how pieces move and how a queen and rook can trap the king, which may help you.";
+	else:
+		say "[b]T[r] toggles tour view for the quest between printing directions and printing a map.";
 	say "And of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
 	say "[line break]While this is more nouns than vertbs, note you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook or [b]CALL K[r] for the king.";
 	the rule succeeds.
@@ -1071,7 +1149,7 @@ volume beta testing - not for release
 
 when play begins:
 	now in-beta is true;
-	say "This is just a check for myself that this is, indeed, the beta version. It won't appear in the release. There may not actually be anything special in the Beta. But it is still there,";
+	say "Beta testers have access to the commands TRY (1-4), to work on a particular quest, and WAYS. This text will not appear in the release, but if it does, that's my fault."
 
 volume testing - not for release
 
