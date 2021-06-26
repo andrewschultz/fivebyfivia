@@ -59,7 +59,23 @@ But this is the one that you want:
 |Q| |k| | |
 +-+-+-+-+-+
 
-Note that this could also have each piece shifted over one column.
+Note that this could also have each piece shifted to the right one column, but the more visible mate, with just your king shifted left, would not be possible with your knight moves.
+
+Note that you get an extra move for King and Queen vs. King, because you need the special alternate solution.
+
+King and rook vs king is trickier. The only way to get him in the corner with three moves is as follows. It is one of the rejected mates above for the queen -- the one they want to save for later, for a surprise.
+
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | | |K| |
++-+-+-+-+-+
+| | | | | |
++-+-+-+-+-+
+| | |R| |k|
++-+-+-+-+-+
 
 The final quest is a traversal. You need to touch all the squares without going over one twice. This seems like there are so many possibilities, but process of elimination helps.
 

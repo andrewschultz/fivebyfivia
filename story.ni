@@ -123,22 +123,48 @@ a room has text called room-edge-text.
 
 offsite is a room. x of offsite is -3. y of offsite is -3.
 
-the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of [5b].[paragraph break][room-detail].".
+the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of [5b][commentary].[paragraph break][room-detail].".
+
+to say commentary:
+	let n be number of normal-viable directions;
 
 to say room-color:
 	say "The ground is [if the remainder after dividing (x of location of player + y of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
 
 to say room-detail:
+	if quest-index is 4:
+		if number of visit-viable directions is 0:
+			say "Unfortunately, you can't go anywhere new, so you can just go [list of visit-nonviable directions] and try again";
+		else if number of visit-nonviable directions is 0:
+			say "Any direction of [list of visit-viable directions] leads somewhere new";
+		else:
+			say "While going [list of visit-viable directions] would lead somewhere new, going [list of visit-nonviable directions] would not";
+		continue the action;
 	if location of player is c3:
 		say "From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
-	say "You can go [list of viable directions][if number of placed pieces is 0] to search for the best place to CALL your first allies[end if]";
+	say "You can go [list of weird-viable directions][if number of placed pieces is 0 and quest-index < 4] to search for the best place to CALL your first allies[end if]";
 
 definition: a direction (called d) is viable:
-	if d is normal, no;
 	if the room d of location of player is offsite, no;
 	if the room d of location of player is nowhere, no;
 	yes;
+
+definition: a direction (called d) is weird-viable:
+	if d is weird and d is viable, yes;
+	no;
+
+definition: a direction (called d) is visit-viable:
+	if d is weird and the room d of location of player is not circle-visited, yes;
+	no;
+
+definition: a direction (called d) is visit-nonviable:
+	if d is weird and the room d of location of player is circle-visited, yes;
+	no;
+
+definition: a direction (called d) is normal-viable:
+	if d is normal and d is viable, yes;
+	no;
 
 section going nowhere
 
@@ -166,7 +192,7 @@ after printing the locale description when need-to-hurry is true:
 		else:
 			say "You hear familiar moans. Your summoned compatriot[if number of placed pieces > 1]s have[else] has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
 		say "[line break]You did not succeed in your quest, and your king and queen will not be pleased ... unless we pretend this was just a practice run you planned in your head before the real thing. Yes, yes, let's do that. That's how it is.";
-		reset-the-board;
+		fail-and-reset;
 	continue the action;
 
 after printing the locale description when quest-index is 1:
@@ -178,7 +204,7 @@ after printing the locale description when quest-index is 1:
 section circle-visited
 
 after going to a circle-visited room:
-	say "A groan goes up. You've been here before. Your triumphant tour is cut short.";
+	say "A groan goes up. You've been here before. Your triumphant tour is cut short. [if number of circle-visited cornery rooms > 0]You seemed to get trapped in the corner squares[else if number of circle-visited rooms < 10]Perhaps a bit of planning might help you get more places[else]You wonder if starting from the end -- any end -- might help you find a path through. You note that since c3 is a light square, and you move from light to dark squares and back, you will have to end on a light square after 24 moves--maybe cutting down the possibilities by starting on a less accessible light square would help[end if].";
 	reset-the-board;
 
 chapter direction info
@@ -255,9 +281,18 @@ xness of north is 0. yness of north is 1. xness of south is 0. yness of south is
 
 volume rooms
 
+to decide which number is edge-count of (r - a room):
+	let temp be 0;
+	if x of r is 4 or y of r is 4, increment temp;
+	if x of r is 0 or y of r is 0, increment temp;
+	decide on temp;
+
 definition: a room (called r) is edgy:
-	if x of r is 4 or y of r is 4, yes;
-	if x of r is 0 or y of r is 0, yes;
+	if edge-count of r > 0, yes;
+	no;
+
+definition: a room (called r) is cornery:
+	if edge-count of r is 2, yes;
 	no;
 
 a1 is a room. x of a1 is 0. y of a1 is 0. room-edge-text is "at the relatively inaccessible southwest corner".
@@ -397,11 +432,11 @@ definition: a piece (called p) is offensive:
 	if p is irrelevant, no;
 	yes;
 
-the friendly king is a piece. understand "k" and "k1" and "fk" as friendly king. short-text of friendly king is "K".
+the friendly king is a piece. understand "k" and "k1" and "fk" as friendly king. short-text of friendly king is "K". understand "my king" as friendly king.
 
 summon-list of friendly king is { false, true, true, false }.
 
-the enemy king is a piece. understand "k" and "k2" and "ek" as enemy king. short-text of enemy king is "K".
+the enemy king is a piece. understand "k" and "k2" and "ek" as enemy king. short-text of enemy king is "K". understand "their king" as enemy king.
 
 summon-list of enemy king is { true, true, true, false }.
 
@@ -478,7 +513,7 @@ carry out calling:
 	if noun is irrelevant:
 		say "Right now [the noun] is not part of your maneuver." instead;
 	if number of pieces in location of player > 0:
-		say "That would make things too crowded here. You already called [the random piece in location of player] here." instead;
+		say "That would make things too crowded here at [location of player], since [the random piece in location of player] is already present." instead;
 	if noun is enemy king:
 		abide by the enemy-placement rule;
 	say "You call [the noun] to [location of player].";
@@ -490,7 +525,8 @@ carry out calling:
 	if number of reserved pieces > 0, the rule succeeds;
 	consider the takeit processing rule;
 	if the rule succeeded:
-		reset-the-board instead;
+		fail-and-reset instead;
+		reset-the-board;
 	consider the stalemate processing rule;
 	if the rule succeeded:
 		quest-conclusion;
@@ -499,7 +535,7 @@ carry out calling:
 	if the rule failed:
 		if location of enemy king is not edgy:
 			say "The enemy king had a lot of places to run. Maybe you should've summoned him to an edge, instead.";
-		reset-the-board instead;
+		fail-and-reset instead;
 	if the rule succeeded:
 		quest-conclusion;
 	the rule succeeds.
@@ -616,13 +652,21 @@ to setup-next-puzzle:
 			now preferred-rook is queenside rook;
 		else:
 			now preferred-rook is kingside rook;
-		say "[preferred-rook].";
 
 max-turns-after-placing is a number that varies.
 
 current-turns-after-placing is a number that varies.
 
 need-to-hurry is a truth state that varies.
+
+to show-failure:
+	say "[line break]        [b]* * * * LET'S TRY AGAIN * * * *[r][paragraph break]";
+
+to fail-and-reset:
+	show-failure;
+	reset-the-board;
+
+past-intro is a truth state that varies.
 
 to reset-the-board:
 	now all pieces are off-stage;
@@ -631,11 +675,17 @@ to reset-the-board:
 	now max-turns-after-placing is entry quest-index of max-wait-times;
 	now current-turns-after-placing is 0;
 	now need-to-hurry is false;
-	if location of player is not c3:
-		move player to c3;
 	if quest-index is 4:
 		now all rooms are not circle-visited;
 		now c3 is circle-visited;
+	if past-intro is true:
+		if location of player is not c3:
+			say "You go back to c3 in the center to start again.";
+		else:
+			say "You're already at c3 in the center, so that saves time starting again.";
+		move player to c3;
+	else:
+		now past-intro is true;
 
 this is the takeit processing rule:
 	let ek be the location of the enemy king;
@@ -1031,15 +1081,22 @@ when play begins:
 
 chapter stupid stuff
 
+test q1f with "call rook/nnw/call rook/ssw/call king".
 test q1 with "ssw/nnw/see/see/call kingside/nww/call queenside/sww/call king".
 test q1s with "nnw/call kingside/ssw/see/call queenside/sww/call king".
 
+test q2f with "call queen/nnw/call king/ssw/call king".
 test q2n with "ssw/nee/call queen/sww/nne/call king/sse/call king".
 test q2 with "sse/call queen/nnw/ssw/nnw/call friendly king/sse/call enemy king".
 test q2s with "nne/call friendly king/sww/sse/call queen/sww/call king".
 
+test a2 with "test q1/test q2".
+
+test q3f with "call rook/nnw/call king/ssw/call king".
 test q3 with "sww/see/call rook/nnw/call friendly king/ssw/call enemy king".
 test q3s with "sww/call rook/see/call friendly king/nne/sse/call enemy king".
+
+test a3 with "test q1/test q2/test q3".
 
 test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/ssw/sse/nww/sww".
 
