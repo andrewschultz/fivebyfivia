@@ -592,7 +592,8 @@ to quest-conclusion:
 	 else if quest-index is 2:
 		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
-		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.[paragraph break]By the way, there is a new meta-verb. You may wish to type [b]T[r] or [b]TOUR[r] to toggle tour view mode.";
+		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.[paragraph break]By the way, there is a new meta-verb. [b]T[r] or [b]TOUR[r] to toggles tour view mode, which shows an overall map of [5b] instead of telling you directions. It is set to on.";
+		now show-tour-view is true;
 	increment quest-index;
 	setup-next-puzzle;
 
@@ -648,7 +649,8 @@ after printing the locale description when quest-index is 4:
 			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an intenational medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.";
 		end the story;
 	if number of circle-visited rooms is random-parchment-number and final-failed-yet is true and parchmente is off-stage:
-		say "[one of]A small parchment flutters into view. It is labeled [parchmente][or][parchmente] flutters into view again[stopping]. It'd be so tempting to read it, and yet, your adventurous spirit has trouble balancing duty to country with the pure personal satisfaction of solving everything on your own."
+		say "[one of]A small parchment flutters into view. It is labeled [parchmente][or][parchmente] flutters into view again[stopping]. It'd be so tempting to read it, and yet, your adventurous spirit has trouble balancing duty to country with the pure personal satisfaction of solving everything on your own.";
+		move parchmente to location of player;
 
 final-failed-yet is a truth state that varies.
 
@@ -1017,8 +1019,21 @@ understand "stats" as statsing.
 understand "st" as statsing.
 understand "stat" as statsing.
 
+definition: a room (called r) is knight-movable:
+	repeat with D running through weird directions:
+		if the room D of location of player is r, yes;
+	no;
+
 to say vis of (r - a room):
-	say " [if location of player is r]+[else if r is circle-visited]*[else] [end if]";
+	say " ";
+	if location of player is r:
+		say "+";
+	else if r is circle-visited:
+		say "*";
+	else if quest-index is 4 and r is knight-movable:
+		say "?[no line break]";
+	else:
+		say " "
 
 to show-visited:
 	say "VISITED SO FAR:[line break]";
@@ -1176,6 +1191,7 @@ test q3s with "sww/call rook/see/call friendly king/nne/sse/call enemy king".
 
 test a3 with "test q1/test q2/test q3".
 
+test q4f with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/sww".
 test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/ssw/sse/nww/sww".
 
 test win1 with "test q1/test q2/test q3/test q4".
