@@ -955,6 +955,23 @@ carry out dirsing:
 	say "You can toggle how the directions appear (long or short) in room descriptions with [b]ABB[r].";
 	the rule succeeds.
 
+chapter fail
+
+failing is an action out of world.
+
+understand the command "fail" as something new.
+understand the command "f" as something new.
+
+understand "fail" as failing.
+understand "f" as failing.
+
+carry out failing:
+	if number of placed pieces is 0 and quest-index < 4:
+		say "You haven't placed any pieces yet." instead;
+	say "Okay, let's end things early...";
+	reset-the-board;
+	the rule succeeds;
+
 chapter helping
 
 helping is an action out of world.
@@ -1134,7 +1151,7 @@ understand "v" as verbsing.
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
-	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. These are all the commands you need to win. [b]X[r] [delenda] for your current quest.";
+	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. These are all the commands you need to win. [b]X[r] [delenda] for your current quest. You can also [b]FAIL[r]/[b]F[r] to reset the current quest.";
 	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
 	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
 	say "You also have the option of toggling abbreviations of long directions with [b]ABB[r].";
