@@ -137,8 +137,10 @@ to say room-color:
 	say "The ground is [if the remainder after dividing (x of location of player + y of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
 
 rule for printing the locale description:
-	if quest-index is 4 and show-tour-view is true:
-		show-visited;
+	if quest-index is 4:
+		now location of player is circle-visited;
+		if show-tour-view is true:
+			show-visited;
 		the rule succeeds;
 	say "[room-detail].";
 	continue the action;
@@ -209,13 +211,14 @@ after printing the locale description when need-to-hurry is true:
 
 after printing the locale description when quest-index is 1:
 	increment moves-this-quest;
-	if remainder after dividing moves-this-quest by 7 is 0:
+	if remainder after dividing moves-this-quest by 7 is 0 and number of placed pieces is 0:
 		say "You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. It's worth scouting around, but just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry. It's worth experimenting.[paragraph break]Oh, and if you want to seriously plan things out, every other square is reachable in four moves from the center.";
 	continue the action;
 
 section circle-visited
 
 after going to a circle-visited room:
+	show-failure;
 	say "A groan goes up across the land. You've been here before. Your triumphant tour is cut short. [if number of circle-visited cornery rooms > 0]You seemed to get trapped in the corner squares[else if number of circle-visited rooms < 10]Perhaps a bit of planning might help you get more places[else]You wonder if starting from the end -- any end -- might help you find a path through. You note that since c3 is a light square, and you move from light to dark squares and back, you will have to end on a light square after 24 moves--maybe cutting down the possibilities by starting on a less accessible light square would help[end if].";
 	now final-failed-yet is true;
 	say "[line break]";
@@ -366,7 +369,7 @@ to decide which room is room_of (n1 - a number) and (n2 - a number):
 		if x of Q is n1 and y of Q is n2:
 			decide on Q;
 	if debug-state is true:
-		say "Could not find room for [n1] and [n2].";
+		say "(DEBUG) Could not find room for [n1] and [n2].";
 	decide on offsite
 
 check going a normal direction:
@@ -640,7 +643,6 @@ to decide which number is stalemate-count:
 	decide on temp;
 
 after printing the locale description when quest-index is 4:
-	now location of player is circle-visited;
 	if debug-state is true:
 		say "(DEBUG) [number of circle-visited rooms] visited, [number of not circle-visited rooms] unvisited.";
 		if number of not circle-visited rooms < 5:
@@ -649,10 +651,11 @@ after printing the locale description when quest-index is 4:
 		say "Horns blare! Voices soar to the sky! You have trampled all of [5b], literally and figuratively! Now is time for your reward!";
 		let t be stalemate-count;
 		if stalemate-count is 3:
-			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. They delegate you to plan annexation of west, central and east Twelvebyfouria to the south. Each requires a slightly different solution: first, you take two knights, which people say couldn't be done -- but you did it! While they are shaking their heads in disbelief, you sweep in with a bishop and up-and-comer knight, then two bishops.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
+			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. They delegate you to plan annexation of west, central and east Twelvebyfouria to the south. Each requires a slightly different solution: first, you take two knights, which people say couldn't be done -- but with the help of a treacherous pawn, you did it! While they are shaking their heads in disbelief, you sweep in with a bishop and up-and-comer knight, then two bishops.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
+			end the story finally saying "The beginning of a glorious (?) empire";
 		else:
 			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an intenational medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.";
-		end the story;
+			end the story finally;
 	if number of circle-visited rooms is random-parchment-number and final-failed-yet is true and parchmente is off-stage:
 		say "[one of]A small parchment flutters into view. It is labeled [parchmente][or][parchmente] flutters into view again[stopping]. It'd be so tempting to read it, and yet, your adventurous spirit has trouble balancing duty to country with the pure personal satisfaction of solving everything on your own.";
 		move parchmente to location of player;
@@ -705,7 +708,7 @@ to reset-the-board:
 		now all rooms are not circle-visited;
 		now c3 is circle-visited;
 		now random-parchment-number is a random number between 12 and 16;
-		if debug-state is true, say "[random-parchment-number].";
+		if debug-state is true, say "DEBUG [random-parchment-number].";
 	if past-intro is true:
 		if location of player is not c3:
 			say "You go back to c3 in the center to start again.";
@@ -940,7 +943,7 @@ understand the command "credits" as something new.
 understand "credits" as creditsing.
 
 carry out creditsing:
-	say "Thanks to Wade Clarke and Arthur DiBianca and Garry Francis for testing.";
+	say "Thanks to Wade Clarke, Dee Cooke, Arthur DiBianca, Garry Francis and Olaf Nowicki for testing.";
 	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all was especially nice during the pandemic.";
 	the rule succeeds.
 
@@ -1018,7 +1021,7 @@ carry out reviewing:
 		if entry x in stalemated is true:
 			say "You stalemated the enemy king with [stalemate-notes entry].";
 		else:
-			say "[checkmate-notes entry].";
+			say "[checkmate-notes entry]";
 	the rule succeeds.
 
 table of notes
@@ -1188,6 +1191,26 @@ when play begins:
 	now in-beta is true;
 	say "Beta testers have access to the commands TRY (1-4), to work on a particular quest, and WAYS. This text will not appear in the release, but if it does, that's my fault."
 
+chapter trying
+
+trying is an action applying to one number.
+
+understand the command "try" as something new.
+
+understand "try [number]" as trying.
+
+carry out trying:
+	if number understood < 1 or number understood > 4:
+		say "You need a number between 1 and 4." instead;
+	if quest-index is number understood:
+		say "We're already on that quest, so we won't reset it. Just do it wrong to reset.";
+		the rule succeeds;
+	else:
+		say "Moving to quest [number understood].";
+	now quest-index is number understood;
+	setup-next-puzzle;
+	the rule succeeds.
+
 volume testing - not for release
 
 when play begins:
@@ -1218,25 +1241,6 @@ test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sw
 
 test win1 with "test q1/test q2/test q3/test q4".
 test win2 with "test q1s/test q2s/test q3s/test q4".
-
-chapter trying
-
-trying is an action applying to one number.
-
-understand the command "try" as something new.
-
-understand "try [number]" as trying.
-
-carry out trying:
-	if number understood < 1 or number understood > 4:
-		say "You need a number between 1 and 4." instead;
-	if quest-index is number understood:
-		say "We're already on that quest.";
-	else:
-		say "Moving to quest [number understood].";
-	now quest-index is number understood;
-	setup-next-puzzle;
-	the rule succeeds.
 
 chapter waysing
 
