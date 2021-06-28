@@ -8,6 +8,8 @@ volume basics and definitions
 
 include Trivial Niceties by Andrew Schultz.
 
+include Old School Verb Total Carnage by Andrew Schultz.
+
 in-beta is a truth state that varies.
 
 debug-state is a truth state that varies.
@@ -31,6 +33,9 @@ after examining a thing (called th):
 	continue the action;
 
 got-rook-for-queen is a truth state that varies.
+
+understand the command "y" as something new. [this is to reject "That was a rhetorical question" before ]
+understand the command "yes" as something new. [this is to reject "That was a rhetorical question" before ]
 
 chapter rooms
 
