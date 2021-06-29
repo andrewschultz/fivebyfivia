@@ -47,7 +47,13 @@ to reset-guard: now all rooms are not guarded.
 
 chapter start of play
 
+screen-reader is a truth state that varies.
+
 when play begins:
+	say "Fivebyfivia has some text-mapping options that may cause screen-readers to give useless output. Are you using a screen reader?";
+	if the player consents:
+		say "Potentially garbling options are now restricted.";
+		now screen-reader is true;
 	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELENDA EST]. And you're off!";
 	now right hand status line is "[entry quest-index of quest-quick-desc]";
 
@@ -141,7 +147,7 @@ rule for printing the locale description:
 		now location of player is circle-visited;
 		if show-tour-view is true:
 			show-visited;
-		the rule succeeds;
+			the rule succeeds;
 	say "[room-detail].";
 	continue the action;
 
@@ -601,11 +607,19 @@ to quest-conclusion:
 		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
 		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.[paragraph break]By the way, there is a new meta-verb. [b]T[r] or [b]TOUR[r] to toggles tour view mode, which shows an overall map of [5b] instead of telling you directions. It is set to on.";
-		now show-tour-view is true;
+		if screen-reader is false, now show-tour-view is true;
 	increment quest-index;
 	setup-next-puzzle;
 
 to show-the-board:
+	if screen-reader is true:
+		if number of placed pieces is 0:
+			say "You haven't placed any pieces yet.";
+			continue the action;
+		say "Currently placed:";
+		repeat with Q running through placed pieces:
+			say "[Q] is at [location of Q].";
+		continue the action;
 	if in-tutorial is false, say "STRATEGIC MAP OF FIVEBYFIVIA SO FAR:[line break]";
 	say "[fixed letter spacing]  a b c d e[line break]";
 	say "5[pie of a5][pie of b5][pie of c5][pie of d5][pie of e5] 5[line break]";
@@ -1060,7 +1074,27 @@ to say vis of (r - a room):
 	else:
 		say " "
 
+definition: a room (called r) is circle-to-visit:
+	if r is offsite, no;
+	if r is circle-visited, no;
+	yes;
+
+definition: a room (called r) is safe-knight-movable:
+	if r is circle-visited, no;
+	if r is knight-movable, yes;
+	no;
+
 to show-visited:
+	if screen-reader is true:
+		if number of circle-visited rooms < 13:
+			say "You've visited [list of circle-visited rooms] so far.";
+		else:
+			say "You still need to visit [list of circle-to-visit rooms].";
+		if number of safe-knight-movable rooms > 0:
+			say "Of the above, you can immediately visit [list of safe-knight-movable rooms] from here.";
+		else:
+			say "Sadly, there are no rooms you can safely visit from here.";
+		continue the action;
 	say "VISITED SO FAR:[line break]";
 	say "[fixed letter spacing]  a b c d e[line break]";
 	say "5[vis of a5][vis of b5][vis of c5][vis of d5][vis of e5] 5[line break]";
@@ -1100,6 +1134,7 @@ understand "t" as ting when quest-index is 4.
 understand "tour" as ting when quest-index is 4.
 
 carry out ting:
+	if screen-reader is true, say "Toggling tour view would cause the screen reader to make strange outputs, so I'm restricting it." instead;
 	now show-tour-view is whether or not show-tour-view is false;
 	say "Tour view is now [on-off of show-tour-view].";
 	the rule succeeds.
@@ -1117,6 +1152,9 @@ understand the command "tut" as something new.
 understand "tut" as tuting.
 
 carry out tuting:
+	if screen-reader is true:
+		say "(Text maps bowdlerized for screen reader.) For checkmate with a queen and rook, you put a rook on the file next to the queen, then move the queen two right past the rook, then the rook two right past the queen, until the enemy king is up against the side of the board and attacked and cannot move.";
+		the rule succeeds;
 	now in-tutorial is true;
 	now queenside rook is tutorial-held;
 	now queen is tutorial-held;
