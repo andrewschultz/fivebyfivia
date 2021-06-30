@@ -6,6 +6,8 @@ the story description is "Less impossible than beating Stockfish".
 
 volume basics and definitions
 
+include Undo Output Control by Erik Temple.
+
 include Trivial Niceties by Andrew Schultz.
 
 include Old School Verb Total Carnage by Andrew Schultz.
@@ -376,7 +378,7 @@ to decide which room is room_of (n1 - a number) and (n2 - a number):
 			decide on Q;
 	if debug-state is true:
 		say "(DEBUG) Could not find room for [n1] and [n2].";
-	decide on offsite
+	decide on offsite;
 
 check going a normal direction:
 	if noun is up, say "Your horse can fly across ground but not over it." instead;
@@ -668,7 +670,7 @@ after printing the locale description when quest-index is 4:
 			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. They delegate you to plan annexation of west, central and east Twelvebyfouria to the south. Each requires a slightly different solution: first, you take two knights, which people say couldn't be done -- but with the help of a treacherous pawn, you did it! While they are shaking their heads in disbelief, you sweep in with a bishop and up-and-comer knight, then two bishops.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
 			end the story finally saying "The beginning of a glorious (?) empire";
 		else:
-			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an intenational medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.";
+			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an international medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.";
 			end the story finally;
 	if number of circle-visited rooms is random-parchment-number and final-failed-yet is true and parchmente is off-stage:
 		say "[one of]A small parchment flutters into view. It is labeled [parchmente][or][parchmente] flutters into view again[stopping]. It'd be so tempting to read it, and yet, your adventurous spirit has trouble balancing duty to country with the pure personal satisfaction of solving everything on your own.";
@@ -682,6 +684,11 @@ does the player mean calling a reserved piece: it is very likely.
 
 does the player mean calling the enemy king when friendly king is reserved: it is very unlikely.
 
+definition: a piece (called p) is accessory:
+	if p is irrelevant, no;
+	if p is enemy king, no;
+	yes;
+
 to setup-next-puzzle:
 	reset-the-board;
 	repeat with P running through pieces:
@@ -694,6 +701,10 @@ to setup-next-puzzle:
 			now preferred-rook is queenside rook;
 		else:
 			now preferred-rook is kingside rook;
+	if quest-index is 4:
+		say "No allies this time.";
+	else:
+		say "So, your quest: you need to coordinate your king with [the list of accessory pieces]. It's also shorthanded in the status line in the upper right."
 
 max-turns-after-placing is a number that varies.
 
@@ -724,11 +735,11 @@ to reset-the-board:
 		now random-parchment-number is a random number between 12 and 16;
 		if debug-state is true, say "DEBUG [random-parchment-number].";
 	if past-intro is true:
-		if location of player is not c3:
-			say "You go back to c3 in the center to start again.";
+		say "[if location of player is not c3]You go back to c3 in the center to start again[else]You're already at c3 in the center, so that saves time starting again[end if]. Time to re-summon [the list of accessory pieces].";
 		else:
-			say "You're already at c3 in the center, so that saves time starting again.";
-		move player to c3;
+			say ".";
+		if location of player is not c3:
+			move player to c3;
 	else:
 		now past-intro is true;
 
@@ -865,6 +876,12 @@ rule for printing a parser error when the latest parser error is the noun did no
 
 rule for printing a parser error when the latest parser error is the only understood as far as error:
 	say "You only needed the first word of that command. You can use the up arrow and backspace so you don't have to retype."
+
+report undoing an action:
+	if quest-index is 4:
+		say "Undone. While I can't give any help on whether or not this has made the quest winnable, don't worry. You can restart if you need to.";
+	else:
+		say "Undone[if number of placed pieces is 0], though until you've placed a piece, there's nothing worth undoing[end if]. Note you can always undo everything with [b]F[r] or [b]FAIL[r].";
 
 section inventory trivia
 
@@ -1250,10 +1267,6 @@ carry out trying:
 	the rule succeeds.
 
 volume testing - not for release
-
-when play begins:
-	say "This should not show up in beta mode. It is a rule to toggle the debug-state truth state.";
-	now debug-state is true;
 
 chapter stupid stuff
 
