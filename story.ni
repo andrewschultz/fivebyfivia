@@ -4,6 +4,10 @@ the story headline is "Flagrant Horsing Around".
 
 the story description is "Less impossible than beating Stockfish".
 
+release along with a website.
+
+release along with an interpreter.
+
 volume basics and definitions
 
 include Undo Output Control by Erik Temple.
@@ -220,7 +224,7 @@ after printing the locale description when need-to-hurry is true:
 after printing the locale description when quest-index is 1:
 	increment moves-this-quest;
 	if remainder after dividing moves-this-quest by 7 is 0 and number of placed pieces is 0:
-		say "You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. It's worth scouting around, but just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry. It's worth experimenting.[paragraph break]Oh, and if you want to seriously plan things out, every other square is reachable in four moves from the center.";
+		say "[line break]You're still looking around for the best square to [b]CALL[r] or [b]PLACE[r] allies. It's worth scouting around, but just so you know, more than one square works for the first piece, and even if you mess up, this quest will reset, and you can retry. It's worth experimenting.[paragraph break]Oh, and if you want to seriously plan things out, every other square is reachable in four moves from the center.";
 	continue the action;
 
 section circle-visited
@@ -450,7 +454,7 @@ check taking a piece:
 
 preferred-rook is a piece that varies.
 
-does the player mean calling preferred-rook when quest-index is 1: it is likely.
+does the player mean calling preferred-rook when quest-index is not 3: it is likely. [ this is to avoid disambiguation that gets rejected either way ]
 
 definition: a piece (called p) is offensive:
 	if p is enemy king, no;
@@ -539,7 +543,7 @@ carry out calling:
 	if noun is placed:
 		say "You already placed [the noun] at [location of the noun]." instead;
 	if noun is irrelevant:
-		say "Right now [the noun] is not part of your maneuver." instead;
+		say "Right now [the noun] is not part of your maneuver. You can, however, call [the list of reserved pieces]." instead;
 	if number of pieces in location of player > 0:
 		say "That would make things too crowded here at [location of player], since [the random piece in location of player] is already present." instead;
 	if noun is enemy king:
@@ -736,8 +740,6 @@ to reset-the-board:
 		if debug-state is true, say "DEBUG [random-parchment-number].";
 	if past-intro is true:
 		say "[if location of player is not c3]You go back to c3 in the center to start again[else]You're already at c3 in the center, so that saves time starting again[end if]. Time to re-summon [the list of accessory pieces].";
-		else:
-			say ".";
 		if location of player is not c3:
 			move player to c3;
 	else:
@@ -754,7 +756,7 @@ this is the takeit processing rule:
 
 this is the stalemate processing rule:
 	unless the location of the enemy king is not checked and the location of the enemy king is surrounded, the rule fails;
-	say "The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.[paragraph break]Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny.";
+	say "The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.[paragraph break]Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!";
 	now entry quest-index in stalemated is True;
 	the rule succeeds;
 
@@ -989,9 +991,9 @@ understand "dirs" as dirsing.
 understand "dir" as dirsing.
 
 carry out dirsing:
-	say "The eight directions your horse can travel are, clockwise from north, northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
-	say "That's a bit long, so you can abbreviate them [b]NNE[r], [b] NEE[r], [b] SEE[r], [b] SSE[r], [b] SSW[r], [b] SWW[r], [b]NWW[r], [b]NNW[r] or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between [b]NNE[r], [b]NEN[r] and [b]ENN[r].";
-	say "You can toggle how the directions appear (long or short) in room descriptions with [b]ABB[r].";
+	say "There are eight directions your horse can travel,, clockwise from north: northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
+	say "[line break]That's a bit long, so you can abbreviate them [b]NNE[r], [b] NEE[r], [b] SEE[r], [b] SSE[r], [b] SSW[r], [b] SWW[r], [b]NWW[r], [b]NNW[r] or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between [b]NNE[r], [b]NEN[r] and [b]ENN[r].";
+	say "You can toggle how the directions appear (long or short) in room descriptions with [b]ABB[r] or [b]A[r].";
 	the rule succeeds.
 
 chapter fail
