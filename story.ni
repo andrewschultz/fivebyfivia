@@ -6,7 +6,9 @@ the story description is "Less impossible than beating Stockfish".
 
 release along with a website.
 
-release along with an interpreter.
+release along with the "Parchment" interpreter.
+
+release along with cover art.
 
 volume basics and definitions
 
