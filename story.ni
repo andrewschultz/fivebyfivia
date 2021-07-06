@@ -64,6 +64,7 @@ when play begins:
 		now screen-reader is true;
 	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELENDA EST]. And you're off!";
 	now right hand status line is "[entry quest-index of quest-quick-desc]";
+	now all pieces are in offsite;
 
 chapter FIVEBYFIVIA DELENDA EST
 
@@ -445,7 +446,7 @@ chapter pieces
 
 a piece is a kind of person. a piece can be reserved, irrelevant or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
 
-a piece has a room called cached-position.
+a piece has a room called cached-position. cached-position of a piece is usually offsite.
 
 a piece can be tutorial-held. a piece is usually not tutorial-held.
 
@@ -728,7 +729,7 @@ to fail-and-reset:
 past-intro is a truth state that varies.
 
 to reset-the-board:
-	now all pieces are off-stage;
+	now all pieces are in offsite;
 	now all placed pieces are reserved;
 	now all rooms are not guarded;
 	now max-turns-after-placing is entry quest-index of max-wait-times;
@@ -1193,8 +1194,14 @@ carry out tuting:
 		say "[blather entry][line break]";
 		say "Type any key to continue[if my-row < 4] or Q to quit[end if].";
 		let Q be the chosen letter;
-		if Q is 81 or Q is 113, the rule succeeds;
+		if Q is 81 or Q is 113, break;
 	now in-tutorial is false;
+	repeat with X running through tutorial-held pieces:
+		now X is in offsite;
+		now X is not tutorial-held;
+	repeat with X running through pieces:
+		if cached-position of X is not offsite, move X to cached-position of X;
+		now cached-position of X is offsite;
 	the rule succeeds.
 
 table of tutorial stuff
