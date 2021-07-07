@@ -127,8 +127,8 @@ Include (-
 	'x//':   print "examine";
 	'z//':   print "wait";
 	'about':  print "see info about the game";
-	'c//', 'credit', 'credits': print "see the credits";
-	'c//', 'p//', 'call', 'place': print "place";
+	'credit', 'credits': print "see the credits";
+	'c//', 'p//', 'call', 'place': print "(P)lace or (C)all";
 	default: rfalse;
 	}
 	rtrue;
@@ -478,7 +478,7 @@ summon-list of queen is { false, true, false, false }.
 
 the kingside rook is a neuter piece. understand "kr" as kingside rook. understand "r" as kingside rook. short-text of kingside rook is "KR/R".
 
-summon-list of kingside rook is { true, false, true, false }.
+summon-list of kingside rook is { true, false, false, false }.
 
 the queenside rook is a neuter piece. understand "qr" as queenside rook. understand "r" as queenside rook. short-text of queenside rook is "QR/R".
 
@@ -534,8 +534,8 @@ rule for supplying a missing noun when calling:
 this is the enemy-placement rule:
 	if number of reserved pieces > 1:
 		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
-	if enemy king is off-stage, continue the action;
-	if absval of (x of location of enemy king - x of location of enemy king) < 2 and absval of (y of location of enemy king - y of location of enemy king) < 2:
+	if enemy king is off-stage or location of enemy king is offsite, continue the action;
+	if absval of (x of location of enemy king - x of location of friendly king) < 2 and absval of (y of location of enemy king - y of location of friendly king) < 2:
 		say "Wait, no, you can't put the enemy kings adjacent to each other, not even diagonally. They operate through intermediaries, apparently." instead;
 
 carry out calling:
@@ -698,16 +698,18 @@ definition: a piece (called p) is accessory:
 
 to setup-next-puzzle:
 	reset-the-board;
+	if quest-index is 1 or quest-index is 2:
+		if a random chance of 1 in 2 succeeds:
+			now preferred-rook is queenside rook;
+		else:
+			now preferred-rook is kingside rook;
+		if quest-index is 3:
+			now entry 3 of summon-list of preferred-rook is true;
 	repeat with P running through pieces:
 		if entry quest-index of summon-list of P is true:
 			now P is reserved;
 		else:
 			now P is irrelevant;
-	if quest-index is 1:
-		if a random chance of 1 in 2 succeeds:
-			now preferred-rook is queenside rook;
-		else:
-			now preferred-rook is kingside rook;
 	if quest-index is 4:
 		say "No allies this time.";
 	else:
@@ -1196,7 +1198,8 @@ carry out tuting:
 		let Q be the chosen letter;
 		if Q is 81 or Q is 113, break;
 	now in-tutorial is false;
-	repeat with X running through tutorial-held pieces:
+	reset-guard;
+	repeat with X running through pieces:
 		now X is in offsite;
 		now X is not tutorial-held;
 	repeat with X running through pieces:
