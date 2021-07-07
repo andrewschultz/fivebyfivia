@@ -457,7 +457,7 @@ check taking a piece:
 
 preferred-rook is a piece that varies.
 
-does the player mean calling preferred-rook when quest-index is 2 or quest-index is 3: it is likely. [ this is to avoid disambiguation that gets rejected either way ]
+does the player mean calling preferred-rook: it is likely. [ this is to avoid disambiguation that gets rejected either way e.g. "do you want the kingside or queenside rook?" / either / "That is not part of your maneuvers." ]
 
 definition: a piece (called p) is offensive:
 	if p is enemy king, no;
@@ -699,7 +699,7 @@ definition: a piece (called p) is accessory:
 
 to setup-next-puzzle:
 	reset-the-board;
-	if quest-index is 1 or quest-index is 3:
+	if quest-index < 4: [ maybe this randomization is self-indulgent, but the QR and KR are functionally equivalent. ]
 		if a random chance of 1 in 2 succeeds:
 			now preferred-rook is queenside rook;
 		else:
