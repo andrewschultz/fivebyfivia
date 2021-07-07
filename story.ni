@@ -457,7 +457,7 @@ check taking a piece:
 
 preferred-rook is a piece that varies.
 
-does the player mean calling preferred-rook when quest-index is not 3: it is likely. [ this is to avoid disambiguation that gets rejected either way ]
+does the player mean calling preferred-rook when quest-index is 2 or quest-index is 3: it is likely. [ this is to avoid disambiguation that gets rejected either way ]
 
 definition: a piece (called p) is offensive:
 	if p is enemy king, no;
@@ -531,12 +531,13 @@ rule for supplying a missing noun when calling:
 		say "You need to specify which ally to summon of [the list of not-last pieces].";
 		reject the player's command.
 
-this is the enemy-placement rule:
+this is the enemy-king-placement rule:
 	if number of reserved pieces > 1:
 		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
-	if enemy king is off-stage or location of enemy king is offsite, continue the action;
-	if absval of (x of location of enemy king - x of location of friendly king) < 2 and absval of (y of location of enemy king - y of location of friendly king) < 2:
-		say "Wait, no, you can't put the enemy kings adjacent to each other, not even diagonally. They operate through intermediaries, apparently." instead;
+	let ax be absval of (x of location of player - x of location of friendly king);
+	let ay be absval of (y of location of player - y of location of friendly king);
+	if  ax < 2 and ay < 2:
+		say "Wait, no, you can't put the enemy kings adjacent to each other[if ax is 1 and ay is 1], not even diagonally[end if]. They operate through intermediaries, apparently." instead;
 
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
@@ -550,7 +551,7 @@ carry out calling:
 	if number of pieces in location of player > 0:
 		say "That would make things too crowded here at [location of player], since [the random piece in location of player] is already present." instead;
 	if noun is enemy king:
-		abide by the enemy-placement rule;
+		abide by the enemy-king-placement rule;
 	say "You call [the noun] to [location of player].";
 	now need-to-hurry is true;
 	now noun is placed;
@@ -698,7 +699,7 @@ definition: a piece (called p) is accessory:
 
 to setup-next-puzzle:
 	reset-the-board;
-	if quest-index is 1 or quest-index is 2:
+	if quest-index is 1 or quest-index is 3:
 		if a random chance of 1 in 2 succeeds:
 			now preferred-rook is queenside rook;
 		else:
@@ -1288,6 +1289,7 @@ test q1f with "call rook/nnw/call rook/ssw/call king".
 test q1 with "ssw/nnw/see/see/call kingside/nww/call queenside/sww/call king".
 test q1s with "nnw/call kingside/ssw/see/call queenside/sww/call king".
 
+test q2a with "see/place k/sww/place q/nne/sse/place k".
 test q2f with "call queen/nnw/call king/ssw/call king".
 test q2n with "ssw/nee/call queen/sww/nne/call king/sse/call king".
 test q2 with "sse/call queen/nnw/ssw/nnw/call friendly king/sse/call enemy king".
