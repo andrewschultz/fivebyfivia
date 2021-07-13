@@ -73,7 +73,23 @@ when play begins:
 
 chapter FIVEBYFIVIA DELENDA EST
 
-FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. description of DELENDA is "[DELENDA] contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].[paragraph break]There are also some general notes about not calling the enemy king until your allies are all set, or he'll get suspicious.".
+FIVEBYFIVIA DELENDA EST is a thing. the player carries FIVEBYFIVIA DELENDA EST. description of DELENDA is "[DELENDA] contains the instructions for your current quest. Right now, it seems you need to [current-quest-text].[paragraph break][noun-abbrevs].".
+
+to say noun-abbrevs:
+	if quest-index is 4:
+		say "There seem to be no useful scrawls in the margins for this final quest";
+		continue the action;
+	say "Scrawls in the margins indicate ways to think of your allies more efficiently. ";
+	if in-tutorial is true:
+		say "[b]Q[r] calls the Queen, [b]R[r] the rook, and [b]K[r] the enemy king";
+		continue the action;
+	if quest-index is 1:
+		say "[b]KR[r] and [b]QR[r] pick a rook, though since they're functionally equivalent, [b]R[r] is just fine, too";
+	else if quest-index is 2:
+		say "Q[r] refers to the Queen";
+	else if quest-index is 3:
+		say "R refers to [the preferred-rook]";
+	say ". [b]K[r] refers to your King if he's not placed and the enemy King if yours is. You could think [b]K1[r] and [b]K2[r], but since the enemy king should be called last (he may get suspicious if he has to wait around,) that may be excessive";
 
 printed name of DELENDA is "[i]FIVEBYFIVIA DELENDA EST[r]".
 
@@ -84,11 +100,11 @@ understand "del" as DELENDA.
 understand "scroll" as DELENDA.
 
 after examining DELENDA for the first time:
-	say "You may wish to shorten typing [delenda]'s long name to [b]FDE[r], [b]EST[r], or [b]DEL[r]. Or you can just type [b]X[r]. You're an ambitious knight, not some boring old scribe who shows off writing fancy words out. You have much more exciting ways to show off!"
+	say "You may wish to shorten typing [delenda]'s long name to [b]FDE[r], [b]EST[r], or [b]DEL[r]. Or you can just type [b]X[r]. You're an ambitious knight, not some boring old scribe who writes big long fancy words out, just because. You have much more exciting ways to show off!"
 
 to say current-quest-text:
 	if quest-index is 4:
-		say "trample around all twenty-five precincts of [5b] without repeating twice";
+		say "trample around all twenty-five counties of [5b] without repeating twice";
 		continue the action;
 	say "entrap the [age-of] king of [5b] with [the list of offensive pieces]"
 
@@ -648,7 +664,7 @@ to show-the-board:
 	say "1[pie of a1][pie of b1][pie of c1][pie of d1][pie of e1] 1[line break]";
 	say "  a b c d e[variable letter spacing][paragraph break]";
 	if in-tutorial is true:
-		say "Q = queen, R = queenside rook, k = enemy king, + = guarded square.";
+		say "Q = queen, R = rook, k = enemy king, + = guarded square.";
 		continue the action;
 	say "[if in-tutorial is false]* = you, ^ = available in one move, [end if]+ = square is guarded[if friendly king is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
 
@@ -850,32 +866,38 @@ parch-take-count is a number that varies.
 
 check taking PARCHMENTE:
 	increment parch-take-count;
-	say "[one of]It blows away before you can get close! Well, that's a bit of temptation resisted by default. Perhaps it will fly back into view later[or]This time, you snag the parchment[stopping].";
+	say "[one of]It blows away before you can get close! Well, that's a bit of temptation resisted by default. Perhaps it will fly back into view sooner or later (fourth wall break: it should be sooner.)[or]This time, you snag the parchment.[stopping]";
 	if parch-take-count is 2:
 		now player has PARCHMENTE;
 	the rule succeeds;
 
-description of YE OLDE HINTE PARCHMENTE is "[if player does not have parchmente]It's too far to read. You'll have to TAKE it to read it[else][parchment-tips][end if]."
+description of YE OLDE HINTE PARCHMENTE is "[if player does not have parchmente]The writing's too small to read when it's on the ground. You'll have to TAKE it to read it[else][parchment-tips][end if]"
 
 read-so-far is a number that varies. read-so-far is 1.
 
 this is the theres-more rule:
 	say "There's more. Read it (Y, any other letter is N)?";
 	let Q be the chosen letter;
-	if Q is 89 or Q is 115, the rule succeeds;
+	if Q is 89 or Q is 121, the rule succeeds;
 	the rule fails;
 
 to say parchment-tips:
-	say "1. Ye must save the CORNER SQUARES for last.";
+	say "1. Ye must save CERTAIN COUNTIES for last. Which might they be?";
 	if read-so-far < 2:
 		consider the theres-more rule;
 		unless the rule succeeded, continue the action;
-		now read-so-far is 3;
-	say "2. Ye have but one route to and from each CORNER SQUARE.";
+		now read-so-far is 2;
+	say "2. Ye must save the CORNER COUNTIES for last.";
 	if read-so-far < 3:
 		consider the theres-more rule;
 		unless the rule succeeded, continue the action;
-	say "3. If ye avoid such squares, you may soon find the next move is FORCED, saving thee considerable brain work."
+		now read-so-far is 3;
+	say "3. Ye have but one route to and from each CORNER COUNTY.";
+	if read-so-far < 4:
+		consider the theres-more rule;
+		unless the rule succeeded, continue the action;
+		now read-so-far is 4;
+	say "4. If ye avoid such CORNER COUNTIES, you may soon find the next move is FORCED, saving thee considerable brain work.[no line break]"
 
 volume regular verbs to reject
 
@@ -1143,7 +1165,7 @@ to show-visited:
 	say "2[vis of a2][vis of b2][vis of c2][vis of d2][vis of e2] 2[line break]";
 	say "1[vis of a1][vis of b1][vis of c1][vis of d1][vis of e1] 1[line break]";
 	say "  a b c d e[variable letter spacing][line break]";
-	say "You've visited [number of circle-visited rooms] of [5b]'s twenty-five precincts.";
+	say "You've visited [number of circle-visited rooms in words] of [5b]'s twenty-five counties.";
 
 carry out statsing:
 	if quest-index is 4:
@@ -1244,7 +1266,8 @@ understand "v" as verbsing.
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
-	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. These are all the commands you need to win. [b]X[r] [delenda] for your current quest. You can also [b]FAIL[r]/[b]F[r] to reset the current quest.";
+	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. You can often use abbreviations for the allies you need to place. These are all the commands you need to win.";
+	say "[line break][b]X[r] [delenda] details your current quest, including useful shorthand to refer to your allies. You can also [b]FAIL[r]/[b]F[r] to reset the current quest.";
 	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
 	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]CR[r] for general game information and thanks.";
 	say "You also have the option of toggling abbreviations of long directions with [b]ABB[r].";
@@ -1256,8 +1279,6 @@ carry out verbsing:
 	else:
 		say "[b]T[r] toggles tour view for the quest between printing directions and printing a map.";
 	say "And of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
-	say "[line break]While this is more nouns than vertbs, note you can often use abbreviations for nouns, e.g. [b]CALL Q[r] for the queen or [b]CALL KR[r] for the kingside rook or [b]CALL K[r] for the king.";
-	the rule succeeds.
 
 chapter xyzzying
 
