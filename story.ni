@@ -10,6 +10,10 @@ release along with the "Parchment" interpreter.
 
 release along with cover art.
 
+to say email: say "blurglecruncheon@gmail.com"
+
+to say github: say "https://github.com/andrewschultz/fivebyfivia-delenda-est"
+
 volume basics and definitions
 
 include Undo Output Control by Erik Temple.
@@ -42,8 +46,9 @@ after examining a thing (called th):
 
 got-rook-for-queen is a truth state that varies.
 
-understand the command "y" as something new. [this is to reject "That was a rhetorical question" before ]
-understand the command "yes" as something new. [this is to reject "That was a rhetorical question" before ]
+understand the command "y" as something new.
+understand the command "yes" as something new.
+understand the command "no" as something new. [these are to reject the "That was a rhetorical question" error, which can annoy players. ]
 
 chapter rooms
 
@@ -154,10 +159,13 @@ to say room-color:
 rule for printing the locale description:
 	if quest-index is 4:
 		now location of player is circle-visited;
-		if show-tour-view is true:
+		if maps-in-description is true:
 			show-visited;
 			the rule succeeds;
-	say "[room-detail].";
+	if maps-in-description is true:
+		show-the-board;
+	else:
+		say "[room-detail].";
 	continue the action;
 
 to say room-detail:
@@ -431,6 +439,7 @@ when play begins:
 				now re2 is mapped southeasteast of rn1;
 				now rn1 is mapped northwestwest of re2;
 	setup-next-puzzle;
+	say "[line break][bracket]NOTE: [5b] has different commands from standard adventures, including options that may make navigation easier. The [b]ABOUT[r]/[b]A[r] and [b]VERBS[r]/[b]V[r] commands describe them.[close bracket][line break]";
 
 volume people and quests
 
@@ -617,7 +626,7 @@ to quest-conclusion:
 		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
 		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.[paragraph break]By the way, there is a new meta-verb. [b]T[r] or [b]TOUR[r] to toggles tour view mode, which shows an overall map of [5b] instead of telling you directions. It is set to on.";
-		if screen-reader is false, now show-tour-view is true;
+		if screen-reader is false, now maps-in-description is true;
 	increment quest-index;
 	setup-next-puzzle;
 
@@ -641,7 +650,7 @@ to show-the-board:
 	if in-tutorial is true:
 		say "Q = queen, R = queenside rook, k = enemy king, + = guarded square.";
 		continue the action;
-	say "[if in-tutorial is false]* = you, [end if]+ = square is guarded[if friendly king is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
+	say "[if in-tutorial is false]* = you, ^ = available in one move, [end if]+ = square is guarded[if friendly king is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
 
 to say pie of (r - a room):
 	say " ";
@@ -657,6 +666,8 @@ to say pie of (r - a room):
 		say "*";
 	else if r is guarded:
 		say "+";
+	else if r is knight-movable:
+		say "^";
 	else:
 		say "-"
 
@@ -931,7 +942,7 @@ understand "about" as abouting.
 understand "a" as abouting.
 
 carry out abouting:
-	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where was the story?[paragraph break]I wasn't expecting one to pop up. The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]But one evening, something came into form. And as ParserComp's deadline came up, my bigger plan had stalled, so why not bail out?[paragraph break]I like parser games with weird directions. So I tried to make one.[paragraph break]Thankfully, I was able to find something that worked, technically, and it had the shell of a story, too. And I hope you enjoy this, too, whether or not you play chess.";
+	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where would the story be? I wasn't expecting anything to pop up.[paragraph break]The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]Then one evening, something came into form. And as ParserComp's deadline came up, my bigger planned game had stalled, so why not bail out?[paragraph break]I had some initial doubts, but I started to see how I could work around them. The result was something that worked technically, addressed an odd sort of position that always amused me, and it had the shell of a story, too. I'd also wanted to do some programming related to chess, so I had fun. And I hope you enjoy this, too, whether or not you play chess.[paragraph break]If this is still during ParserComp, please also check out the other games (17 others!) and try to leave a transcript. For Z-machine games, typing TRANSCRIPT helps--even if you can't find anything or leave comments, the programmer may notice certain things worth fixing from how you play, e.g. they wanted to make a hint more prominent. My address is [email].[paragraph break][b]CREDITS[r]/[b]CR[r] has more information about specific people who helped me.";
 	the rule succeeds.
 
 chapter boarding
@@ -978,12 +989,16 @@ chapter creditsing
 creditsing is an action out of world.
 
 understand the command "credits" as something new.
+understand the command "cr" as something new.
 
 understand "credits" as creditsing.
+understand "cr" as creditsing.
 
 carry out creditsing:
-	say "Thanks to Wade Clarke, Dee Cooke, Arthur DiBianca, Garry Francis and Olaf Nowicki for testing.";
-	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all was especially nice during the pandemic.";
+	say "Thanks to Wade Clarke, Dee Cooke, Arthur DiBianca, Garry Francis and Olaf Nowacki for testing. I know my games are tricky to test, especially when I have the idea 2-3 weeks before the deadline.";
+	say "[line break]Thanks to Adam Sommerfield for holding ParserComp and for allowing updates. I tried not to need them but failed.";
+	say "[line break]Thanks to the people on itch.io who reported bugs in-comp, including salty-horse. It may seem trivial, but trust me: after that first five minutes of 'Geez, that can't be it. Wait, did I overlook THAT?' it's very much appreciated. If you find a bug, report it at [github] or send me a mail at [email].";
+	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all has been especially nice during the pandemic.";
 	the rule succeeds.
 
 chapter dirsing
@@ -999,7 +1014,7 @@ understand "dir" as dirsing.
 carry out dirsing:
 	say "There are eight directions your horse can travel,, clockwise from north: northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
 	say "[line break]That's a bit long, so you can abbreviate them [b]NNE[r], [b] NEE[r], [b] SEE[r], [b] SSE[r], [b] SSW[r], [b] SWW[r], [b]NWW[r], [b]NNW[r] or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between [b]NNE[r], [b]NEN[r] and [b]ENN[r].";
-	say "You can toggle how the directions appear (long or short) in room descriptions with [b]ABB[r] or [b]A[r].";
+	say "[line break]You can toggle how the directions appear (long or short) in room descriptions with [b]ABB[r] or [b]A[r].";
 	the rule succeeds.
 
 chapter fail
@@ -1094,7 +1109,7 @@ to say vis of (r - a room):
 		say "+";
 	else if r is circle-visited:
 		say "*";
-	else if quest-index is 4 and r is knight-movable:
+	else if r is knight-movable:
 		say "?[no line break]";
 	else:
 		say " "
@@ -1153,18 +1168,18 @@ chapter ting
 ting is an action applying to nothing.
 
 understand the command "t" as something new.
-understand the command "tour" as something new.
+understand the command "toggle" as something new.
 
-understand "t" as ting when quest-index is 4.
-understand "tour" as ting when quest-index is 4.
+understand "t" as ting.
+understand "toggle" as ting.
 
 carry out ting:
-	if screen-reader is true, say "Toggling tour view would cause the screen reader to make strange outputs, so I'm restricting it." instead;
-	now show-tour-view is whether or not show-tour-view is false;
-	say "Tour view is now [on-off of show-tour-view].";
+	if screen-reader is true, say "Toggling maps in the room description would cause the screen reader to make strange outputs, so I'm restricting it." instead;
+	now maps-in-description is whether or not maps-in-description is false;
+	say "Toggling maps in the room description to [on-off of maps-in-description].";
 	the rule succeeds.
 
-show-tour-view is a truth state that varies.
+maps-in-description is a truth state that varies.
 
 chapter tuting
 
@@ -1231,7 +1246,7 @@ carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
 	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. These are all the commands you need to win. [b]X[r] [delenda] for your current quest. You can also [b]FAIL[r]/[b]F[r] to reset the current quest.";
 	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
-	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r] for general game information and thanks.";
+	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]CR[r] for general game information and thanks.";
 	say "You also have the option of toggling abbreviations of long directions with [b]ABB[r].";
 	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
 	if quest-index > 1:
