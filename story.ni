@@ -10,6 +10,8 @@ release along with the "Parchment" interpreter.
 
 release along with cover art.
 
+the release number is 2.
+
 to say email: say "blurglecruncheon@gmail.com"
 
 to say github: say "https://github.com/andrewschultz/fivebyfivia-delenda-est"
@@ -57,6 +59,11 @@ a room can be circle-visited. a room is usually not circle-visited.
 a room can be guarded. a room is usually not guarded.
 
 to reset-guard: now all rooms are not guarded.
+
+definition: a room (called r) is otherly:
+	if r is offsite, no;
+	if r is location of player, no;
+	yes;
 
 chapter start of play
 
@@ -462,7 +469,7 @@ when play begins:
 				now re2 is mapped southeasteast of rn1;
 				now rn1 is mapped northwestwest of re2;
 	setup-next-puzzle;
-	say "[line break][bracket]NOTE: [5b] has different commands from standard adventures, including options that may make navigation easier. The [b]ABOUT[r]/[b]A[r] and [b]VERBS[r]/[b]V[r] commands describe them.[close bracket][line break]";
+	say "[line break][bracket]NOTE: [5b] has different commands from standard adventures, including options that may make navigation easier. The [b]ABOUT[r]/[b]A[r] and [verbs] commands describe them.[close bracket][line break]";
 
 volume people and quests
 
@@ -916,6 +923,15 @@ volume meta
 
 to say verbs: say "[b]V[r] or [b]VERB[r] or [b]VERBS[r]"
 
+the check for room names rule is listed first in the for printing a parser error rulebook.
+
+rule for printing a parser error (this is the check for room names rule):
+	if the player's command matches the regular expression "\b<a-z><0-9>+\b", case insensitively:
+		if the player's command matches the regular expression "\b<a-e><1-5>\b", case insensitively:
+			say "If you want to go to another square, just type it in, e.g. [random otherly room]. You can't do anything else with a room.";
+		else:
+			say "It looks like you are referring to a square not on the board. Only a1-e5 are available. You can type any square name to move to it.[paragraph break]For general help, type [verbs].";
+
 rule for printing a parser error:
 	say "I didn't recognize that command. Type [verbs] to see the full list of commands. If you're confused what to do, [b]X[r] [delenda] again, or refer to the game [b]MAP[r]."
 
@@ -927,7 +943,7 @@ rule for printing a parser error when the latest parser error is the only unders
 
 report undoing an action:
 	if quest-index is 4:
-		say "Undone. While I can't give any help on whether or not this has made the quest winnable, don't worry. You can restart if you need to.";
+		say "Undone. Whether this makes the final tour doable, I'm too lazy to calculate. But don't worry. You can restart if you need to.";
 	else:
 		say "Undone[if number of placed pieces is 0], though until you've placed a piece, there's nothing worth undoing[end if]. Note you can always undo everything with [b]F[r] or [b]FAIL[r].";
 
@@ -1285,7 +1301,7 @@ carry out verbsing:
 		say "[b]TUT[r] provides a tutorial on how pieces move and how a queen and rook can trap the king, which may help you.";
 	else:
 		say "[b]T[r] toggles tour view for the quest between printing directions and printing a map.";
-	say "And of course, there's this command, too: [b]VERBS[r]/[b]VERB[r]/[b]V[r].";
+	say "And of course, there's this command, too: [verbs].";
 
 chapter xyzzying
 
@@ -1370,7 +1386,7 @@ lesser	greater	general	corner
 4	4	4	--
 
 after reading a command:
-	if the player's command matches the regular expression "^<a-e><1-5>$":
+	if the player's command matches the regular expression "^<a-e><1-5>$", case insensitively:
 		let n be indexed text;
 		now n is "gt [the player's command]";
 		change the text of the player's command to n;
