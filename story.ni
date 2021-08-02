@@ -196,7 +196,14 @@ to say room-detail:
 	if location of player is c3:
 		say "From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
+	now room-too is true;
 	say "You can go [list of weird-viable directions][if number of placed pieces is 0 and quest-index < 4] to search for the best place to CALL your first allies[end if]";
+	now room-too is false:
+
+room-too is a truth state that varies.
+
+after printing the name of a direction (called d) when room-too is true:
+	say " to [the room d of location of player]";
 
 definition: a direction (called d) is viable:
 	if the room d of location of player is offsite, no;
@@ -1097,7 +1104,7 @@ carry out reviewing:
 		if entry x in stalemated is true:
 			say "You stalemated the enemy king with [stalemate-notes entry].";
 		else:
-			say "[checkmate-notes entry]";
+			say "[checkmate-notes entry][line break]";
 	the rule succeeds.
 
 table of notes
@@ -1265,7 +1272,7 @@ understand "verb" as verbsing.
 understand "v" as verbsing.
 
 carry out verbsing:
-	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r].";
+	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r]. You can also specify the county you wish to visit by name, e.g. [b]c3[r] will send you back to the center.";
 	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. You can often use abbreviations for the allies you need to place. These are all the commands you need to win.";
 	say "[line break][b]X[r] [delenda] details your current quest, including useful shorthand to refer to your allies. You can also [b]FAIL[r]/[b]F[r] to reset the current quest.";
 	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
@@ -1290,6 +1297,83 @@ understand "xyzzy" as xyzzying.
 
 carry out xyzzying:
 	say "On the very east side of the world lie such repositories of hooliganism and pointless chance-taking as Backgammonton, Pokersfield or, worse, Yahtzeeburg. You dream of helping conquer them one day, but it is only a dream. A too-risky one at that.";
+
+volume post release
+
+chapter going to
+
+gotoing is an action applying to one visible thing.
+
+understand the command "g" as something new.
+understand the command "gt" as something new.
+understand the command "go to" as something new.
+
+understand "g [any onboard room]" as gotoing.
+understand "gt [any onboard room]" as gotoing.
+understand "go to [any onboard room]" as gotoing.
+
+definition: a room (called r) is onboard:
+	if r is offsite, no;
+	yes;
+
+to decide which number is x-dist of (r1 - a room) and (r2 - a room):
+	decide on absval of (x of r1) - (x of r2);
+
+to decide which number is y-dist of (r1 - a room) and (r2 - a room):
+	decide on absval of (y of r1) - (y of r2);
+
+carry out gotoing:
+	if noun is location of player:
+		say "You're already here." instead;
+	let xd be x-dist of location of player and noun;
+	let yd be y-dist of location of player and noun;
+	if xd < yd:
+		let temp be xd;
+		now xd is yd;
+		now yd is temp;
+	repeat through table of distances to moves:
+		if lesser entry is not yd or greater entry is not xd, next;
+		let prob-moves be general entry;
+		if there is a corner entry:
+			if location of player is cornery or noun is cornery:
+				now prob-moves is corner entry;
+		if prob-moves > 1 and quest-index is 4:
+			say "You need to run around efficiently, but that's too fast. Since you need to visit the counties in order, I'm going to be a stickler and only let you move between knight-adjacent rooms, even though there might be just one valid short path between, say, a2 and d1.";
+			the rule fails;
+		if need-to-hurry is true and prob-moves + current-turns-after-placing > max-turns-after-placing:
+			say "But then you would run out of time to summon everyone.";
+			the rule fails;
+		say "Your horse zooms [if prob-moves > 1]around for [prob-moves] moves[else]briefly[end if] to [noun].";
+		move player to noun;
+		if need-to-hurry is true:
+			increase current-turns-after-placing by prob-moves;
+		the rule succeeds;
+	say "BUG. I don't khow what happened, but I didn't find distances between rooms.";
+	the rule succeeds;
+
+table of distances to moves
+lesser	greater	general	corner
+0	0	0	--
+0	1	3	--
+0	2	2	--
+0	3	3	--
+0	4	2	--
+1	1	2	4
+1	2	1	--
+1	3	2	--
+1	4	3	--
+2	2	4	--
+2	3	3	--
+2	4	2	--
+3	3	2	--
+3	4	3	--
+4	4	4	--
+
+after reading a command:
+	if the player's command matches the regular expression "^<a-e><1-5>$":
+		let n be indexed text;
+		now n is "gt [the player's command]";
+		change the text of the player's command to n;
 
 volume beta testing - not for release
 
