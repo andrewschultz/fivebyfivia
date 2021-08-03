@@ -4,33 +4,13 @@ the story headline is "Flagrant Horsing Around".
 
 the story description is "Less impossible than beating Stockfish".
 
-release along with a website.
-
-release along with the "Parchment" interpreter.
-
-release along with cover art.
-
 the release number is 2.
-
-to say email: say "blurglecruncheon@gmail.com"
 
 to say github: say "https://github.com/andrewschultz/fivebyfivia-delenda-est"
 
 volume basics and definitions
 
-include Undo Output Control by Erik Temple.
-
-include Trivial Niceties by Andrew Schultz.
-
-include Old School Verb Total Carnage by Andrew Schultz.
-
-in-beta is a truth state that varies.
-
-debug-state is a truth state that varies.
-
-to say 12b: say "Twelvebytwelvia"
-
-to say 5b: say "Fivebyfivia"
+include Chess Common Functions by Andrew Schultz.
 
 max-quests is a number that varies. max-quests is 4.
 
@@ -38,9 +18,7 @@ quest-index is a number that varies. quest-index is 1.
 
 moves-this-quest is a number that varies. moves-this-quest is 0.
 
-description of the player is "Spiffy and knightly indeed."
-
-a thing can be examined. a thing is usually not examined.
+description of the player is "You're quite the physical specimen under that armor. Not just any knight could ride your super-fast crazy horse that zigzags. But you've got confidence and cunning, too."
 
 after examining a thing (called th):
 	now th is examined;
@@ -48,26 +26,11 @@ after examining a thing (called th):
 
 got-rook-for-queen is a truth state that varies.
 
-understand the command "y" as something new.
-understand the command "yes" as something new.
-understand the command "no" as something new. [these are to reject the "That was a rhetorical question" error, which can annoy players. ]
-
 chapter rooms
 
 a room can be circle-visited. a room is usually not circle-visited.
 
-a room can be guarded. a room is usually not guarded.
-
-to reset-guard: now all rooms are not guarded.
-
-definition: a room (called r) is otherly:
-	if r is offsite, no;
-	if r is location of player, no;
-	yes;
-
 chapter start of play
-
-screen-reader is a truth state that varies.
 
 when play begins:
 	say "Fivebyfivia has some text-mapping options that may cause screen-readers to give useless output. Are you using a screen reader?";
@@ -139,37 +102,9 @@ To say character number (N - a number): (- print (char) {N}; -)
 
 section what did you mean to
 
-volume i6 modification(s)
-
-section What Do You Want to X
-
-Include (-
-Replace LanguageVerb;
--) after "Definitions.i6t".
-
-Include (-
-[ LanguageVerb i;
-	switch (i) {
-	'i//','inv','inventory': print "take inventory";
-	'l//':   print "look";
-	'x//':   print "examine";
-	'z//':   print "wait";
-	'about':  print "see info about the game";
-	'credit', 'credits': print "see the credits";
-	'c//', 'p//', 'call', 'place': print "(P)lace or (C)all";
-	default: rfalse;
-	}
-	rtrue;
-];
--) after "Language.i6t".
-
 chapter room info
 
 a room has a number called x. a room has a number called y.
-
-a room has text called room-edge-text.
-
-offsite is a room. x of offsite is -3. y of offsite is -3.
 
 the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of [5b][commentary].".
 
@@ -211,11 +146,6 @@ room-too is a truth state that varies.
 
 after printing the name of a direction (called d) when room-too is true:
 	say " to [the room d of location of player]";
-
-definition: a direction (called d) is viable:
-	if the room d of location of player is offsite, no;
-	if the room d of location of player is nowhere, no;
-	yes;
 
 definition: a direction (called d) is weird-viable:
 	if d is weird and d is viable, yes;
@@ -277,13 +207,9 @@ after going to a circle-visited room:
 	say "[line break]";
 	reset-the-board;
 
-chapter direction info
+chapter info for knight directions
 
 a direction can be normal or weird. a direction is usually normal. a direction has text called vh-abbrev.
-
-a direction has a number called yness. yness of a direction is usually 0.
-
-a direction has a number called xness. xness of a direction is usually 0.
 
 southsoutheast is a direction. it is weird. vh-abbrev is "SSE". northnorthwest is a direction. it is weird. vh-abbrev is "NNW".
 
@@ -327,103 +253,61 @@ understand "nee" and "ene" and "een" as northeasteast.
 
 for printing the name of a weird direction (called d) when show-short-dirs is true: say "[vh-abbrev of d]"
 
-section for seeing what's attacking who
-
-xness of northwest is -1. yness of northwest is 1.
-
-xness of northeast is 1. yness of northeast is 1.
-
-xness of southwest is -1. yness of southwest is -1.
-
-xness of southeast is 1. yness of southeast is -1.
-
-xness of east is 1. yness of east is 0.
-
-xness of west is -1. yness of west is 0.
-
-xness of north is 0. yness of north is 1.
-
-xness of south is 0. yness of south is -1.
-
 section for posterity
-
-xness of north is 0. yness of north is 1. xness of south is 0. yness of south is -1. xness of east is 1. yness of east is 0. xness of west is -1. yness of west is 0. xness of northwest is -1. yness of northwest is 1. xness of northeast is 1. yness of northeast is 1. xness of southwest is -1. yness of southwest is -1. xness of southeast is 1. yness of southeast is -1.
 
 volume rooms
 
-to decide which number is edge-count of (r - a room):
-	let temp be 0;
-	if x of r is 4 or y of r is 4, increment temp;
-	if x of r is 0 or y of r is 0, increment temp;
-	decide on temp;
+room-edge-text of a1 is "at the relatively inaccessible southwest corner".
 
-definition: a room (called r) is edgy:
-	if edge-count of r > 0, yes;
-	no;
+room-edge-text of b1 is "on the south edge and near the west edge".
 
-definition: a room (called r) is cornery:
-	if edge-count of r is 2, yes;
-	no;
+room-edge-text of c1 is "in the center of the south edge".
 
-a1 is a room. x of a1 is 0. y of a1 is 0. room-edge-text is "at the relatively inaccessible southwest corner".
+room-edge-text of d1 is "on the south edge and near the east edge".
 
-b1 is a room. x of b1 is 1. y of b1 is 0. room-edge-text is "on the south edge and near the west edge".
+room-edge-text of e1 is "at the relatively inaccessible southeast corner".
 
-c1 is a room. x of c1 is 2. y of c1 is 0. room-edge-text is "in the center of the south edge".
+room-edge-text of a2 is "on the west edge and near the south edge".
 
-d1 is a room. x of d1 is 3. y of d1 is 0. room-edge-text is "on the south edge and near the east edge".
+room-edge-text of b2 is "in a southwest-ish area".
 
-e1 is a room. x of e1 is 4. y of e1 is 0. room-edge-text is "at the relatively inaccessible southeast corner".
+room-edge-text of c2 is "just south of the center".
 
-a2 is a room. x of a2 is 0. y of a2 is 1. room-edge-text is "on the west edge and near the south edge".
+room-edge-text of d2 is "in a southeast-ish area".
 
-b2 is a room. x of b2 is 1. y of b2 is 1. room-edge-text is "in a southwest-ish area".
+room-edge-text of e2 is "on the east edge and near the south edge".
 
-c2 is a room. x of c2 is 2. y of c2 is 1. room-edge-text is "just south of the center".
+room-edge-text of a3 is "at the center of the west edge".
 
-d2 is a room. x of d2 is 3. y of d2 is 1. room-edge-text is "in a southeast-ish area".
+room-edge-text of b3 is "just west of the center".
 
-e2 is a room. x of e2 is 4. y of e2 is 1. room-edge-text is "on the east edge and near the south edge".
+room-edge-text of c3 is "smack in the center".
 
-a3 is a room. x of a3 is 0. y of a3 is 2. room-edge-text is "at the center of the west edge".
+room-edge-text of d3 is "just east of the center".
 
-b3 is a room. x of b3 is 1. y of b3 is 2. room-edge-text is "just west of the center".
+room-edge-text of e3 is "at the center of the east edge".
 
-c3 is a room. x of c3 is 2. y of c3 is 2. room-edge-text is "smack in the center".
+room-edge-text of a4 is "on the west edge and near the north edge".
 
-d3 is a room. x of d3 is 3. y of d3 is 2. room-edge-text is "just east of the center".
+room-edge-text of b4 is "in a northwest-ish area".
 
-e3 is a room. x of e3 is 4. y of e3 is 2. room-edge-text is "at the center of the east edge".
+room-edge-text of c4 is "just north of the center".
 
-a4 is a room. x of a4 is 0. y of a4 is 3. room-edge-text is "on the west edge and near the north edge".
+room-edge-text of d4 is "in a northeast-ish area".
 
-b4 is a room. x of b4 is 1. y of b4 is 3. room-edge-text is "in a northwest-ish area".
+room-edge-text of e4 is "on the east edge and near the north edge".
 
-c4 is a room. x of c4 is 2. y of c4 is 3. room-edge-text is "just north of the center".
+room-edge-text of a5 is "at the relatively inaccessible northwest corner".
 
-d4 is a room. x of d4 is 3. y of d4 is 3. room-edge-text is "in a northeast-ish area".
+room-edge-text of b5 is "on the north edge and near the west edge".
 
-e4 is a room. x of e4 is 4. y of e4 is 3. room-edge-text is "on the east edge and near the north edge".
+room-edge-text of c5 is "in the center of the north edge".
 
-a5 is a room. x of a5 is 0. y of a5 is 4. room-edge-text is "at the relatively inaccessible northwest corner".
+room-edge-text of d5 is "on the north edge and near the east edge".
 
-b5 is a room. x of b5 is 1. y of b5 is 4. room-edge-text is "on the north edge and near the west edge".
-
-c5 is a room. x of c5 is 2. y of c5 is 4. room-edge-text is "in the center of the north edge".
-
-d5 is a room. x of d5 is 3. y of d5 is 4. room-edge-text is "on the north edge and near the east edge".
-
-e5 is a room. x of e5 is 4. y of e5 is 4. room-edge-text is "at the relatively inaccessible northeast corner".
+room-edge-text of e5 is "at the relatively inaccessible northeast corner".
 
 the player is in c3.
-
-to decide which room is room_of (n1 - a number) and (n2 - a number):
-	repeat with Q running through rooms:
-		if x of Q is n1 and y of Q is n2:
-			decide on Q;
-	if debug-state is true:
-		say "(DEBUG) Could not find room for [n1] and [n2].";
-	decide on offsite;
 
 check going a normal direction:
 	if noun is up, say "Your horse can fly across ground but not over it." instead;
@@ -435,11 +319,11 @@ volume initialization
 when play begins:
 	repeat with xval running from 0 to 3:
 		repeat with yval running from 0 to 3:
-			let r0 be room_of xval and yval;
-			let re1 be room_of xval + 1 and yval;
-			let rn1 be room_of xval and yval + 1;
+			let r0 be room-from-nums of xval and yval;
+			let re1 be room-from-nums of xval + 1 and yval;
+			let rn1 be room-from-nums of xval and yval + 1;
 			if r0 is offsite, next; [ shouldn't happen, but ... ]
-			let rne be room_of xval + 1 and yval + 1;
+			let rne be room-from-nums of xval + 1 and yval + 1;
 			if rne is not offsite: [northeast]
 				now rne is mapped northeast of r0;
 				now r0 is mapped southwest of rne;
@@ -452,10 +336,10 @@ when play begins:
 			if rn1 is not offsite:
 				now rn1 is mapped north of r0;
 				now r0 is mapped south of rn1;
-			let rn2 be room_of xval and yval + 2;
-			let re2 be room_of xval + 2 and yval;
-			let re2n1 be room_of xval + 2 and yval + 1;
-			let rn2e1 be room_of xval + 1 and yval + 2;
+			let rn2 be room-from-nums of xval and yval + 2;
+			let re2 be room-from-nums of xval + 2 and yval;
+			let re2n1 be room-from-nums of xval + 2 and yval + 1;
+			let rn2e1 be room-from-nums of xval + 1 and yval + 2;
 			if re2n1 is not offsite:
 				now r0 is mapped southwestwest of re2n1;
 				now re2n1 is mapped northeasteast of r0;
@@ -483,7 +367,7 @@ quest-quick-desc is a list of text variable. quest-quick-desc is { "R & R", "K &
 
 chapter pieces
 
-a piece is a kind of person. a piece can be reserved, irrelevant or placed. a piece is usually irrelevant. a piece has a list of truth state called summon-list. a piece has text called short-text.
+a piece has a list of truth state called summon-list. a piece has text called short-text.
 
 a piece has a room called cached-position. cached-position of a piece is usually offsite.
 
@@ -534,23 +418,6 @@ the bishop is a quasipiece. understand "b/kb/qb" as bishop.
 the knight is a quasipiece. understand "n/kn/qn" as knight.
 
 chapter calling
-
-calling is an action applying to one visible thing.
-
-understand the command "call" as something new.
-understand the command "c" as something new.
-understand the command "place" as something new.
-understand the command "p" as something new.
-
-understand "call [any thing]" as calling.
-understand "c [any thing]" as calling.
-understand "place [any thing]" as calling.
-understand "p [any thing]" as calling.
-
-understand "call" as calling.
-understand "c" as calling.
-understand "place" as calling.
-understand "p" as calling.
 
 definition: a piece (called p) is not-last:
 	if p is enemy king, no;
@@ -637,7 +504,7 @@ to place-range (p - a piece) and (myl - a list of directions):
 			increase temp-y by yness of dir;
 			if temp-x > 4 or temp-x < 0, break;
 			if temp-y > 4 or temp-y < 0, break;
-			let myrm be room_of temp-x and temp-y;
+			let myrm be room-from-nums of temp-x and temp-y;
 			now myrm is guarded;
 			if number of pieces in myrm > 0, break;
 
@@ -645,7 +512,7 @@ to place-king:
 	let myx be x of location of friendly king;
 	let myy be y of location of friendly king;
 	repeat with mydir running through planar directions:
-		let rm be room_of (myx + xness of mydir) and (myy + yness of mydir);
+		let rm be room-from-nums of (myx + xness of mydir) and (myy + yness of mydir);
 		now rm is guarded;
 
 to quest-conclusion:
@@ -833,15 +700,6 @@ this is the checkmate processing rule:
 	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
 	the rule succeeds;
 
-definition: a room (called r) is cornery:
-	unless x of r is 4 or x of r is 0, no;
-	unless y of r is 4 or y of r is 0, no;
-	yes;
-
-to decide which number is absval of (n - a number):
-	if n > 0, decide on n;
-	decide on 0 - n;
-
 definition: a room (called r) is checked:
 	if r is nothing, yes;
 	if r is offsite, yes;
@@ -871,6 +729,60 @@ definition: a room (called r) is surrounded:
 		if the room D of r is checked, next;
 		no;
 	yes;
+
+chapter gotoing
+
+to decide which number is x-dist of (r1 - a room) and (r2 - a room):
+	decide on absval of (x of r1) - (x of r2);
+
+to decide which number is y-dist of (r1 - a room) and (r2 - a room):
+	decide on absval of (y of r1) - (y of r2);
+
+carry out gotoing:
+	abide by the already-here rule;
+	let xd be x-dist of location of player and noun;
+	let yd be y-dist of location of player and noun;
+	if xd < yd:
+		let temp be xd;
+		now xd is yd;
+		now yd is temp;
+	repeat through table of distances to moves:
+		if lesser entry is not yd or greater entry is not xd, next;
+		let prob-moves be general entry;
+		if there is a corner entry:
+			if location of player is cornery or noun is cornery:
+				now prob-moves is corner entry;
+		if prob-moves > 1 and quest-index is 4:
+			say "You need to run around efficiently, but that's too fast. Since you need to visit the counties in order, I'm going to be a stickler and only let you move between knight-adjacent rooms, even though there might be just one valid short path between, say, a2 and d1.";
+			the rule fails;
+		if need-to-hurry is true and prob-moves + current-turns-after-placing > max-turns-after-placing:
+			say "But then you would run out of time to summon everyone.";
+			the rule fails;
+		say "Your horse zooms [if prob-moves > 1]around for [prob-moves] moves[else]briefly[end if] to [noun].";
+		move player to noun;
+		if need-to-hurry is true:
+			increase current-turns-after-placing by prob-moves;
+		the rule succeeds;
+	say "BUG. I don't khow what happened, but I didn't find distances between rooms.";
+	the rule succeeds;
+
+table of distances to moves
+lesser	greater	general	corner
+0	0	0	--
+0	1	3	--
+0	2	2	--
+0	3	3	--
+0	4	2	--
+1	1	2	4
+1	2	1	--
+1	3	2	--
+1	4	3	--
+2	2	4	--
+2	3	3	--
+2	4	2	--
+3	3	2	--
+3	4	3	--
+4	4	4	--
 
 volume clues
 
@@ -913,33 +825,7 @@ to say parchment-tips:
 		now read-so-far is 4;
 	say "4. If ye avoid such CORNER COUNTIES, you may soon find the next move is FORCED, saving thee considerable brain work.[no line break]"
 
-volume regular verbs to reject
-
-check pushing: say "You're not some boring old woodpusher who sits crouched over a board for hours on end. Besides, your allies can push themselves well enough. They're motivated enough." instead;
-
-check pulling: say "You already pulled [the noun] away." instead;
-
 volume meta
-
-to say verbs: say "[b]V[r] or [b]VERB[r] or [b]VERBS[r]"
-
-the check for room names rule is listed first in the for printing a parser error rulebook.
-
-rule for printing a parser error (this is the check for room names rule):
-	if the player's command matches the regular expression "\b<a-z><0-9>+\b", case insensitively:
-		if the player's command matches the regular expression "\b<a-e><1-5>\b", case insensitively:
-			say "If you want to go to another square, just type it in, e.g. [random otherly room]. You can't do anything else with a room.";
-		else:
-			say "It looks like you are referring to a square not on the board. Only a1-e5 are available. You can type any square name to move to it.[paragraph break]For general help, type [verbs].";
-
-rule for printing a parser error:
-	say "I didn't recognize that command. Type [verbs] to see the full list of commands. If you're confused what to do, [b]X[r] [delenda] again, or refer to the game [b]MAP[r]."
-
-rule for printing a parser error when the latest parser error is the noun did not make sense in that context error:
-	say "The verb was okay, but I didn't understand the noun in that sentence. You can type [verbs] to see how to use verbs with a subject."
-
-rule for printing a parser error when the latest parser error is the only understood as far as error:
-	say "You only needed the first word of that command. You can use the up arrow and backspace so you don't have to retype."
 
 report undoing an action:
 	if quest-index is 4:
@@ -957,17 +843,7 @@ section score trivia
 check requesting the score:
 	say "This game doesn't keep track of scores, but to give you an idea of your progress, you're on quest [quest-index] of [max-quests] right now." instead;
 
-The print final score rule is not listed in the for printing the player's obituary rulebook.
-
 chapter abbing
-
-abbing is an action out of world.
-
-understand the command "abbrev" as something new.
-understand the command "abb" as something new.
-
-understand "abbrev" as abbing.
-understand "abb" as abbing.
 
 carry out abbing:
 	now show-short-dirs is whether or not show-short-dirs is false;
@@ -978,31 +854,11 @@ show-short-dirs is a truth state that varies.
 
 chapter abouting
 
-abouting is an action out of world.
-
-understand the command "about" as something new.
-understand the command "a" as something new.
-
-understand "about" as abouting.
-understand "a" as abouting.
-
 carry out abouting:
 	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where would the story be? I wasn't expecting anything to pop up.[paragraph break]The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]Then one evening, something came into form. And as ParserComp's deadline came up, my bigger planned game had stalled, so why not bail out?[paragraph break]I had some initial doubts, but I started to see how I could work around them. The result was something that worked technically, addressed an odd sort of position that always amused me, and it had the shell of a story, too. I'd also wanted to do some programming related to chess, so I had fun. And I hope you enjoy this, too, whether or not you play chess.[paragraph break]If this is still during ParserComp, please also check out the other games (17 others!) and try to leave a transcript. For Z-machine games, typing TRANSCRIPT helps--even if you can't find anything or leave comments, the programmer may notice certain things worth fixing from how you play, e.g. they wanted to make a hint more prominent. My address is [email].[paragraph break][b]CREDITS[r]/[b]CR[r] has more information about specific people who helped me.";
 	the rule succeeds.
 
 chapter boarding
-
-boarding is an action applying to nothing.
-
-understand the command "board" as something new.
-understand the command "b" as something new.
-understand the command "map" as something new.
-understand the command "m" as something new.
-
-understand "board" as boarding.
-understand "b" as boarding.
-understand "map" as boarding.
-understand "m" as boarding.
 
 carry out boarding:
 	if quest-index is 4, show-visited instead;
@@ -1010,14 +866,6 @@ carry out boarding:
 	the rule succeeds.
 
 chapter chessing
-
-chessing is an action out of world.
-
-understand the command "chess" as something new.
-understand the command "ch" as something new.
-
-understand "chess" as chessing.
-understand "ch" as chessing.
 
 carry out chessing:
 	say "Pawns and bishops do not appear in this game, so don't worry about them.";
@@ -1030,14 +878,6 @@ carry out chessing:
 	the rule succeeds.
 
 chapter creditsing
-
-creditsing is an action out of world.
-
-understand the command "credits" as something new.
-understand the command "cr" as something new.
-
-understand "credits" as creditsing.
-understand "cr" as creditsing.
 
 carry out creditsing:
 	say "Thanks to Wade Clarke, Dee Cooke, Arthur DiBianca, Garry Francis and Olaf Nowacki for testing. I know my games are tricky to test, especially when I have the idea 2-3 weeks before the deadline.";
@@ -1057,20 +897,12 @@ understand "dirs" as dirsing.
 understand "dir" as dirsing.
 
 carry out dirsing:
-	say "There are eight directions your horse can travel,, clockwise from north: northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
+	say "There are eight directions your horse can travel, clockwise from north: northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.";
 	say "[line break]That's a bit long, so you can abbreviate them [b]NNE[r], [b] NEE[r], [b] SEE[r], [b] SSE[r], [b] SSW[r], [b] SWW[r], [b]NWW[r], [b]NNW[r] or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between [b]NNE[r], [b]NEN[r] and [b]ENN[r].";
 	say "[line break]You can toggle how the directions appear (long or short) in room descriptions with [b]ABB[r] or [b]A[r].";
 	the rule succeeds.
 
 chapter fail
-
-failing is an action out of world.
-
-understand the command "fail" as something new.
-understand the command "f" as something new.
-
-understand "fail" as failing.
-understand "f" as failing.
 
 carry out failing:
 	if number of placed pieces is 0 and quest-index < 4:
@@ -1080,16 +912,6 @@ carry out failing:
 	the rule succeeds;
 
 chapter helping
-
-helping is an action out of world.
-
-understand the command "help" as something new.
-understand the command "hint" as something new.
-understand the command "h" as something new.
-
-understand "hint" as helping.
-understand "help" as helping.
-understand "h" as helping.
 
 carry out helping:
 	say "This game should come with a walkthrough. However, if you need a refresher on your quest, simply [b]X[r] [delenda] or just [b]X[r]. It's a bit short on details -- of course it is! Royalty tends to delegate like that.";
@@ -1208,17 +1030,9 @@ after printing the name of a reserved piece (called p) when statsing:
 	say " ([b][short-text of p][r])";
 	continue the action;
 
-chapter ting
+chapter toggleing
 
-ting is an action applying to nothing.
-
-understand the command "t" as something new.
-understand the command "toggle" as something new.
-
-understand "t" as ting.
-understand "toggle" as ting.
-
-carry out ting:
+carry out toggleing:
 	if screen-reader is true, say "Toggling maps in the room description would cause the screen reader to make strange outputs, so I'm restricting it." instead;
 	now maps-in-description is whether or not maps-in-description is false;
 	say "Toggling maps in the room description to [on-off of maps-in-description].";
@@ -1277,16 +1091,6 @@ e5	d4	e1	"The enemy king is trapped, since it can't move over. Maybe you can do 
 
 chapter verbsing
 
-verbsing is an action out of world.
-
-understand the command "verbs" as something new.
-understand the command "verb" as something new.
-understand the command "v" as something new.
-
-understand "verbs" as verbsing.
-understand "verb" as verbsing.
-understand "v" as verbsing.
-
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r]. You can also specify the county you wish to visit by name, e.g. [b]c3[r] will send you back to the center.";
 	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. You can often use abbreviations for the allies you need to place. These are all the commands you need to win.";
@@ -1314,82 +1118,10 @@ understand "xyzzy" as xyzzying.
 carry out xyzzying:
 	say "On the very east side of the world lie such repositories of hooliganism and pointless chance-taking as Backgammonton, Pokersfield or, worse, Yahtzeeburg. You dream of helping conquer them one day, but it is only a dream. A too-risky one at that.";
 
-volume post release
+volume game-specific parser error details
 
-chapter going to
-
-gotoing is an action applying to one visible thing.
-
-understand the command "g" as something new.
-understand the command "gt" as something new.
-understand the command "go to" as something new.
-
-understand "g [any onboard room]" as gotoing.
-understand "gt [any onboard room]" as gotoing.
-understand "go to [any onboard room]" as gotoing.
-
-definition: a room (called r) is onboard:
-	if r is offsite, no;
-	yes;
-
-to decide which number is x-dist of (r1 - a room) and (r2 - a room):
-	decide on absval of (x of r1) - (x of r2);
-
-to decide which number is y-dist of (r1 - a room) and (r2 - a room):
-	decide on absval of (y of r1) - (y of r2);
-
-carry out gotoing:
-	if noun is location of player:
-		say "You're already here." instead;
-	let xd be x-dist of location of player and noun;
-	let yd be y-dist of location of player and noun;
-	if xd < yd:
-		let temp be xd;
-		now xd is yd;
-		now yd is temp;
-	repeat through table of distances to moves:
-		if lesser entry is not yd or greater entry is not xd, next;
-		let prob-moves be general entry;
-		if there is a corner entry:
-			if location of player is cornery or noun is cornery:
-				now prob-moves is corner entry;
-		if prob-moves > 1 and quest-index is 4:
-			say "You need to run around efficiently, but that's too fast. Since you need to visit the counties in order, I'm going to be a stickler and only let you move between knight-adjacent rooms, even though there might be just one valid short path between, say, a2 and d1.";
-			the rule fails;
-		if need-to-hurry is true and prob-moves + current-turns-after-placing > max-turns-after-placing:
-			say "But then you would run out of time to summon everyone.";
-			the rule fails;
-		say "Your horse zooms [if prob-moves > 1]around for [prob-moves] moves[else]briefly[end if] to [noun].";
-		move player to noun;
-		if need-to-hurry is true:
-			increase current-turns-after-placing by prob-moves;
-		the rule succeeds;
-	say "BUG. I don't khow what happened, but I didn't find distances between rooms.";
-	the rule succeeds;
-
-table of distances to moves
-lesser	greater	general	corner
-0	0	0	--
-0	1	3	--
-0	2	2	--
-0	3	3	--
-0	4	2	--
-1	1	2	4
-1	2	1	--
-1	3	2	--
-1	4	3	--
-2	2	4	--
-2	3	3	--
-2	4	2	--
-3	3	2	--
-3	4	3	--
-4	4	4	--
-
-after reading a command:
-	if the player's command matches the regular expression "^<a-e><1-5>$", case insensitively:
-		let n be indexed text;
-		now n is "gt [the player's command]";
-		change the text of the player's command to n;
+rule for printing a parser error:
+	say "I didn't recognize that command. Type [verbs] to see the full list of commands. If you're confused what to do, [b]X[r] [delenda] again, or refer to the game [b]MAP[r]."
 
 volume beta testing - not for release
 
