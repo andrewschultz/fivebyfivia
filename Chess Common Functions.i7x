@@ -4,15 +4,7 @@ Version 1/210803 of Chess Common Functions by Andrew Schultz begins here.
 
 volume common big picture stuff
 
-chapter project settings
-
-release along with a website.
-
-release along with the "Parchment" interpreter.
-
-release along with cover art.
-
-chapter project includes
+chapter common includes
 
 include Old School Verb Total Carnage by Andrew Schultz.
 
@@ -89,9 +81,9 @@ chapter room properties
 
 a room has text called room-edge-text.
 
-a room has a number called x.
+a room has a number called xval.
 
-a room has a number called y.
+a room has a number called yval.
 
 a room can be puzzly. a room is usually puzzly.
 
@@ -101,64 +93,64 @@ to reset-guard: now all rooms are not guarded.
 
 chapter all the rooms
 
-offsite is a not puzzly room. x of offsite is -3. y of offsite is -3. [ this is where we dump unused stuff ]
+offsite is a not puzzly room. xval of offsite is -3. yval of offsite is -3. [ this is where we dump unused stuff ]
 
-a1 is a room. x of a1 is 0. y of a1 is 0.
+a1 is a room. xval of a1 is 0. yval of a1 is 0.
 
-b1 is a room. x of b1 is 1. y of b1 is 0.
+b1 is a room. xval of b1 is 1. yval of b1 is 0.
 
-c1 is a room. x of c1 is 2. y of c1 is 0.
+c1 is a room. xval of c1 is 2. yval of c1 is 0.
 
-d1 is a room. x of d1 is 3. y of d1 is 0.
+d1 is a room. xval of d1 is 3. yval of d1 is 0.
 
-e1 is a room. x of e1 is 4. y of e1 is 0.
+e1 is a room. xval of e1 is 4. yval of e1 is 0.
 
-a2 is a room. x of a2 is 0. y of a2 is 1.
+a2 is a room. xval of a2 is 0. yval of a2 is 1.
 
-b2 is a room. x of b2 is 1. y of b2 is 1.
+b2 is a room. xval of b2 is 1. yval of b2 is 1.
 
-c2 is a room. x of c2 is 2. y of c2 is 1.
+c2 is a room. xval of c2 is 2. yval of c2 is 1.
 
-d2 is a room. x of d2 is 3. y of d2 is 1.
+d2 is a room. xval of d2 is 3. yval of d2 is 1.
 
-e2 is a room. x of e2 is 4. y of e2 is 1.
+e2 is a room. xval of e2 is 4. yval of e2 is 1.
 
-a3 is a room. x of a3 is 0. y of a3 is 2.
+a3 is a room. xval of a3 is 0. yval of a3 is 2.
 
-b3 is a room. x of b3 is 1. y of b3 is 2.
+b3 is a room. xval of b3 is 1. yval of b3 is 2.
 
-c3 is a room. x of c3 is 2. y of c3 is 2.
+c3 is a room. xval of c3 is 2. yval of c3 is 2.
 
-d3 is a room. x of d3 is 3. y of d3 is 2.
+d3 is a room. xval of d3 is 3. yval of d3 is 2.
 
-e3 is a room. x of e3 is 4. y of e3 is 2.
+e3 is a room. xval of e3 is 4. yval of e3 is 2.
 
-a4 is a room. x of a4 is 0. y of a4 is 3.
+a4 is a room. xval of a4 is 0. yval of a4 is 3.
 
-b4 is a room. x of b4 is 1. y of b4 is 3.
+b4 is a room. xval of b4 is 1. yval of b4 is 3.
 
-c4 is a room. x of c4 is 2. y of c4 is 3.
+c4 is a room. xval of c4 is 2. yval of c4 is 3.
 
-d4 is a room. x of d4 is 3. y of d4 is 3.
+d4 is a room. xval of d4 is 3. yval of d4 is 3.
 
-e4 is a room. x of e4 is 4. y of e4 is 3.
+e4 is a room. xval of e4 is 4. yval of e4 is 3.
 
-a5 is a room. x of a5 is 0. y of a5 is 4.
+a5 is a room. xval of a5 is 0. yval of a5 is 4.
 
-b5 is a room. x of b5 is 1. y of b5 is 4.
+b5 is a room. xval of b5 is 1. yval of b5 is 4.
 
-c5 is a room. x of c5 is 2. y of c5 is 4.
+c5 is a room. xval of c5 is 2. yval of c5 is 4.
 
-d5 is a room. x of d5 is 3. y of d5 is 4.
+d5 is a room. xval of d5 is 3. yval of d5 is 4.
 
-e5 is a room. x of e5 is 4. y of e5 is 4.
+e5 is a room. xval of e5 is 4. yval of e5 is 4.
 
 chapter defining room traits
 
 to decide which number is edge-count of (r - a room):
 	let temp be 0;
-	if x of r is 4 or y of r is 4, increment temp;
-	if x of r is 0 or y of r is 0, increment temp;
+	if xval of r is 4 or yval of r is 4, increment temp;
+	if xval of r is 0 or yval of r is 0, increment temp;
 	decide on temp;
 
 definition: a room (called r) is edgy:
@@ -171,7 +163,7 @@ definition: a room (called r) is cornery:
 
 to decide which room is room-from-nums of (n1 - a number) and (n2 - a number):
 	repeat with Q running through rooms:
-		if x of Q is n1 and y of Q is n2:
+		if xval of Q is n1 and yval of Q is n2:
 			decide on Q;
 	if debug-state is true:
 		say "(DEBUG) Could not find room for [n1] and [n2].";
