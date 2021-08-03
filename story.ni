@@ -4,7 +4,19 @@ the story headline is "Flagrant Horsing Around".
 
 the story description is "Less impossible than beating Stockfish".
 
+section project settings
+
+[cannot go into the common header]
+
+release along with a website.
+
+release along with the "Parchment" interpreter.
+
+release along with cover art.
+
 the release number is 2.
+
+section project includes
 
 to say github: say "https://github.com/andrewschultz/fivebyfivia-delenda-est"
 
