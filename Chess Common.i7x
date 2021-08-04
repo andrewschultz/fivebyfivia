@@ -1,4 +1,4 @@
-Version 1/210803 of Chess Common Functions by Andrew Schultz begins here.
+Version 1/210803 of Chess Common by Andrew Schultz begins here.
 
 "Functions common to Fourbyfouria and Fivebyfivia."
 
@@ -398,6 +398,6 @@ after reading a command:
 		now n is "gt [the player's command]";
 		change the text of the player's command to n;
 
-Chess Common Functions ends here.
+Chess Common ends here.
 
 ---- DOCUMENTATION ----
