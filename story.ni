@@ -22,7 +22,7 @@ to say github: say "https://github.com/andrewschultz/fivebyfivia-delenda-est"
 
 volume basics and definitions
 
-include Chess Common Functions by Andrew Schultz.
+include Chess Common by Andrew Schultz.
 
 max-quests is a number that varies. max-quests is 4.
 

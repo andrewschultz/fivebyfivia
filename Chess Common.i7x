@@ -380,6 +380,8 @@ rule for printing a parser error (this is the check for room names rule):
 			say "If you want to go to another square, just type it in, e.g. [random otherly room]. You can't do anything else with a room.";
 		else:
 			say "It looks like you are referring to a square not on the board. Only a1-e5 are available. You can type any square name to move to it.[paragraph break]For general help, type [verbs].";
+		the rule succeeds;
+	continue the action;
 
 rule for printing a parser error when the latest parser error is the noun did not make sense in that context error:
 	say "The verb was okay, but I didn't understand the noun in that sentence. You can type [verbs] to see how to use verbs with a subject."
