@@ -116,15 +116,13 @@ section what did you mean to
 
 chapter room info
 
-a room has a number called x. a room has a number called y.
-
 the description of a room is usually "[room-color]. You're [room-edge-text of the item described] of [5b][commentary].".
 
 to say commentary:
 	let n be number of normal-viable directions;
 
 to say room-color:
-	say "The ground is [if the remainder after dividing (x of location of player + y of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
+	say "The ground is [if the remainder after dividing (xval of location of player + yval of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
 
 rule for printing the locale description:
 	if quest-index is 4:
@@ -181,14 +179,14 @@ check going nowhere:
 	say "Your trusty steed won't budge. You grumble for a bit, then realize [5b] has no [file of noun][square of noun] area. What a piffly country! They should've been taken over long before this. They should feel LUCKY a country as swell as [12b] is plotting to take them over.[paragraph break]Anyway. Another direction, perhaps." instead;
 
 to say file of (d - a direction):
-	let d2 be xness of d + x of location of player;
+	let d2 be xness of d + xval of location of player;
 	if d2 < 0:
 		say "[character number 123 + d2]";
 	else:
 		say "[character number 97 + d2]";
 
 to decide which number is square of (d - a direction):
-	decide on 1 + y of location of player + yness of d.
+	decide on 1 + yval of location of player + yness of d.
 
 section timed-going
 
@@ -452,8 +450,8 @@ rule for supplying a missing noun when calling:
 this is the enemy-king-placement rule:
 	if number of reserved pieces > 1:
 		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
-	let ax be absval of (x of location of player - x of location of friendly king);
-	let ay be absval of (y of location of player - y of location of friendly king);
+	let ax be absval of (xval of location of player - xval of location of friendly king);
+	let ay be absval of (yval of location of player - yval of location of friendly king);
 	if  ax < 2 and ay < 2:
 		say "Wait, no, you can't put the enemy kings adjacent to each other[if ax is 1 and ay is 1], not even diagonally[end if]. They operate through intermediaries, apparently." instead;
 
@@ -506,8 +504,8 @@ to update-guarded:
 		place-range queen and list of all planar directions;
 
 to place-range (p - a piece) and (myl - a list of directions):
-	let myx be x of location of p;
-	let myy be y of location of p;
+	let myx be xval of location of p;
+	let myy be yval of location of p;
 	repeat with dir running through myl:
 		let temp-x be myx;
 		let temp-y be myy;
@@ -521,8 +519,8 @@ to place-range (p - a piece) and (myl - a list of directions):
 			if number of pieces in myrm > 0, break;
 
 to place-king:
-	let myx be x of location of friendly king;
-	let myy be y of location of friendly king;
+	let myx be xval of location of friendly king;
+	let myy be yval of location of friendly king;
 	repeat with mydir running through planar directions:
 		let rm be room-from-nums of (myx + xness of mydir) and (myy + yness of mydir);
 		now rm is guarded;
@@ -687,8 +685,8 @@ this is the stalemate processing rule:
 	the rule succeeds;
 
 definition: a room (called rm) is king-escape:
-	if (absval of x of rm - x of location of enemy king) > 1, no;
-	if (absval of y of rm - y of location of enemy king) > 1, no;
+	if (absval of xval of rm - xval of location of enemy king) > 1, no;
+	if (absval of yval of rm - yval of location of enemy king) > 1, no;
 	if rm is checked, no;
 	yes;
 
@@ -700,8 +698,8 @@ this is the checkmate processing rule:
 		say "The enemy king regards you suspiciously. He knows something is up. But then he runs away via [a random king-escape room]!";
 		the rule fails;
 	if quest-index is 2:
-		let qx be absval of (x of location of queen - x of location of enemy king);
-		let qy be absval of (y of location of queen - y of location of enemy king);
+		let qx be absval of (xval of location of queen - xval of location of enemy king);
+		let qy be absval of (yval of location of queen - yval of location of enemy king);
 		if qx < 2 and qy < 2:
 			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid enemy king. You thought you had things planned out well, but--well, maybe there is another way to get people together. But not too close. Perhaps using your horse's quick movements will help find a properly spacious arrangement.";
 			the rule fails;
@@ -715,12 +713,12 @@ this is the checkmate processing rule:
 definition: a room (called r) is checked:
 	if r is nothing, yes;
 	if r is offsite, yes;
-	let x0 be x of r;
-	let y0 be y of r;
+	let x0 be xval of r;
+	let y0 be yval of r;
 	repeat with q running through on-stage pieces:
 		if q is irrelevant, next;
-		let x1 be x of location of q;
-		let y1 be y of location of q;
+		let x1 be xval of location of q;
+		let y1 be yval of location of q;
 		let xdelt be absval of x1 - x0;
 		let ydelt be absval of y1 - y0;
 		if q is friendly king:
@@ -745,10 +743,10 @@ definition: a room (called r) is surrounded:
 chapter gotoing
 
 to decide which number is x-dist of (r1 - a room) and (r2 - a room):
-	decide on absval of (x of r1) - (x of r2);
+	decide on absval of (xval of r1) - (xval of r2);
 
 to decide which number is y-dist of (r1 - a room) and (r2 - a room):
-	decide on absval of (y of r1) - (y of r2);
+	decide on absval of (yval of r1) - (yval of r2);
 
 carry out gotoing:
 	abide by the already-here rule;
