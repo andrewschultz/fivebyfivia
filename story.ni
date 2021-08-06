@@ -42,15 +42,25 @@ chapter rooms
 
 a room can be circle-visited. a room is usually not circle-visited.
 
+[definition: a room (called r) is weird-viable:
+	unless r is adjacent to player, no;
+	if r is offsite, no;
+	let d be the best way from l to location of player;
+	if d is weird, yes;
+	no;]
+
 chapter start of play
 
-when play begins:
+when play begins (this is the initial screen tweaks rule):
+	now right hand status line is "[entry quest-index of quest-quick-desc]";
+	if debug-state is true, continue the action; [we have an option to change this, and y/n questions get in the way of automated testing]
 	say "Fivebyfivia has some text-mapping options that may cause screen-readers to give useless output. Are you using a screen reader?";
 	if the player consents:
 		say "Potentially garbling options are now restricted.";
 		now screen-reader is true;
+
+when play begins (this is the start narration rule):
 	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELENDA EST]. And you're off!";
-	now right hand status line is "[entry quest-index of quest-quick-desc]";
 	now all pieces are in offsite;
 
 chapter FIVEBYFIVIA DELENDA EST
@@ -532,7 +542,7 @@ to quest-conclusion:
 	 else if quest-index is 2:
 		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
-		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.[paragraph break]By the way, there is a new meta-verb. [b]T[r] or [b]TOUR[r] to toggles tour view mode, which shows an overall map of [5b] instead of telling you directions. It is set to on.";
+		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.";
 		if screen-reader is false, now maps-in-description is true;
 	increment quest-index;
 	setup-next-puzzle;
@@ -569,11 +579,11 @@ to say pie of (r - a room):
 		say "K";
 	else if enemy king is in r:
 		say "k";
-	else if r is location of player:
+	else if r is location of player and in-tutorial is false:
 		say "*";
 	else if r is guarded:
 		say "+";
-	else if r is knight-movable:
+	else if r is knight-movable and in-tutorial is false:
 		say "^";
 	else:
 		say "-"
@@ -593,10 +603,10 @@ after printing the locale description when quest-index is 4:
 		say "Horns blare! Voices soar to the sky! You have trampled all of [5b], literally and figuratively! Now is time for your reward!";
 		let t be stalemate-count;
 		if stalemate-count is 3:
-			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. They delegate you to plan annexation of west, central and east Twelvebyfouria to the south. Each requires a slightly different solution: first, you take two knights, which people say couldn't be done -- but with the help of a treacherous pawn, you did it! While they are shaking their heads in disbelief, you sweep in with a bishop and up-and-comer knight, then two bishops.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
+			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. Perhaps there will be, with time, opportunities for further clandestine annexations.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
 			end the story finally saying "The beginning of a glorious (?) empire";
 		else:
-			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an international medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.";
+			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an international medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.[paragraph break]Perhaps there was a way to be even more cunning than you were[if stalemate-count > 1]. Hint: you figured things partially[end if].";
 			end the story finally;
 	if number of circle-visited rooms is random-parchment-number and final-failed-yet is true and parchmente is off-stage:
 		say "[one of]A small parchment flutters into view. It is labeled [parchmente][or][parchmente] flutters into view again[stopping]. It'd be so tempting to read it, and yet, your adventurous spirit has trouble balancing duty to country with the pure personal satisfaction of solving everything on your own.";
@@ -742,6 +752,19 @@ definition: a room (called r) is surrounded:
 
 chapter gotoing
 
+rule for supplying a missing noun when gotoing:
+	if quest-index is 4:
+		if number of visit-viable directions is 1:
+			let d be a random visit-viable direction;
+			let next-room be the room d of location of player;
+			say "There's only one square available that you haven't visited yet, [next-room]. So let's go there.";
+			try going d instead;
+		if number of visit-viable directions is 0:
+			say "Looks like you're trapped. But you can always restart.";
+		say "You'll need to be more specific where you want to go--though if there's only one room you can visit from your current square, 'g' will send you there.";
+		reject the player's command;
+	say "You need to specify which square to go to.";
+
 to decide which number is x-dist of (r1 - a room) and (r2 - a room):
 	decide on absval of (xval of r1) - (xval of r2);
 
@@ -760,6 +783,7 @@ carry out gotoing:
 		if lesser entry is not yd or greater entry is not xd, next;
 		let prob-moves be general entry;
 		if there is a corner entry:
+			say "1.";
 			if location of player is cornery or noun is cornery:
 				now prob-moves is corner entry;
 		if prob-moves > 1 and quest-index is 4:
@@ -885,6 +909,7 @@ carry out chessing:
 	say "Kings can move one square adjacent, vertically or horizontally or diagonally, unless there is an obstruction.";
 	say "Check occurs when one piece is attacking your king.";
 	say "Checkmate is when you attack the enemy's king and he has no safe square nearby to flee to.";
+	say "Stalemate is when the enemy has no legal moves, but the king is not under attack.";
 	the rule succeeds.
 
 chapter creditsing
@@ -959,7 +984,7 @@ table of notes
 stalemate-notes	checkmate-notes
 "two rooks--in practical play, the most likely stalemate is one rook being diagonal from the corner, guarded by the other rook"	"You pinned the enemy king into the corner using the two rooks: one covering the side, one covering the row/column next to it. The process of cornering a king is known as a rook roll--the rooks start in adjacent rows, then one moves two over across the other, and so forth to the edge. Once you learn it, you're never gonna give it up."
 "king and queen--there are so many ways to do this! The queen can force the king in the corner, or you don't move the king the right way"	"You trapped the enemy king with a queen and king. In practical play, the queen alone can drive the enemy king into the corner where he only has two squares to move, then your king walks in. Your queen just sits three squares up and one square left (or some rotation/mirroring) from the corner."
-"king and rook--in practical play you probably won't see the position you got, and the only likely way is to have the rook, guarded by a king, diagonal from the corner"	"You trapped the king in the corner with your own king and rook. It's possible to trap the king on the side--your king is two squares away, off the edge, and the rook gives check. It's trickier for the king and rook to corner an enemy king, though. You have to make semi-waiting moves to slowly make the enemy king's rectangle smaller and smaller."
+"king and rook--in practical play you probably won't see the position you got, and the only likely way is to have the rook, guarded by a king, diagonal from the corner"	"You trapped the king in the corner with your own king and rook. It's possible to trap the king on the edge and not the corner--your king is two squares from the enemy (called the opposition,) and the rook gives check. It's slower for the king and rook to corner an enemy king than for an enemy queen, though. Sometimes you have to move your king instead of your rook as you make the enemy king's rectangle smaller and smaller."
 
 chapter statsing
 
@@ -1027,7 +1052,7 @@ carry out statsing:
 		show-visited;
 	else:
 		say "Reserved pieces to (C)all: [list of reserved pieces].";
-		say "Pieces out on the board: [list of placed pieces].";
+		say "Pieces out on the board: [if number of placed pieces is 0]none, yet[else][list of placed pieces][end if].";
 	if quest-index is 3 and got-rook-for-queen is true:
 		say "[line break]You remember how you almost trapped the enemy king before: him in the corner, your king a knight-move away, your queen another knight-move away. That would work here, too.";
 	the rule succeeds.
@@ -1079,9 +1104,12 @@ carry out tuting:
 		update-guarded;
 		show-the-board;
 		say "[blather entry][line break]";
-		say "Type any key to continue[if my-row < 4] or Q to quit[end if].";
-		let Q be the chosen letter;
-		if Q is 81 or Q is 113, break;
+		if debug-state is false:
+			say "Type any key to continue[if my-row < 4] or Q to quit[end if].";
+			let Q be the chosen letter;
+			if Q is 81 or Q is 113, break;
+		else:
+			say "Skipping push-key-to-continue nag in debug mode.";
 	now in-tutorial is false;
 	reset-guard;
 	repeat with X running through pieces:
@@ -1181,7 +1209,7 @@ test q3s with "sww/call rook/see/call friendly king/nne/sse/call enemy king".
 
 test a3 with "test q1/test q2/test q3".
 
-test q4f with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/sww".
+test q4f with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/sww". [fail but get very close]
 test q4 with "nnw/ssw/sse/nee/nne/nww/sww/sse/see/nne/nnw/sww/ssw/see/nee/nnw/sww/nnw/see/nee/ssw/sse/nww/sww".
 
 test win1 with "test q1/test q2/test q3/test q4".
