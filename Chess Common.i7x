@@ -60,6 +60,7 @@ Include (-
 	'about':  print "see info about the game";
 	'credit', 'credits': print "see the credits";
 	'c//', 'p//', 'call', 'place': print "(P)lace or (C)all";
+	'g//', 'gt//': print "go to";
 	default: rfalse;
 	}
 	rtrue;
@@ -149,8 +150,8 @@ chapter defining room traits
 
 to decide which number is edge-count of (r - a room):
 	let temp be 0;
-	if xval of r is 4 or yval of r is 4, increment temp;
-	if xval of r is 0 or yval of r is 0, increment temp;
+	if xval of r is 0 or xval of r is 4, increment temp; [ horizontal edge ]
+	if yval of r is 0 or yval of r is 4, increment temp; [ vertical edge ]
 	decide on temp;
 
 definition: a room (called r) is edgy:
@@ -259,9 +260,12 @@ understand the command "go to" as something new.
 understand "g [any puzzly room]" as gotoing.
 understand "gt [any puzzly room]" as gotoing.
 understand "go to [any puzzly room]" as gotoing.
+understand "g" as gotoing.
+understand "gt" as gotoing.
+understand "go to" as gotoing.
 
 this is the already-here rule:
-	if noun is location of player, say "You're already here." instead;
+	if noun is location of player, say "You're already at [location of player]." instead;
 
 volume meta verb stuff
 
