@@ -374,6 +374,12 @@ understand "verbs" as verbsing.
 understand "verb" as verbsing.
 understand "v" as verbsing.
 
+xyzzying is an action out of world.
+
+understand the command "xyzzy" as something new.
+
+understand "xyzzy" as xyzzying.
+
 volume parser syntax and errors
 
 the check for room names rule is listed first in the for printing a parser error rulebook.
