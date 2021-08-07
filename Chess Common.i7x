@@ -175,6 +175,22 @@ definition: a room (called r) is otherly:
 	if r is puzzly, yes;
 	no;
 
+chapter irregular and non-existent rooms for humor value only
+
+To say character number (N - a number): (- print (char) {N}; -)
+
+to say file of (d - a direction):
+	let d2 be xness of d + xval of location of player;
+	if d2 < 0:
+		say "[character number 123 + d2]";
+	else:
+		say "[character number 97 + d2]";
+
+to decide which number is rank of (d - a direction):
+	decide on 1 + yval of location of player + yness of d.
+
+to say square of noun: say "[file of noun][rank of noun]"
+
 volume direction definitions
 
 a direction has a number called yness. yness of a direction is usually 0.
@@ -196,6 +212,52 @@ xness of west is -1. yness of west is 0.
 xness of north is 0. yness of north is 1.
 
 xness of south is 0. yness of south is -1.
+
+chapter knight-move directions [ this is here for an amusing bit for Fourbyfouria ]
+
+[the "it is weird" syntax is clumsy but necessary. "a weird direction" feels natural but makes the Inform compiler complain.]
+
+a direction can be normal or weird. a direction is usually normal. a direction has text called vh-abbrev.
+
+southsoutheast is a direction. it is weird. vh-abbrev is "SSE". northnorthwest is a direction. it is weird. vh-abbrev is "NNW".
+
+xness of southsoutheast is 1. yness of southsoutheast is -2. xness of northnorthwest is -1. yness of northnorthwest is 2.
+
+the opposite of southsoutheast is northnorthwest. the opposite of northnorthwest is southsoutheast.
+
+understand "sse" and "ses" and "ess" as southsoutheast.
+
+understand "nnw" and "nwn" and "wnn" as northnorthwest.
+
+southeasteast is a direction. it is weird. vh-abbrev is "SEE". northwestwest is a direction. it is weird. vh-abbrev is "NWW".
+
+xness of southeasteast is 2. yness of southeasteast is -1. xness of northwestwest is -2. yness of northwestwest is 1.
+
+the opposite of southeasteast is northwestwest. the opposite of northwestwest is southeasteast.
+
+understand "see" and "ese" and "ees" as southeasteast.
+
+understand "nww" and "wnw" and "wwn" as northwestwest.
+
+southsouthwest is a direction. it is weird. vh-abbrev is "SSW". northnortheast is a direction. it is weird. vh-abbrev is "NNE".
+
+xness of southsouthwest is -1. yness of southsouthwest is -2. xness of northnortheast is 1. yness of northnortheast is 2.
+
+the opposite of southsouthwest is northnortheast. the opposite of northnortheast is southsouthwest.
+
+understand "ssw" and "sws" and "wss" as southsouthwest.
+
+understand "nne" and "nen" and "enn" as northnortheast.
+
+southwestwest is a direction. it is weird. vh-abbrev is "SWW". northeasteast is a direction. it is weird. vh-abbrev is "NEE".
+
+xness of southwestwest is -2. yness of southwestwest is -1. xness of northeasteast is 2. yness of northeasteast is 1.
+
+the opposite of southwestwest is northeasteast. the opposite of northeasteast is southwestwest.
+
+understand "sww" and "wsw" and "wws" as southwestwest.
+
+understand "nee" and "ene" and "een" as northeasteast.
 
 chapter direction traits
 

@@ -118,10 +118,6 @@ instead of doing something with your horse:
 
 chapter i6
 
-section char nums
-
-To say character number (N - a number): (- print (char) {N}; -)
-
 section what did you mean to
 
 chapter room info
@@ -189,17 +185,7 @@ definition: a direction (called d) is normal-viable:
 section going nowhere
 
 check going nowhere:
-	say "Your trusty steed won't budge. You grumble for a bit, then realize [5b] has no [file of noun][square of noun] area. What a piffly country! They should've been taken over long before this. They should feel LUCKY a country as swell as [12b] is plotting to take them over.[paragraph break]Anyway. Another direction, perhaps." instead;
-
-to say file of (d - a direction):
-	let d2 be xness of d + xval of location of player;
-	if d2 < 0:
-		say "[character number 123 + d2]";
-	else:
-		say "[character number 97 + d2]";
-
-to decide which number is square of (d - a direction):
-	decide on 1 + yval of location of player + yness of d.
+	say "Your trusty steed won't budge. You grumble for a bit, then realize [5b] has no [square of noun] area. What a piffly country! They should've been taken over long before this. They should feel LUCKY a country as swell as [12b] is plotting to take them over.[paragraph break]Anyway. Another direction, perhaps." instead;
 
 section timed-going
 
@@ -231,53 +217,9 @@ after going to a circle-visited room:
 	say "[line break]";
 	reset-the-board;
 
-chapter info for knight directions
-
-a direction can be normal or weird. a direction is usually normal. a direction has text called vh-abbrev.
-
-southsoutheast is a direction. it is weird. vh-abbrev is "SSE". northnorthwest is a direction. it is weird. vh-abbrev is "NNW".
-
-xness of southsoutheast is 1. yness of southsoutheast is -2. xness of northnorthwest is -1. yness of northnorthwest is 2.
-
-the opposite of southsoutheast is northnorthwest. the opposite of northnorthwest is southsoutheast.
-
-understand "sse" and "ses" and "ess" as southsoutheast.
-
-understand "nnw" and "nwn" and "wnn" as northnorthwest.
-
-southeasteast is a direction. it is weird. vh-abbrev is "SEE". northwestwest is a direction. it is weird. vh-abbrev is "NWW".
-
-xness of southeasteast is 2. yness of southeasteast is -1. xness of northwestwest is -2. yness of northwestwest is 1.
-
-the opposite of southeasteast is northwestwest. the opposite of northwestwest is southeasteast.
-
-understand "see" and "ese" and "ees" as southeasteast.
-
-understand "nww" and "wnw" and "wwn" as northwestwest.
-
-southsouthwest is a direction. it is weird. vh-abbrev is "SSW". northnortheast is a direction. it is weird. vh-abbrev is "NNE".
-
-xness of southsouthwest is -1. yness of southsouthwest is -2. xness of northnortheast is 1. yness of northnortheast is 2.
-
-the opposite of southsouthwest is northnortheast. the opposite of northnortheast is southsouthwest.
-
-understand "ssw" and "sws" and "wss" as southsouthwest.
-
-understand "nne" and "nen" and "enn" as northnortheast.
-
-southwestwest is a direction. it is weird. vh-abbrev is "SWW". northeasteast is a direction. it is weird. vh-abbrev is "NEE".
-
-xness of southwestwest is -2. yness of southwestwest is -1. xness of northeasteast is 2. yness of northeasteast is 1.
-
-the opposite of southwestwest is northeasteast. the opposite of northeasteast is southwestwest.
-
-understand "sww" and "wsw" and "wws" as southwestwest.
-
-understand "nee" and "ene" and "een" as northeasteast.
+volume directions [ this was more of an actual volume until the code was moved to the common file ]
 
 for printing the name of a weird direction (called d) when show-short-dirs is true: say "[vh-abbrev of d]"
-
-section for posterity
 
 volume rooms
 
