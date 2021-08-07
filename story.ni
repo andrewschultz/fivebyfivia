@@ -147,20 +147,21 @@ rule for printing the locale description:
 	continue the action;
 
 to say room-detail:
+	now room-too is true;
 	if quest-index is 4:
 		if number of visit-viable directions is 0:
-			say "Unfortunately, you can't go anywhere new, so you can just go [list of visit-nonviable directions] and try again";
+			say "Unfortunately, you can't go anywhere new. Going [list of visit-nonviable directions] will reset the victory tour, and you can try again";
 		else if number of visit-nonviable directions is 0:
 			say "Any direction of [list of visit-viable directions] leads somewhere new";
 		else:
 			say "While going [list of visit-viable directions] would lead somewhere new, going [list of visit-nonviable directions] would not";
+		now room-too is false;
 		continue the action;
 	if location of player is c3:
 		say "From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
-	now room-too is true;
 	say "You can go [list of weird-viable directions][if number of placed pieces is 0 and quest-index < 4] to search for the best place to CALL your first allies[end if]";
-	now room-too is false:
+	now room-too is false;
 
 room-too is a truth state that varies.
 
@@ -172,7 +173,9 @@ definition: a direction (called d) is weird-viable:
 	no;
 
 definition: a direction (called d) is visit-viable:
-	if d is weird and the room d of location of player is not circle-visited, yes;
+	if d is normal, no;
+	if the room d of location of player is nothing, no;
+	if the room d of location of player is not circle-visited, yes;
 	no;
 
 definition: a direction (called d) is visit-nonviable:
