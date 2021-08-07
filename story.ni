@@ -201,15 +201,16 @@ to decide which number is square of (d - a direction):
 section timed-going
 
 after printing the locale description when need-to-hurry is true:
-	increment current-turns-after-placing;
 	if debug-state is true, say "DEBUG turn count track: [current-turns-after-placing] of [max-turns-after-placing].";
 	if current-turns-after-placing > max-turns-after-placing:
 		if enemy king is placed:
-			say "You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
+			say "[line break]You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
 		else:
-			say "You hear familiar moans. Your summoned compatriot[if number of placed pieces > 1]s have[else] has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
+			say "[line break]You hear familiar moans. Your summoned compatriot[if number of placed pieces > 1]s have[else] has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
 		say "[line break]You did not succeed in your quest, and your king and queen will not be pleased ... unless we pretend this was just a practice run you planned in your head before the real thing. Yes, yes, let's do that. That's how it is.";
 		fail-and-reset;
+	else if number of reserved pieces > 1 + max-turns-after-placing - current-turns-after-placing:
+		say "[line break]You wonder if you'll have time to summon everyone. But you can always try again.";
 	continue the action;
 
 after printing the locale description when quest-index is 1:
@@ -752,6 +753,10 @@ definition: a room (called r) is surrounded:
 
 chapter gotoing
 
+after going when need-to-hurry is true:
+	increment current-turns-after-placing;
+	continue the action;
+
 rule for supplying a missing noun when gotoing:
 	if quest-index is 4:
 		if number of visit-viable directions is 1:
@@ -783,19 +788,19 @@ carry out gotoing:
 		if lesser entry is not yd or greater entry is not xd, next;
 		let prob-moves be general entry;
 		if there is a corner entry:
-			say "1.";
 			if location of player is cornery or noun is cornery:
 				now prob-moves is corner entry;
 		if prob-moves > 1 and quest-index is 4:
 			say "You need to run around efficiently, but that's too fast. Since you need to visit the counties in order, I'm going to be a stickler and only let you move between knight-adjacent rooms, even though there might be just one valid short path between, say, a2 and d1.";
 			the rule fails;
-		if need-to-hurry is true and prob-moves + current-turns-after-placing > max-turns-after-placing:
-			say "But then you would run out of time to summon everyone.";
+		let move-delta be prob-moves + current-turns-after-placing - max-turns-after-placing;
+		if need-to-hurry is true and move-delta > 0:
+			say "But then you would run out of time to summon everyone. Specifially, you'd be over by [move-delta] move[if move-delta > 1]s[end if].";
 			the rule fails;
 		say "Your horse zooms [if prob-moves > 1]around for [prob-moves] moves[else]briefly[end if] to [noun].";
-		move player to noun;
 		if need-to-hurry is true:
 			increase current-turns-after-placing by prob-moves;
+		move player to noun;
 		the rule succeeds;
 	say "BUG. I don't khow what happened, but I didn't find distances between rooms.";
 	the rule succeeds;
