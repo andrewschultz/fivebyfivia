@@ -34,6 +34,7 @@ STRATEGIC MAP OF FIVEBYFIVIA SO FAR:
 
 >f
 You haven't placed any pieces yet.
+>call
 >fail
 Okay, let's end things early...
 You're already at c3 in the center, so that saves time starting again. Time to re-summon the queenside rook and the kingside rook.
@@ -82,16 +83,16 @@ There are eight directions
 
 >status
 Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
-Pieces out on the board: nothing.
+Pieces out on the board: none, yet.
 >stats
 Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
-Pieces out on the board: nothing.
+Pieces out on the board: none, yet.
 >st
 Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
-Pieces out on the board: nothing.
+Pieces out on the board: none, yet.
 >stat
 Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
-Pieces out on the board: nothing.
+Pieces out on the board: none, yet.
 
 >review
 Nothing to review yet.
@@ -121,7 +122,7 @@ This game should come with a walkthrough. However, if you need a refresher on yo
 >h
 This game should come with a walkthrough. However, if you need a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
 >try 1
->call
+>call kr
 You call the kingside rook to c3.
 >undo
 >c kr

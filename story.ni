@@ -42,13 +42,6 @@ chapter rooms
 
 a room can be circle-visited. a room is usually not circle-visited.
 
-[definition: a room (called r) is knightly-viable:
-	unless r is adjacent to player, no;
-	if r is offsite, no;
-	let d be the best way from l to location of player;
-	if d is knightly, yes;
-	no;]
-
 chapter start of play
 
 when play begins (this is the initial screen tweaks rule):
@@ -156,7 +149,7 @@ to say room-detail:
 	if location of player is c3:
 		say "From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
-	say "You can go [list of knightly-viable directions][if number of placed pieces is 0 and quest-index < 4] to search for the best place to CALL your first allies[end if]";
+	say "You can go [list of knight-viable directions][if number of placed pieces is 0 and quest-index < 4] to search for the best place to CALL your first allies[end if]";
 	now room-too is false;
 
 room-too is a truth state that varies.
@@ -164,9 +157,16 @@ room-too is a truth state that varies.
 after printing the name of a direction (called d) when room-too is true:
 	say " to [the room d of location of player]";
 
-definition: a direction (called d) is knightly-viable:
+definition: a direction (called d) is knight-viable:
 	if d is knightly and d is viable, yes;
 	no;
+
+[definition: a room (called r) is knight-viable:
+	unless r is adjacent to player, no;
+	if r is offsite, no;
+	let d be the best way from l to location of player;
+	if d is knightly, yes;
+	no;]
 
 definition: a direction (called d) is visit-viable:
 	if d is normal, no;
