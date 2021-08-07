@@ -1,0 +1,120 @@
+# reg-5b-meta.txt
+## generated manually looking through verbs, checked with regv.py l
+
+** game: /home/andrew/prt/debug-fivebyfivia.z8
+** interpreter: /home/andrew/prt/dfrotz -m -w 5000
+
+* main-thru
+
+>gt a1
+Your horse zooms around for 4 moves to a1.
+>gt a2
+Your horse zooms around for 3 moves to a2.
+>undo
+>gt a3
+Your horse zooms around for 2 moves to a3.
+>undo
+>gt a4
+Your horse zooms around for 3 moves to a4.
+>undo
+>gt a5
+Your horse zooms around for 2 moves to a5.
+>undo
+>gt b1
+Your horse zooms around for 3 moves to b1.
+>undo
+>gt b2
+Your horse zooms around for 4 moves to b2.
+>undo
+>gt b3
+Your horse zooms briefly to b3.
+>undo
+>gt b4
+Your horse zooms around for 2 moves to b4.
+>undo
+>gt b5
+Your horse zooms around for 3 moves to b5.
+>undo
+>gt c1
+Your horse zooms around for 2 moves to c1.
+>undo
+>gt c2
+Your horse zooms briefly to c2.
+>undo
+>gt c3
+Your horse zooms around for 4 moves to c3.
+>undo
+>gt c4
+Your horse zooms around for 3 moves to c4.
+>undo
+>gt c5
+Your horse zooms around for 2 moves to c5.
+>undo
+>gt d1
+Your horse zooms around for 3 moves to d1.
+>undo
+>gt d2
+Your horse zooms around for 2 moves to d2.
+>undo
+>gt d3
+Your horse zooms around for 3 moves to d3.
+>undo
+>gt d4
+Your horse zooms around for 2 moves to d4.
+>undo
+>gt d5
+Your horse zooms around for 3 moves to d5.
+>undo
+>gt e1
+Your horse zooms around for 2 moves to e1.
+>undo
+>gt e2
+Your horse zooms around for 3 moves to e2.
+>undo
+>gt e3
+Your horse zooms around for 2 moves to e3.
+>undo
+>gt e4
+Your horse zooms around for 3 moves to e4.
+>undo
+
+>gt e5
+Your horse zooms around for 4 moves to e5.
+>gt d4
+Your horse zooms around for 4 moves to d4.
+>gt c3
+Your horse zooms around for 2 moves to c3.
+>gt d4
+Your horse zooms around for 2 moves to d4.
+>gt e5
+Your horse zooms around for 4 moves to e5.
+
+>gt a1
+>gt b2
+Your horse zooms around for 4 moves to b2.
+>gt a1
+Your horse zooms around for 4 moves to a1.
+
+>gt e1
+>gt d2
+Your horse zooms around for 4 moves to d2.
+>gt e1
+Your horse zooms around for 4 moves to e1.
+
+>gt a5
+>gt b4
+Your horse zooms around for 4 moves to b4.
+>gt a5
+Your horse zooms around for 4 moves to a5.
+
+>gt c3
+>place r
+>a1
+But then you would run out of time to summon everyone. Specifially, you'd be over by 1 move.
+>c4
+Your horse zooms around for 3 moves to c4.
+You wonder if you'll have time to summon everyone. But you can always try again.
+>undo
+>a2
+>a1
+But then you would run out of time to summon everyone. Specifially, you'd be over by 1 move.

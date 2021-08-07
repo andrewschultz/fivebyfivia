@@ -1,0 +1,181 @@
+# reg-5b-walkthrough.txt
+## brute force walkthrough
+
+** game: /home/andrew/prt/debug-fivebyfivia.z8
+** interpreter: /home/andrew/prt/dfrotz -m -w 5000
+
+* zero_points
+
+>{include} _quest1-checkmate
+>{include} _quest2-checkmate
+>{include} _quest3-checkmate
+>{include} _quest4
+
+Plus, your day of martyry is a national holiday every year.
+
+Perhaps there was a way to be even more cunning than you were.
+!Hint: you figured things partially.
+
+* one_point
+
+>{include} _quest1-checkmate
+>{include} _quest2-stalemate
+>{include} _quest3-checkmate
+>{include} _quest4
+
+Plus, your day of martyry is a national holiday every year.
+
+Perhaps there was a way to be even more cunning than you were.
+Hint: you figured things partially.
+
+* two_points
+
+>{include} _quest1-stalemate
+>{include} _quest2-checkmate
+>{include} _quest3-stalemate
+>{include} _quest4
+
+Plus, your day of martyry is a national holiday every year.
+
+Perhaps there was a way to be even more cunning than you were.
+Hint: you figured things partially.
+
+* three_points
+
+>{include} _quest1-stalemate
+>{include} _quest2-stalemate
+>{include} _quest3-stalemate
+>{include} _quest4
+
+Because of the lack of blood, other nations shake their head at Twelvebytwelvia's annexation of Fivebyfivia, but what can they do? Your discretion went above and beyond what the king and queen required of you. Perhaps there will be, with time, opportunities for further clandestine annexations.
+
+You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.
+
+The beginning of a glorious (?) empire
+
+* _quest1-checkmate
+
+>ssw
+>nnw
+>see
+>see
+>call kingside
+>nww
+>call queenside
+>sww
+>call king
+The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
+
+!Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
+
+The old king is dead! Long live the middle-aged king. He's going to be a bit sneakier. And he knows his father died in a corner -- so you may not be able to sucker him there. However, he makes indications he wants a diplomatic meeting with your king and queen.
+
+* _quest2-checkmate
+
+>sse
+>call queen
+>nnw
+>ssw
+>nnw
+>call friendly king
+>sse
+>call enemy king
+The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
+
+!Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
+
+The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.
+
+* _quest3-checkmate
+
+>sww
+>call rook
+>see
+>call friendly king
+>nne
+>sse
+>call enemy king
+The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
+
+!Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
+
+The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.
+
+* _quest4
+
+>nnw
+>ssw
+>sse
+>nee
+>nne
+>nww
+>sww
+>sse
+>see
+>nne
+>nnw
+>sww
+>ssw
+>see
+>nee
+>nnw
+>sww
+>nnw
+>see
+>nee
+>ssw
+>sse
+>nww
+>sww
+
+Horns blare! Voices soar to the sky! You have trampled all of Fivebyfivia, literally and figuratively! Now is time for your reward!
+But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an international medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in Fivebyfivia seems happier to be annexed by Twelvebytwelvia. Or at least nobody has said they aren't, so no sense in returning Fivebyfivia's sovereignty.
+
+* _quest1-stalemate
+
+>nnw
+>call kingside
+>ssw
+>see
+>call queenside
+>sww
+>call king
+
+The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
+
+The old king is dead! Long live the middle-aged king. He's going to be a bit sneakier. And he knows his father died in a corner -- so you may not be able to sucker him there. However, he makes indications he wants a diplomatic meeting with your king and queen.
+
+NOTE: you will be able to see technical details of completed quest with R or REVIEW.
+You go back to c3 in the center to start again. Time to re-summon the queenside rook and the kingside rook.
+
+* _quest2-stalemate
+
+>nne
+>call friendly king
+>sww
+>sse
+>call queen
+>sww
+>call king
+
+The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
+
+Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
+
+The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.
+You go back to c3 in the center to start again. Time to re-summon the queen and the friendly king.
+
+* _quest3-stalemate
+
+>sww
+>see
+>call rook
+>nnw
+>call friendly king
+>ssw
+>call enemy king
+The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
+
+Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
+
+The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.

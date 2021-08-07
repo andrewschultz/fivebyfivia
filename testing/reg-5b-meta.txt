@@ -1,0 +1,167 @@
+# reg-5b-meta.txt
+## generated manually looking through verbs, checked with regv.py l
+
+** game: /home/andrew/prt/debug-fivebyfivia.z8
+** interpreter: /home/andrew/prt/dfrotz -m -w 5000
+
+* main-thru
+
+>xyzzy
+On the very east side of the world lie such repositories of hooliganism and pointless chance-taking as Backgammonton, Pokersfield or, worse, Yahtzeeburg. You dream of helping conquer them one day, but it is only a dream. A too-risky one at that.
+
+>g
+You need to specify which square to go to.
+>gt
+You need to specify which square to go to.
+>go to
+You need to specify which square to go to.
+
+>board
+STRATEGIC MAP OF FIVEBYFIVIA SO FAR:
+  a b c d e
+5 - ^ - ^ - 5
+4 ^ - - - ^ 4
+3 - - * - - 3
+2 ^ - - - ^ 2
+1 - ^ - ^ - 1
+  a b c d e
+>map
+5 - ^ - ^ - 5
+>b
+5 - ^ - ^ - 5
+>m
+5 - ^ - ^ - 5
+
+>f
+You haven't placed any pieces yet.
+>fail
+Okay, let's end things early...
+You're already at c3 in the center, so that saves time starting again. Time to re-summon the queenside rook and the kingside rook.
+
+>tut
+1 + k - - - 1
+1 - + k - - 1
+1 - - + k - 1
+1 - - - + k 1
+
+>toggle
+Toggling maps in the room description to on.
+>l
+STRATEGIC MAP OF FIVEBYFIVIA SO FAR:
+>t
+Toggling maps in the room description to off.
+>l
+From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for Fivebyfivia.
+
+
+>verbs
+The main verbs you can use are about going places.
+>verb
+The main verbs you can use are about going places.
+>v
+The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with DIRS. You can also specify the county you wish to visit by name, e.g. c3 will send you back to the center.
+
+>about
+This game was originally written for ParserComp 2021.
+>a
+This game was originally written for ParserComp 2021.
+
+>abbrev
+Showing short directions is now on.
+>abb
+Showing short directions is now off.
+>ab
+Showing short directions is now on.
+
+>dirs
+There are eight directions your horse can travel, clockwise from north: northnortheast, northeasteast, southeasteast, southsoutheast, southsouthwest, southwestwest, northwestwest and northnorthwest.
+That's a bit long, so you can abbreviate them NNE,  NEE,  SEE,  SSE,  SSW,  SWW, NWW, NNW or any possible permutations. The game will treat all similar permutations as identical, e.g. there is no practical difference between NNE, NEN and ENN.
+You can toggle how the directions appear (long or short) in room descriptions with ABB or A.
+>dir
+There are eight directions
+
+>status
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Pieces out on the board: nothing.
+>stats
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Pieces out on the board: nothing.
+>st
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Pieces out on the board: nothing.
+>stat
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Pieces out on the board: nothing.
+
+>review
+Nothing to review yet.
+!Here's what
+>rev
+Nothing to review yet.
+>re
+Nothing to review yet.
+>r
+Nothing to review yet.
+>try 2
+>review
+Here's what you've got so far:
+!Nothing to review
+You pinned the enemy king into the corner using the two rooks:
+>try 3
+>review
+You pinned the enemy king into the corner using the two rooks:
+You trapped the enemy king with a queen and king.
+>try 4
+>review
+You trapped the king in the corner with your own king and rook
+>hint
+This game should come with a walkthrough. However, if you need a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
+>help
+This game should come with a walkthrough. However, if you need a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
+>h
+This game should come with a walkthrough. However, if you need a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
+>try 1
+>call
+You call the kingside rook to c3.
+>undo
+>c kr
+You call the kingside rook to c3.
+>undo
+>place kr
+You call the kingside rook to c3.
+>undo
+>p kr
+You call the kingside rook to c3.
+
+>p
+That would make things too crowded here at c3, since the kingside rook is already present.
+>place
+That would make things too crowded here at c3, since the kingside rook is already present.
+>c
+That would make things too crowded here at c3, since the kingside rook is already present.
+
+>credits
+Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all has been especially nice during the pandemic.
+>credit
+Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all has been especially nice during the pandemic.
+>cr
+Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all has been especially nice during the pandemic.
+
+>chess
+Pawns and bishops do not appear in this game, so don't worry about them.
+Knights (that's you) move one square vertically and two squares horizontally.
+Rooks can move vertically or horizontally until there is an obstruction.
+Queens can move vertically or horizontally or diagonally until there is an obstruction.
+Kings can move one square adjacent, vertically or horizontally or diagonally, unless there is an obstruction.
+Check occurs when one piece is attacking your king.
+Checkmate is when you attack the enemy's king and he has no safe square nearby to flee to.
+Stalemate is when the enemy has no legal moves, but the king is not under attack.
+>ch
+Pawns and bishops do not appear in this game, so don't worry about them.
+
+>g c3
+You're already at c3.
+>gt c3
+You're already at c3.
+>go to c3
+You're already at c3.
