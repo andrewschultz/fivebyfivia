@@ -42,11 +42,11 @@ chapter rooms
 
 a room can be circle-visited. a room is usually not circle-visited.
 
-[definition: a room (called r) is weird-viable:
+[definition: a room (called r) is knightly-viable:
 	unless r is adjacent to player, no;
 	if r is offsite, no;
 	let d be the best way from l to location of player;
-	if d is weird, yes;
+	if d is knightly, yes;
 	no;]
 
 chapter start of play
@@ -156,7 +156,7 @@ to say room-detail:
 	if location of player is c3:
 		say "From here, your horse can bolt in any of the eight crazy directions it likes to zoom off. Hooray, freedom! Well, for you, not for [5b]";
 		continue the action;
-	say "You can go [list of weird-viable directions][if number of placed pieces is 0 and quest-index < 4] to search for the best place to CALL your first allies[end if]";
+	say "You can go [list of knightly-viable directions][if number of placed pieces is 0 and quest-index < 4] to search for the best place to CALL your first allies[end if]";
 	now room-too is false;
 
 room-too is a truth state that varies.
@@ -164,8 +164,8 @@ room-too is a truth state that varies.
 after printing the name of a direction (called d) when room-too is true:
 	say " to [the room d of location of player]";
 
-definition: a direction (called d) is weird-viable:
-	if d is weird and d is viable, yes;
+definition: a direction (called d) is knightly-viable:
+	if d is knightly and d is viable, yes;
 	no;
 
 definition: a direction (called d) is visit-viable:
@@ -175,7 +175,7 @@ definition: a direction (called d) is visit-viable:
 	no;
 
 definition: a direction (called d) is visit-nonviable:
-	if d is weird and the room d of location of player is circle-visited, yes;
+	if d is knightly and the room d of location of player is circle-visited, yes;
 	no;
 
 definition: a direction (called d) is normal-viable:
@@ -219,7 +219,7 @@ after going to a circle-visited room:
 
 volume directions [ this was more of an actual volume until the code was moved to the common file ]
 
-for printing the name of a weird direction (called d) when show-short-dirs is true: say "[vh-abbrev of d]"
+for printing the name of a knightly direction (called d) when show-short-dirs is true: say "[vh-abbrev of d]"
 
 volume rooms
 
@@ -690,7 +690,7 @@ definition: a room (called r) is checked:
 	no;
 
 definition: a room (called r) is surrounded:
-	repeat with D running through not weird directions:
+	repeat with D running through not knightly directions:
 		if the room D of r is nothing, next;
 		if the room D of r is checked, next;
 		no;
@@ -951,7 +951,7 @@ understand "st" as statsing.
 understand "stat" as statsing.
 
 definition: a room (called r) is knight-movable:
-	repeat with D running through weird directions:
+	repeat with D running through knightly directions:
 		if the room D of location of player is r, yes;
 	no;
 
@@ -1168,7 +1168,7 @@ understand the command "ways" as something new.
 understand "ways" as waysing.
 
 carry out waysing:
-	repeat with Q running through weird directions:
+	repeat with Q running through knightly directions:
 		say "[Q] [the room Q of location of player].";
 	repeat with Q running through { north, south, east, west }:
 		say "[Q] [the room Q of location of player].";

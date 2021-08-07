@@ -215,11 +215,11 @@ xness of south is 0. yness of south is -1.
 
 chapter knight-move directions [ this is here for an amusing bit for Fourbyfouria ]
 
-[the "it is weird" syntax is clumsy but necessary. "a weird direction" feels natural but makes the Inform compiler complain.]
+[the "it is knightly" syntax is clumsy but necessary. "a knightly direction" feels natural but makes the Inform compiler complain.]
 
-a direction can be normal or weird. a direction is usually normal. a direction has text called vh-abbrev.
+a direction can be normal or knightly. a direction is usually normal. a direction has text called vh-abbrev.
 
-southsoutheast is a direction. it is weird. vh-abbrev is "SSE". northnorthwest is a direction. it is weird. vh-abbrev is "NNW".
+southsoutheast is a direction. it is knightly. vh-abbrev is "SSE". northnorthwest is a direction. it is knightly. vh-abbrev is "NNW".
 
 xness of southsoutheast is 1. yness of southsoutheast is -2. xness of northnorthwest is -1. yness of northnorthwest is 2.
 
@@ -229,7 +229,7 @@ understand "sse" and "ses" and "ess" as southsoutheast.
 
 understand "nnw" and "nwn" and "wnn" as northnorthwest.
 
-southeasteast is a direction. it is weird. vh-abbrev is "SEE". northwestwest is a direction. it is weird. vh-abbrev is "NWW".
+southeasteast is a direction. it is knightly. vh-abbrev is "SEE". northwestwest is a direction. it is knightly. vh-abbrev is "NWW".
 
 xness of southeasteast is 2. yness of southeasteast is -1. xness of northwestwest is -2. yness of northwestwest is 1.
 
@@ -239,7 +239,7 @@ understand "see" and "ese" and "ees" as southeasteast.
 
 understand "nww" and "wnw" and "wwn" as northwestwest.
 
-southsouthwest is a direction. it is weird. vh-abbrev is "SSW". northnortheast is a direction. it is weird. vh-abbrev is "NNE".
+southsouthwest is a direction. it is knightly. vh-abbrev is "SSW". northnortheast is a direction. it is knightly. vh-abbrev is "NNE".
 
 xness of southsouthwest is -1. yness of southsouthwest is -2. xness of northnortheast is 1. yness of northnortheast is 2.
 
@@ -249,7 +249,7 @@ understand "ssw" and "sws" and "wss" as southsouthwest.
 
 understand "nne" and "nen" and "enn" as northnortheast.
 
-southwestwest is a direction. it is weird. vh-abbrev is "SWW". northeasteast is a direction. it is weird. vh-abbrev is "NEE".
+southwestwest is a direction. it is knightly. vh-abbrev is "SWW". northeasteast is a direction. it is knightly. vh-abbrev is "NEE".
 
 xness of southwestwest is -2. yness of southwestwest is -1. xness of northeasteast is 2. yness of northeasteast is 1.
 
