@@ -1,3 +1,5 @@
+# sols.py: reads sols.txt and outputs graphics for various puzzles and solutions for Fivebyfivia
+
 import mytools as mt
 import sys
 import os
@@ -5,6 +7,7 @@ import re
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+import chesshtmstubs as ch
 
 WHITE_KING = 0
 BLACK_KING = 1
@@ -14,7 +17,7 @@ WHITE_ROOK = 3
 piece_to_icon = [ (0, 0), (0, 1), (1, 0), (2, 0) ]
 
 prev_sect = ''
-html_out = 'html\\visual.htm'
+ch.html_out = 'html\\graphic-solutions.htm'
 
 tour_board = "tour-board.png"
 
@@ -45,7 +48,7 @@ def write_one_graphic(placements, prefix): # king = 0 bishop = 3 knight = 4
         background.save(out_file_full)
     except:
         sys.exit("Could not create {}. Make sure the html directory exists.".format(out_file_full))
-    f = open(html_out, "a")
+    f = open(ch.html_out, "a")
     global prev_sect
     if prev_sect not in out_file or not prev_sect:
         if prev_sect:
@@ -68,7 +71,7 @@ def write_tour_graphic(prefix, data_array):
         img.save(out_file_full)
     except:
         sys.exit("Could not create {}. Make sure the html directory exists.".format(out_file))
-    f = open(html_out, "a")
+    f = open(ch.html_out, "a")
     global prev_sect
     if prev_sect not in out_file or not prev_sect:
         if prev_sect:
@@ -79,9 +82,7 @@ def write_tour_graphic(prefix, data_array):
     f.write("<img src = {}>\n".format(out_file))
     f.close()
 
-f = open(html_out, "w")
-f.write("<html>\n<body bgcolor=cccccc>\n")
-f.close()
+ch.write_header(ch.html_out)
 
 with open ("sols.txt") as file:
     for (line_count, line) in enumerate (file, 1):
@@ -92,4 +93,6 @@ with open ("sols.txt") as file:
         placements = [ [ int(y) for y in x.split(',') ] for x in data.split('/') ]
         write_one_graphic(placements, prefix)
 
-os.system(html_out)
+ch.write_footer(ch.html_out)
+
+os.system(ch.html_out)
