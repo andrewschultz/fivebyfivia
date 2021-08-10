@@ -3,7 +3,6 @@
 import mytools as mt
 import sys
 import os
-import re
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
@@ -16,7 +15,6 @@ WHITE_ROOK = 3
 
 piece_to_icon = [ (0, 0), (0, 1), (1, 0), (2, 0) ]
 
-prev_sect = ''
 ch.html_out = 'html\\graphic-solutions.htm'
 
 tour_board = "tour-board.png"
@@ -48,16 +46,7 @@ def write_one_graphic(placements, prefix): # king = 0 bishop = 3 knight = 4
         background.save(out_file_full)
     except:
         sys.exit("Could not create {}. Make sure the html directory exists.".format(out_file_full))
-    f = open(ch.html_out, "a")
-    global prev_sect
-    if prev_sect not in out_file or not prev_sect:
-        if prev_sect:
-            f.write("</center>\n")
-            f.write("<hr>\n")
-        prev_sect = re.sub('-.*', '', out_file)
-        f.write('<div style="page-break-before: always;"><center><font size=+2>{}</font></center>\n<center></div>\n'.format(prev_sect))
-    f.write("<img src = {}>\n".format(out_file))
-    f.close()
+    ch.one_image_link(out_file)
 
 def write_tour_graphic(prefix, data_array):
     img = Image.open(tour_board)
@@ -71,16 +60,7 @@ def write_tour_graphic(prefix, data_array):
         img.save(out_file_full)
     except:
         sys.exit("Could not create {}. Make sure the html directory exists.".format(out_file))
-    f = open(ch.html_out, "a")
-    global prev_sect
-    if prev_sect not in out_file or not prev_sect:
-        if prev_sect:
-            f.write("</center>\n")
-            f.write("<hr>\n")
-        prev_sect = re.sub('-.*', '', out_file)
-        f.write("<center><font size=+2>{}</font></center>\n<center>\n".format(prev_sect))
-    f.write("<img src = {}>\n".format(out_file))
-    f.close()
+    ch.one_image_link(out_file)
 
 ch.write_header(ch.html_out)
 
