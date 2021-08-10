@@ -3,10 +3,10 @@ import re
 prev_sect = ""
 html_out = "generic-name.html"
 
-blank_board = "c:/Users/Andrew/Documents/github/fourbyfourian-quarryin/utils/blank-board.png"
+blank_board = "c:/Users/Andrew/Documents/github/fivebyfivia/utils/blank-board.png"
 chess_icons = "c:/users/andrew/documents/github/fivebyfivia/utils/freeserif.png"
 
-def one_image_link(graphic_file, sect_abbr = ''):
+def one_image_link(graphic_file, sect_abbr = '', full_sect_name = ''):
     if not sect_abbr:
         sect_abbr = re.sub('-.*', '', graphic_file)
     global prev_sect
@@ -18,7 +18,7 @@ def one_image_link(graphic_file, sect_abbr = ''):
             f.write("<hr>\n")
             f.write('<div style="page-break-before: always;">\n')
             close_tag = True
-        f.write('<center><font size=+2>{}</font></center>\n'.format(prev_sect))
+        f.write('<center><font size=+2>{}</font></center>\n'.format(full_sect_name if full_sect_name else sect_abbr))
         prev_sect = sect_abbr
         if close_tag:
             f.write("</div>\n")

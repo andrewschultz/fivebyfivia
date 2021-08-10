@@ -868,6 +868,7 @@ carry out creditsing:
 	say "[line break]Thanks to Adam Sommerfield for holding ParserComp and for allowing updates. I tried not to need them but failed.";
 	say "[line break]Thanks to the people on itch.io who reported bugs in-comp, including salty-horse. It may seem trivial, but trust me: after that first five minutes of 'Geez, that can't be it. Wait, did I overlook THAT?' it's very much appreciated. If you find a bug, report it at [github] or send me a mail at [email].";
 	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all has been especially nice during the pandemic.";
+	say "[line break]Thanks to openclipart.com for the vector images that helped make up the cover art for release 2. The PDF solution is based on https://www.chessvariants.com/d.font/unicode.html's FreeSerif graphics.";
 	the rule succeeds.
 
 chapter dirsing
