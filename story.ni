@@ -24,6 +24,8 @@ volume basics and definitions
 
 include Chess Common by Andrew Schultz.
 
+series-number is 1.
+
 max-quests is a number that varies. max-quests is 4.
 
 quest-index is a number that varies. quest-index is 1.
@@ -53,7 +55,7 @@ when play begins (this is the initial screen tweaks rule):
 		now screen-reader is true;
 
 when play begins (this is the start narration rule):
-	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]Besides, if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELENDA EST]. And you're off!";
+	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]And if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELENDA EST]. And you're off!";
 	now all pieces are in offsite;
 
 chapter FIVEBYFIVIA DELENDA EST
@@ -119,9 +121,6 @@ the description of a room is usually "[room-color]. You're [room-edge-text of th
 
 to say commentary:
 	let n be number of normal-viable directions;
-
-to say room-color:
-	say "The ground is [if the remainder after dividing (xval of location of player + yval of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
 
 rule for printing the locale description:
 	if quest-index is 4:

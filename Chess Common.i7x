@@ -14,7 +14,7 @@ include Intro Restore Skip by Andrew Schultz.
 
 include Undo Output Control by Erik Temple.
 
-chapter variables
+chapter variables and super common stubs
 
 to say email: say "blurglecruncheon@gmail.com"
 
@@ -37,6 +37,8 @@ screen-reader is a truth state that varies.
 in-beta is a truth state that varies.
 
 debug-state is a truth state that varies.
+
+series-number is a number that varies. [ 1 for 5by5, 2 for 4by4 ]
 
 chapter common rules
 
@@ -91,6 +93,9 @@ a room can be puzzly. a room is usually puzzly.
 a room can be guarded. a room is usually not guarded.
 
 to reset-guard: now all rooms are not guarded.
+
+to say room-color:
+	say "The [if series-number is 1]ground is[else]tiles are[end if] [if the remainder after dividing (xval of location of player + yval of location of player) by 2 is 0]light[else]dark[end if]er than normal here"
 
 chapter all the rooms
 
