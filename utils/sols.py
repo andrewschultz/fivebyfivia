@@ -20,7 +20,7 @@ ch.html_out = 'html\\graphic-solutions.htm'
 tour_board = "tour-board.png"
 
 def write_one_graphic(placements, prefix): # king = 0 bishop = 3 knight = 4
-    background = Image.open(ch.blank_board)
+    background = Image.open(ch.blank_board).convert("RGBA")
     foreground = Image.open(ch.chess_icons)
 
     h_delta = 60
@@ -32,7 +32,7 @@ def write_one_graphic(placements, prefix): # king = 0 bishop = 3 knight = 4
         this_h = x[1]
         this_v = x[2]
         foreground_temp = foreground.crop((icon_h * h_delta, icon_v * v_delta, (icon_h + 1) * h_delta, (icon_v + 1) * v_delta)).convert("RGBA")
-        background.paste(foreground_temp, (60 * this_h, 60 * this_v), foreground_temp)
+        background.paste(foreground_temp, (60 * this_h + 20, 60 * this_v + 20), foreground_temp)
 
     #background.paste(foreground, (0, 0), foreground)
     out_file_full = "html\\{}.png".format(prefix)

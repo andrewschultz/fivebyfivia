@@ -3,6 +3,7 @@ import re
 prev_sect = ""
 html_out = "generic-name.html"
 
+board_outline = "c:/Users/Andrew/Documents/github/fivebyfivia/utils/board-outline.png"
 blank_board = "c:/Users/Andrew/Documents/github/fivebyfivia/utils/blank-board.png"
 chess_icons = "c:/users/andrew/documents/github/fivebyfivia/utils/freeserif.png"
 
@@ -27,14 +28,11 @@ def one_image_link(graphic_file, sect_abbr = '', full_sect_name = ''):
     f.close()
 
 def write_header(my_file):
-    print(my_file)
-    print(html_out)
     f = open(my_file, "w")
     f.write("<html>\n<body bgcolor=cccccc>\n")
     f.close()
 
 def write_footer(my_file):
-    print(my_file)
     f = open(my_file, "a")
     f.write("</center>\n</body>\n</html>\n")
     f.close()
