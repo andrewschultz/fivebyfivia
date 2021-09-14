@@ -44,6 +44,10 @@ chapter common rules
 
 The print final score rule is not listed in the for printing the player's obituary rulebook.
 
+chapter disambiguating diagonal directions
+
+does the player mean doing something with a knightly direction: it is unlikely.
+
 volume i6 modification(s)
 
 section What Do You Want to X
@@ -380,9 +384,11 @@ chapter chessing
 chessing is an action out of world.
 
 understand the command "chess" as something new.
+understand the command "che" as something new.
 understand the command "ch" as something new.
 
 understand "chess" as chessing.
+understand "che" as chessing.
 understand "ch" as chessing.
 
 chapter creditsing
@@ -391,10 +397,14 @@ creditsing is an action out of world.
 
 understand the command "credits" as something new.
 understand the command "credit" as something new.
+understand the command "cred" as something new.
+understand the command "cre" as something new.
 understand the command "cr" as something new.
 
 understand "credits" as creditsing.
 understand "credit" as creditsing.
+understand "cred" as creditsing.
+understand "cre" as creditsing.
 understand "cr" as creditsing.
 
 chapter failing
