@@ -192,6 +192,35 @@ definition: a room (called r) is cornery:
 	if edge-count of r is 2, yes;
 	no;
 
+definition: a room (called r) is edgecentral:
+	unless r is edgy, no;
+	if xval of r is 2 or yval of r is 2, yes;
+	no;
+
+definition: a room (called r) is edgeside:
+	unless r is edgy, no;
+	if xval of r is 2 or yval of r is 2, no;
+	yes;
+
+definition: a room (called r) is inner-ring:
+	if r is edgy, no;
+	if r is central, no;
+	yes;
+
+definition: a room (called r) is inner-ring-side:
+	unless r is inner-ring, no;
+	if xval of r is 2 or yval of r is 2, no;
+	yes;
+
+definition: a room (called r) is inner-ring-corner:
+	unless r is inner-ring, no;
+	if xval of r is 2 or yval of r is 2, no;
+	yes;
+
+definition : a room (called r) is central:
+	if xval of r is 2 and yval of r is 2, yes;
+	no;
+
 to decide which room is room-from-nums of (n1 - a number) and (n2 - a number):
 	repeat with Q running through rooms:
 		if xval of Q is n1 and yval of Q is n2:
@@ -204,6 +233,17 @@ definition: a room (called r) is otherly:
 	if r is location of player, no;
 	if r is puzzly, yes;
 	no;
+
+section possible better general stub, commented for posterity
+
+[board-size is a number that varies. board-size is 5.
+
+to decide which number is ring-level of (r - a room):
+	let x1 be absval of (2 * xval of r - (board-size - 1);
+	let y1 be absval of (2 * yval of r - (board-size - 1));
+	let max be y1;
+	if x1 > y1, now max is x1;
+	decide on (max + 1) / 2;]
 
 chapter irregular and non-existent rooms for humor value only
 
@@ -472,9 +512,13 @@ does the player mean kicking a placed piece: it is likely.
 kick-list is a list of things variable.
 
 rule for supplying a missing noun when kicking:
+	if location of player is not puzzly:
+		say "You need to be on a quest with allies placed in order to [kick].";
+		reject the player's command;
 	let x be the number of entries in kick-list;
 	if x is 0:
 		say "You can't kick any allies out, because you haven't placed anyone yet.";
+		reject the player's command;
 	now noun is entry x of kick-list;
 
 to place-and-list (p - a piece):
@@ -482,6 +526,7 @@ to place-and-list (p - a piece):
 	add p to kick-list;
 
 carry out kicking:
+	if location of player is not puzzly, say "You can't [kick] anyone when you're not on a quest." instead;
 	if noun is not placed, say "You don't need to kick [the noun], since it isn't [if noun is irrelevant]part of the quest[else]placed yet[end if]." instead;
 	if noun is not listed in kick-list:
 		say "Oops. There is a bug here. [the noun] should be in an internal list, but it isn't. This won't affect gameplay.[paragraph break]";
