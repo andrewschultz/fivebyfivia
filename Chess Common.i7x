@@ -96,6 +96,13 @@ Constant AGAIN2__WD = 'again';
 
 -) after "Language.i6t".
 
+volume commenting
+
+after reading a command (this is the punctuation stripper rule):
+	if the player's command matches the regular expression "^\p":
+		say "Noted. [one of]If you started a command with punctuation by accident, note it is understood as comments from testers and thus ignored as a command.[or][line break][stopping]";
+		reject the player's command;
+
 volume room stuff
 
 chapter room properties
@@ -106,7 +113,7 @@ a room has a number called xval.
 
 a room has a number called yval.
 
-a room can be puzzly. a room is usually puzzly.
+a room can be puzzly or organizational. a room is usually puzzly.
 
 a room can be guarded. a room is usually not guarded.
 
@@ -323,16 +330,20 @@ understand the command "call" as something new.
 understand the command "c" as something new.
 understand the command "place" as something new.
 understand the command "p" as something new.
+understand the command "drop" as something new.
+understand the command "put" as something new.
 
 understand "call [any thing]" as calling.
 understand "c [any thing]" as calling.
 understand "place [any thing]" as calling.
 understand "p [any thing]" as calling.
+understand "put [any thing]" as calling.
 
 understand "call" as calling.
 understand "c" as calling.
 understand "place" as calling.
 understand "p" as calling.
+understand "drop" as calling.
 
 chapter gotoing
 
