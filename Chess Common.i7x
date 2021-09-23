@@ -454,6 +454,48 @@ understand "hint" as helping.
 understand "help" as helping.
 understand "h" as helping.
 
+chapter kicking
+
+kicking is an action applying to one visible thing.
+
+understand the command "kick" as something new.
+understand the command "k" as something new.
+
+understand "kick" as kicking.
+understand "k" as kicking.
+
+understand "kick [any piece]" as kicking.
+understand "k [any piece]" as kicking.
+
+does the player mean kicking a placed piece: it is likely.
+
+kick-list is a list of things variable.
+
+rule for supplying a missing noun when kicking:
+	let x be the number of entries in kick-list;
+	if x is 0:
+		say "You can't kick any allies out, because you haven't placed anyone yet.";
+	now noun is entry x of kick-list;
+
+to place-and-list (p - a piece):
+	now p is placed;
+	add p to kick-list;
+
+carry out kicking:
+	if noun is not placed, say "You don't need to kick [the noun], since it isn't [if noun is irrelevant]part of the quest[else]placed yet[end if]." instead;
+	if noun is not listed in kick-list:
+		say "Oops. There is a bug here. [the noun] should be in an internal list, but it isn't. This won't affect gameplay.[paragraph break]";
+	remove noun from kick-list, if present;
+	now noun is off-stage;
+	now noun is reserved;
+	say "With no small embarrassment, you whisper to [the noun] that their presence isn't quite needed right here, right now. You assure them there's been an important change of plans and all that sort of thing.";
+	update-guarded;
+	if number of entries in kick-list is 0:
+		say "Now you have no allies placed.";
+	else:
+		show-the-board;
+	the rule succeeds;
+
 chapter toggleing
 
 toggleing is an action out of world.
