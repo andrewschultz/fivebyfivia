@@ -30,7 +30,21 @@ to say 4b: say "Fourbyfouria"
 
 to say 4n: say "[4b]n"
 
+to say 4s: say "[4b]s"
+
 to say verbs: say "[b]V[r] or [b]VERB[r] or [b]VERBS[r]"
+
+to say xbold: say "[b]X[r] or [b]EXAMINE[r]"
+
+to say cred: say "[b]C[r] or [b]CREDITS[r]".
+
+to say about: say "[b]A[r] or [b]ABOUT[r]".
+
+to say tog: say "[b]T[r] or [b]TOGGLE[r]".
+
+to say kick: say "[b]K[r] or [b]KICK[r]".
+
+to say credits: say "[b]C[r]/[b]CRE[r]/[b]CRED[r]/[b]CREDITS"
 
 screen-reader is a truth state that varies.
 
