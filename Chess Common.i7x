@@ -54,6 +54,18 @@ debug-state is a truth state that varies.
 
 series-number is a number that varies. [ 1 for 5by5, 2 for 4by4 ]
 
+chapter swearing rules
+
+the block swearing obscenely rule is not listed in any rulebook.
+
+the block swearing mildly rule is not listed in any rulebook.
+
+check swearing obscenely:
+	say "Not with the Twelvebytwelvian King around, and not until he uses profanity first. You're good at the whole swearing thing, or threatening to swear, to keep the troops in line. Pawns, knights, bishops, even rooks. But you don't need to, here.";
+
+check swearing mildly:
+	try swearing obscenely instead;
+
 chapter common rules
 
 The print final score rule is not listed in the for printing the player's obituary rulebook.
