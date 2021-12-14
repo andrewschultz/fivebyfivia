@@ -558,11 +558,21 @@ rule for printing a parser error when the latest parser error is the didn't unde
 
 chapter kludge to avoid "sense in that context" error
 
+warn-digit-letter is a truth state that varies.
+
 after reading a command:
-	if the player's command matches the regular expression "^<a-e><1-5>$" or the player's command matches the regular expression "^<1-5><a-e>$", case insensitively:
-		let n be indexed text;
-		now n is "gt [the player's command]";
-		change the text of the player's command to n;
+	if the player's command matches the regular expression "^<a-e><1-5>$", case insensitively:
+		rejig-square-to-command;
+	if the player's command matches the regular expression "^<1-5><a-e>$", case insensitively:
+		rejig-square-to-command;
+		if warn-digit-letter is false:
+			say "[i][bracket]ONE-TIME NAG: either a4 or 4a, for instance, is equally appropriate for moving around. However, there's a small but nonzero chance you might've meant, say, d1 or 1d instead of a4 or 4a, so just in case, I'll remind you that can [b]UNDO[r][i].[close bracket][r]";
+			now warn-digit-letter is true;
+
+to rejig-square-to-command:
+	let n be indexed text;
+	now n is "gt [the player's command]";
+	change the text of the player's command to n;
 
 Chess Common ends here.
 
