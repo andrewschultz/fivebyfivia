@@ -279,7 +279,7 @@ the player is in c3.
 check going a normal direction:
 	if noun is up, say "Your horse can fly across ground but not over it." instead;
 	if noun is down, say "Your horse isn't built for that." instead;
-	say "Your horse doesn't go in normal directions. It goes in diagonal ones. But not normal ones like southeast ([b]SE[r]). There's southsoutheast ([b]SSE, ESS, SES[r]) and, well, 7 others you may be able to extrapolate.[paragraph break][b]DIRS[r] gives a full rundown." instead;
+	say "Your horse doesn't go in normal directions. It goes in diagonal ones. But not normal diagonals like southeast ([b]SE[r]). There's southsoutheast ([b]SSE, ESS, SES[r]) and, well, 7 others you may be able to extrapolate.[paragraph break][b]DIRS[r] gives a full rundown." instead;
 
 volume initialization
 
@@ -418,7 +418,7 @@ carry out calling:
 	if noun is placed:
 		say "You already placed [the noun] at [location of the noun]." instead;
 	if noun is irrelevant:
-		say "Right now [the noun] is not part of your maneuver. You can, however, call [the list of reserved pieces]." instead;
+		say "Right now [the noun] is not part of your maneuver. You can, however, call [the list of reserved pieces][if number of placed pieces > 0]. You've already placed [the list of placed pieces][end if]." instead;
 	if number of pieces in location of player > 0:
 		say "That would make things too crowded here at [location of player], since [the random piece in location of player] is already present." instead;
 	if noun is enemy king:
@@ -490,6 +490,7 @@ to quest-conclusion:
 		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.";
 		if screen-reader is false, now maps-in-description is true;
 	increment quest-index;
+	now just-solved is true;
 	setup-next-puzzle;
 
 to show-the-board:
@@ -545,13 +546,13 @@ after printing the locale description when quest-index is 4:
 		if number of not circle-visited rooms < 5:
 			say "(DEBUG) [list of not circle-visited rooms].";
 	if number of circle-visited rooms is 25:
-		say "Horns blare! Voices soar to the sky! You have trampled all of [5b], literally and figuratively! Now is time for your reward!";
+		say "Horns blare! Voices soar to the sky! You have trampled all of [5b], literally and figuratively! Now is time for your reward![paragraph break]";
 		let t be stalemate-count;
 		if stalemate-count is 3:
 			say "Because of the lack of blood, other nations shake their head at [12b]'s annexation of [5b], but what can they do? Your discretion went above and beyond what the king and queen required of you. Perhaps there will be, with time, opportunities for further clandestine annexations.[paragraph break]You grow old and fat and wise and powerful enough so nobody has the courage to mention you are too old and fat to ride your super-fast horse. Besides, they don't have the time, because they're always mentioning how powerful you are.";
 			end the story finally saying "The beginning of a glorious (?) empire";
 		else:
-			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an international medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year.[paragraph break]Perhaps there was a way to be even more cunning than you were[if stalemate-count > 1]. Hint: you figured things partially[end if].";
+			say "But the blood is traced back to you. Even if it was the royalty that did the work. Somehow, a blood-soaked garment ... you are turned over to an international medieval crime court as a sacrifice. Somehow, the royal family convinced everyone you and your crazy-moving horse acted on your own, before they could dissuade you. But everyone in [5b] seems happier to be annexed by [12b]. Or at least nobody has said they aren't, so no sense in returning [5b]'s sovereignty.[paragraph break]Plus, your day of martyry is a national holiday every year. And hey, you went to heaven right away! Or so it's said.[paragraph break]Perhaps there was a way to be even more cunning than you were[if stalemate-count > 1]. Hint: you figured things partially[end if].";
 			end the story finally;
 	if number of circle-visited rooms is random-parchment-number and final-failed-yet is true and parchmente is off-stage:
 		say "[one of]A small parchment flutters into view. It is labeled [parchmente][or][parchmente] flutters into view again[stopping]. It'd be so tempting to read it, and yet, your adventurous spirit has trouble balancing duty to country with the pure personal satisfaction of solving everything on your own.";
@@ -600,6 +601,8 @@ to fail-and-reset:
 
 past-intro is a truth state that varies.
 
+just-solved is a truth state that varies.
+
 to reset-the-board:
 	now all pieces are in offsite;
 	now all placed pieces are reserved;
@@ -613,8 +616,13 @@ to reset-the-board:
 		now c3 is circle-visited;
 		now random-parchment-number is a random number between 12 and 16;
 		if debug-state is true, say "DEBUG [random-parchment-number].";
+	if just-solved is true:
+		say "[line break]Why not start your next quest in the center? Yes, that makes sense.";
+		if location of player is not c3:
+			move player to c3;
+		continue the action;
 	if past-intro is true:
-		say "[if location of player is not c3]You go back to c3 in the center to start again[else]You're already at c3 in the center, so that saves time starting again[end if]. Time to re-summon [the list of accessory pieces].";
+		say "[line break][if location of player is not c3]You go back to c3 in the center to start again[else]You're already at c3 in the center, so that saves time starting again[end if]. Time to re-summon [the list of accessory pieces].";
 		if location of player is not c3:
 			move player to c3;
 	else:
@@ -631,7 +639,7 @@ this is the takeit processing rule:
 
 this is the stalemate processing rule:
 	unless the location of the enemy king is not checked and the location of the enemy king is surrounded, the rule fails;
-	say "The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.[paragraph break]Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!";
+	say "The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.[paragraph break]Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!";
 	now entry quest-index in stalemated is True;
 	the rule succeeds;
 
@@ -834,7 +842,7 @@ show-short-dirs is a truth state that varies.
 chapter abouting
 
 carry out abouting:
-	say "This game was originally written for ParserComp 2021.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where would the story be? I wasn't expecting anything to pop up.[paragraph break]The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]Then one evening, something came into form. And as ParserComp's deadline came up, my bigger planned game had stalled, so why not bail out?[paragraph break]I had some initial doubts, but I started to see how I could work around them. The result was something that worked technically, addressed an odd sort of position that always amused me, and it had the shell of a story, too. I'd also wanted to do some programming related to chess, so I had fun. And I hope you enjoy this, too, whether or not you play chess.[paragraph break]If this is still during ParserComp, please also check out the other games (17 others!) and try to leave a transcript. For Z-machine games, typing TRANSCRIPT helps--even if you can't find anything or leave comments, the programmer may notice certain things worth fixing from how you play, e.g. they wanted to make a hint more prominent. My address is [email].[paragraph break][b]CREDITS[r]/[b]CR[r] has more information about specific people who helped me.";
+	say "This game was originally written for ParserComp 2021 and released at the end of June. Release 2 arrived in late August, a month after the competition ended. It fixed bugs and now allows you to type a square to move to it, instead of a direction, e.g. b1 instead of SSW.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where would the story be? I wasn't expecting anything to pop up.[paragraph break]The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]Then one evening, something came into form. And as ParserComp's deadline came up, my bigger planned game had stalled, so why not bail out?[paragraph break]I had some initial doubts, but I started to see how I could work around them. The result was something that worked technically, addressed an odd sort of position that always amused me, and it had the shell of a story, too. I'd also wanted to do some programming related to chess, so I had fun. And I hope you enjoy this, too, whether or not you play chess.[paragraph break]Comments and transcripts are welcomed if you find anything I can tweak. [paragraph break]Though ParserComp is over, I'd like to point you to the page to try out other games. There were some good ones! during ParserComp, please also check out the other games (17 others!) and try to leave a transcript. For Z-machine games, typing TRANSCRIPT helps--even if you can't find anything or leave comments, the programmer may notice certain things worth fixing from how you play, e.g. they wanted to make a hint more prominent. My address is [email].[paragraph break]ParserComp 2021 was a success, in my opinion. You can see all the games here: https://itch.io/jam/parsercomp-2021.[paragraph break][b]CREDITS[r]/[b]CR[r] has more information about specific people who helped me.";
 	the rule succeeds.
 
 chapter boarding
@@ -862,7 +870,7 @@ chapter creditsing
 carry out creditsing:
 	say "Thanks to Wade Clarke, Dee Cooke, Arthur DiBianca, Garry Francis and Olaf Nowacki for testing. I know my games are tricky to test, especially when I have the idea 2-3 weeks before the deadline.";
 	say "[line break]Thanks to Adam Sommerfield for holding ParserComp and for allowing updates. I tried not to need them but failed.";
-	say "[line break]Thanks to the people on itch.io who reported bugs in-comp, including salty-horse. It may seem trivial, but trust me: after that first five minutes of 'Geez, that can't be it. Wait, did I overlook THAT?' it's very much appreciated. If you find a bug, report it at [github] or send me a mail at [email].";
+	say "[line break]Thanks to the people on itch.io who reported bugs in-comp, including salty-horse. It may seem trivial, but trust me: after that first five minutes of 'Geez, that can't be it. Wait, did I overlook THAT?' it's very much appreciated. If you find a bug, report it at [github] or send me a mail at [email]. Robin Johnson, who deservedly placed very well, suggested the ability to type a room name to move to it. Olaf Nowacki, who also placed very well, mentioned it later. It is cool that competitions like this are not cutthroat.";
 	say "[line break]Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all has been especially nice during the pandemic.";
 	say "[line break]Thanks to openclipart.com for the vector images that helped make up the cover art for release 2. The PDF solution is based on https://www.chessvariants.com/d.font/unicode.html's FreeSerif graphics.";
 	the rule succeeds.
@@ -895,7 +903,7 @@ carry out failing:
 chapter helping
 
 carry out helping:
-	say "This game should come with a walkthrough. However, if you need a refresher on your quest, simply [b]X[r] [delenda] or just [b]X[r]. It's a bit short on details -- of course it is! Royalty tends to delegate like that.";
+	say "[this-game] should come with both a text walkthrough and an illustrated PDF. However, if you only want a refresher on your quest, simply [b]X[r] [delenda] or just [b]X[r]. It's a bit short on details -- of course it is! Royalty tends to delegate like that.";
 	if quest-index is 1:
 		say "[line break]There is, however, the option for help with [b]TUT[r] for the first quest.";
 	the rule succeeds.
@@ -1032,6 +1040,7 @@ understand the command "tut" as something new.
 understand "tut" as tuting.
 
 carry out tuting:
+	if quest-index is 4, say "You no longer need to summon allies. This last bit is all about you traversing Fivebyfivia without retracing your steps. While I can give some hints, all you need to do is move yourself around. The game will give hints if you are unsuccessful." instead;
 	if screen-reader is true:
 		say "(Text maps bowdlerized for screen reader.) For checkmate with a queen and rook, you put a rook on the file next to the queen, then move the queen two right past the rook, then the rook two right past the queen, until the enemy king is up against the side of the board and attacked and cannot move.";
 		the rule succeeds;
@@ -1077,7 +1086,7 @@ chapter verbsing
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r]. You can also specify the county you wish to visit by name, e.g. [b]c3[r] will send you back to the center.";
-	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. You can often use abbreviations for the allies you need to place. These are all the commands you need to win.";
+	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. You can use one- or two-letter abbreviations for the allies you need to place, and in fact, you may not need a subject if relatively few places are left. These are all the commands you need to win.";
 	say "[line break][b]X[r] [delenda] details your current quest, including useful shorthand to refer to your allies. You can also [b]FAIL[r]/[b]F[r] to reset the current quest.";
 	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
 	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]CR[r] for general game information and thanks.";
@@ -1113,7 +1122,7 @@ volume beta testing - not for release
 
 when play begins:
 	now in-beta is true;
-	say "Beta testers have access to the commands TRY (1-4), to work on a particular quest, and WAYS. This text will not appear in the release, but if it does, that's my fault."
+	say "Beta testers have access to the commands [b]TRY (1-4)[r], to work on a particular quest. This text will not appear in the release, but if it does, that's my fault."
 
 chapter trying
 
