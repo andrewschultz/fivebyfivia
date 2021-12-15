@@ -46,6 +46,12 @@ to say kick: say "[b]K[r] or [b]KICK[r]".
 
 to say credits: say "[b]C[r]/[b]CRE[r]/[b]CRED[r]/[b]CREDITS"
 
+to say call: say "[b]C[r] or [b]CALL[r]"
+
+to say place: say "[b]P[r] or [b]PLACE[r]"
+
+to say cp: say "[call] or [place]"
+
 screen-reader is a truth state that varies.
 
 in-beta is a truth state that varies.
@@ -61,7 +67,7 @@ the block swearing obscenely rule is not listed in any rulebook.
 the block swearing mildly rule is not listed in any rulebook.
 
 check swearing obscenely:
-	say "Not with the Twelvebytwelvian King around, and not until he uses profanity first. You're good at the whole swearing thing, or threatening to swear, to keep the troops in line. Pawns, knights, bishops, even rooks. But you don't need to, here.";
+	say "Not with the Twelvebytwelvian King around, and not until he uses profanity first. You're good at the whole swearing thing, or threatening to swear, to keep the troops in line. Pawns, knights, bishops, even rooks. But here, it wouldn't be prudent.";
 
 check swearing mildly:
 	try swearing obscenely instead;
