@@ -77,7 +77,7 @@ The beginning of a glorious (?) empire
 >call queenside
 >sww
 >call king
-The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
+The Fivebyfivian King looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
 
 !Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
 
@@ -90,10 +90,10 @@ The old king is dead! Long live the middle-aged king. He's going to be a bit sne
 >nnw
 >ssw
 >nnw
->call friendly king
+>call k12
 >sse
->call enemy king
-The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
+>call k5
+The Fivebyfivian King looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
 
 !Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
 
@@ -105,11 +105,11 @@ The king is dead, cut down in his prime! Long live the young king. Any show of o
 >see
 >call rook
 >nnw
->call friendly king
+>call k12
 >ssw
->call enemy king
+>call k5
 
-The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
+The Fivebyfivian King looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.
 
 !Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
 
@@ -154,44 +154,43 @@ Horns blare! Voices soar to the sky! You have trampled all of Fivebyfivia, liter
 >sww
 >call king
 
-The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
+The Fivebyfivian King looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
 
 The old king is dead! Long live the middle-aged king. He's going to be a bit sneakier. And he knows his father died in a corner -- so you may not be able to sucker him there. However, he makes indications he wants a diplomatic meeting with your king and queen.
 
 NOTE: you will be able to see technical details of completed quest with R or REVIEW.
 Why not start your next quest in the center? Yes, that makes sense.
-So, your quest: you need to coordinate your king with the queen and the friendly king. It's also shorthanded in the status line in the upper right.
+So, your quest: you need to coordinate the queen and the Twelvebytwelvian King to take down the Fivebyfivian King. This will also be shorthanded in the status line in the upper right.
 
 * _quest2-stalemate
 
 >nne
->call friendly king
+>call k12
 >sww
 >sse
 >call queen
 >sww
 >call king
 
-The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
+The Fivebyfivian King looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
 
 Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
 
 The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.
 Why not start your next quest in the center? Yes, that makes sense.
-So, your quest: you need to coordinate your king with the kingside rook and the friendly king. It's also shorthanded in the status line in the upper right.
-
+/So, your quest: you need to coordinate the (queenside|kingside) rook and the Twelvebytwelvian King to take down the Fivebyfivian King. This will also be shorthanded in the status line in the upper right.
 
 * _quest3-stalemate
 
 >sww
 >call rook
 >see
->call friendly king
+>call k12
 >nne
 >sse
->call enemy king
+>call k5
 
-The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
+The Fivebyfivian King looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.
 
 Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!
 

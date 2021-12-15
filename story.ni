@@ -14,7 +14,7 @@ release along with the "Parchment" interpreter.
 
 release along with cover art.
 
-the release number is 2.
+the release number is 3.
 
 section project includes
 

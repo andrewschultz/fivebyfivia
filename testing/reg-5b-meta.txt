@@ -63,9 +63,9 @@ The main verbs you can use are about going places.
 The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with DIRS. You can also specify the county you wish to visit by name, e.g. c3 will send you back to the center.
 
 >about
-This game was originally written for ParserComp 2021.
+Fivebyfivia Delenda Est was originally written for ParserComp 2021 and released at the end of June
 >a
-This game was originally written for ParserComp 2021.
+Fivebyfivia Delenda Est was originally written for ParserComp 2021 and released at the end of June
 
 >abbrev
 Showing short directions is now on.
@@ -82,16 +82,16 @@ You can toggle how the directions appear (long or short) in room descriptions wi
 There are eight directions
 
 >status
-Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and Fivebyfivian King (K).
 Pieces out on the board: none, yet.
 >stats
-Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and Fivebyfivian King (K).
 Pieces out on the board: none, yet.
 >st
-Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and Fivebyfivian King (K).
 Pieces out on the board: none, yet.
 >stat
-Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and enemy king (K).
+Reserved pieces to (C)all: queenside rook (QR/R), kingside rook (KR/R) and Fivebyfivian King (K).
 Pieces out on the board: none, yet.
 
 >review
@@ -107,11 +107,11 @@ Nothing to review yet.
 >review
 Here's what you've got so far:
 !Nothing to review
-You pinned the enemy king into the corner using the two rooks:
+You pinned the Fivebyfivian King into the corner using the two rooks:
 >try 3
 >review
-You pinned the enemy king into the corner using the two rooks:
-You trapped the enemy king with a queen and king.
+You pinned the Fivebyfivian King into the corner using the two rooks:
+You trapped the Fivebyfivian King with a queen and king.
 >try 4
 >tut
 You no longer need to summon allies. This last bit is all about you traversing Fivebyfivia without retracing your steps. While I can give some hints, all you need to do is move yourself around.
@@ -119,11 +119,11 @@ You no longer need to summon allies. This last bit is all about you traversing F
 >review
 You trapped the king in the corner with your own king and rook
 >hint
-This game should come with a walkthrough. However, if you need a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
+Fivebyfivia Delenda Est should come with both a text walkthrough and an illustrated PDF. However, if you only want a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
 >help
-This game should come with a walkthrough. However, if you need a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
+Fivebyfivia Delenda Est should come with both a text walkthrough and an illustrated PDF. However, if you only want a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
 >h
-This game should come with a walkthrough. However, if you need a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
+Fivebyfivia Delenda Est should come with both a text walkthrough and an illustrated PDF. However, if you only want a refresher on your quest, simply X FIVEBYFIVIA DELENDA EST or just X. It's a bit short on details -- of course it is! Royalty tends to delegate like that.
 >try 1
 >call kr
 You call the kingside rook to c3.
@@ -152,16 +152,16 @@ Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and pu
 Thanks to chessgames.com, chess.com and lichess.org for all the chess fun and puzzles and opponents from all over the globe. This all has been especially nice during the pandemic.
 
 >chess
-Pawns and bishops do not appear in this game, so don't worry about them.
+Pawns and bishops do not appear in Fivebyfivia Delenda Est, so don't worry about them.
 Knights (that's you) move one square vertically and two squares horizontally.
 Rooks can move vertically or horizontally until there is an obstruction.
 Queens can move vertically or horizontally or diagonally until there is an obstruction.
 Kings can move one square adjacent, vertically or horizontally or diagonally, unless there is an obstruction.
 Check occurs when one piece is attacking your king.
-Checkmate is when you attack the enemy's king and he has no safe square nearby to flee to.
-Stalemate is when the enemy has no legal moves, but the king is not under attack.
+Checkmate is when you attack an opposing king, and he has no safe square nearby to flee to.
+Stalemate is when an opposing king has no legal moves, but he is not under attack.
 >ch
-Pawns and bishops do not appear in this game, so don't worry about them.
+Pawns and bishops do not appear in Fivebyfivia Delenda Est, so don't worry about them.
 
 >g c3
 You're already at c3.
