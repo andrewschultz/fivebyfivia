@@ -1,7 +1,7 @@
 import re
 
 prev_sect = ""
-html_out = "generic-name.html"
+html_out = "html\\generic-name.html"
 
 board_outline = "c:/Users/Andrew/Documents/github/fivebyfivia/utils/board-outline.png"
 blank_board = "c:/Users/Andrew/Documents/github/fivebyfivia/utils/blank-board.png"

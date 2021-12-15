@@ -15,7 +15,7 @@ WHITE_ROOK = 3
 
 piece_to_icon = [ (0, 0), (0, 1), (1, 0), (2, 0) ]
 
-ch.html_out = 'html\\graphic-solutions.htm'
+this_html_out = 'html\\graphic-solutions.htm'
 
 tour_board = "tour-board.png"
 
@@ -61,6 +61,18 @@ def write_tour_graphic(prefix, data_array):
         sys.exit("Could not create {}. Make sure the html directory exists.".format(out_file))
     ch.one_image_link(out_file)
 
+cmd_count = 1
+
+while cmd_count < len(sys.argv):
+    arg = mt.nohy(sys.argv[cmd_count])
+    if arg == 'w':
+        ch.html_out = this_html_out
+    elif arg == 'a':
+        open_main_html = True
+    else:
+        sys.exit("Use W as a command line argument to write to {} or a to launch that file in Chrome.".format(this_html_out))
+    cmd_count += 1
+
 ch.write_header(ch.html_out)
 
 with open ("sols.txt") as file:
@@ -74,4 +86,8 @@ with open ("sols.txt") as file:
 
 ch.write_footer(ch.html_out)
 
-os.system(ch.html_out)
+
+if open_main_html or ch.html_out == this_html_out:
+    mt.browser_or_native(this_html_out, my_browser = 'c')
+else:
+    mt.browser_or_native(ch.html_out, my_browser = 'c')
