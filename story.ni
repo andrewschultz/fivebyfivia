@@ -352,9 +352,9 @@ definition: a piece (called p) is offensive:
 	if p is irrelevant, no;
 	yes;
 
-the friendly king is a piece. understand "k" and "k1" and "fk" as friendly king. short-text of friendly king is "K". understand "my king" as friendly king.
+the k12 is a piece. understand "k" and "kl" and "lk" and "kf" and "fk" and "k12" and "12k" as k12. short-text of k12 is "K". understand "my king" as k12. printed name of k12 is "Twelvebytwelvian King".
 
-summon-list of friendly king is { false, true, true, false }.
+summon-list of k12 is { false, true, true, false }.
 
 the enemy king is a piece. understand "k" and "k2" and "ek" as enemy king. short-text of enemy king is "K". understand "their king" as enemy king.
 
@@ -405,8 +405,8 @@ rule for supplying a missing noun when calling:
 this is the enemy-king-placement rule:
 	if number of reserved pieces > 1:
 		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
-	let ax be absval of (xval of location of player - xval of location of friendly king);
-	let ay be absval of (yval of location of player - yval of location of friendly king);
+	let ax be absval of (xval of location of player - xval of location of k12);
+	let ay be absval of (yval of location of player - yval of location of k12);
 	if  ax < 2 and ay < 2:
 		say "Wait, no, you can't put the enemy kings adjacent to each other[if ax is 1 and ay is 1], not even diagonally[end if]. They operate through intermediaries, apparently." instead;
 
@@ -449,7 +449,7 @@ carry out calling:
 
 to update-guarded:
 	now all rooms are not guarded;
-	if friendly king is placed and in-tutorial is false:
+	if k12 is placed and in-tutorial is false:
 		place-king;
 	if queenside rook is placed or in-tutorial is true:
 		place-range queenside rook and list of all cardinal directions;
@@ -474,8 +474,8 @@ to place-range (p - a piece) and (myl - a list of directions):
 			if number of pieces in myrm > 0, break;
 
 to place-king:
-	let myx be xval of location of friendly king;
-	let myy be yval of location of friendly king;
+	let myx be xval of location of k12;
+	let myy be yval of location of k12;
 	repeat with mydir running through planar directions:
 		let rm be room-from-nums of (myx + xness of mydir) and (myy + yness of mydir);
 		now rm is guarded;
@@ -513,7 +513,7 @@ to show-the-board:
 	if in-tutorial is true:
 		say "Q = queen, R = rook, k = enemy king, + = guarded square.";
 		continue the action;
-	say "[if in-tutorial is false]* = you, ^ = available in one move, [end if]+ = square is guarded[if friendly king is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
+	say "[if in-tutorial is false]* = you, ^ = available in one move, [end if]+ = square is guarded[if k12 is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
 
 to say pie of (r - a room):
 	say " ";
@@ -521,7 +521,7 @@ to say pie of (r - a room):
 		say "R";
 	else if queen is in r:
 		say "Q";
-	else if friendly king is in r:
+	else if k12 is in r:
 		say "K";
 	else if enemy king is in r:
 		say "k";
@@ -680,7 +680,7 @@ definition: a room (called r) is checked:
 		let y1 be yval of location of q;
 		let xdelt be absval of x1 - x0;
 		let ydelt be absval of y1 - y0;
-		if q is friendly king:
+		if q is k12:
 			if xdelt <= 1 and ydelt <= 1, yes;
 			next;
 		if q is kingside rook or q is queenside rook:
@@ -1111,7 +1111,7 @@ does the player mean calling preferred-rook: it is likely. [ this is to avoid di
 
 does the player mean calling a reserved piece: it is very likely.
 
-does the player mean calling the enemy king when friendly king is reserved: it is very unlikely.
+does the player mean calling the enemy king when k12 is reserved: it is very unlikely.
 
 volume game-specific parser error details
 
