@@ -70,7 +70,7 @@ to say noun-abbrevs:
 		continue the action;
 	say "Scrawls in the margins indicate ways to think of your allies more efficiently. ";
 	if in-tutorial is true:
-		say "[b]Q[r] calls the Queen, [b]R[r] the rook, and [b]K[r] the enemy king";
+		say "[b]Q[r] calls the Queen, [b]R[r] the rook, and [b]K[r] [the k5]";
 		continue the action;
 	if quest-index is 1:
 		say "[b]KR[r] and [b]QR[r] pick a rook, though since they're functionally equivalent, [b]R[r] is just fine, too";
@@ -78,7 +78,7 @@ to say noun-abbrevs:
 		say "Q[r] refers to the Queen";
 	else if quest-index is 3:
 		say "R refers to [the preferred-rook]";
-	say ". [b]K[r] refers to your King if he's not placed and the enemy King if yours is. You could think [b]K1[r] and [b]K2[r], but since the enemy king should be called last (he may get suspicious if he has to wait around,) that may be excessive";
+	say ". [b]K[r] refers to your King if he's not placed and [the k5] if yours is. You could think [b]K1[r] and [b]K2[r], but since [the k5] should be called last (he may get suspicious if he has to wait around,) that may be excessive";
 
 printed name of DELENDA is "[i]FIVEBYFIVIA DELENDA EST[r]".
 
@@ -193,8 +193,8 @@ section timed-going
 after printing the locale description when need-to-hurry is true:
 	if debug-state is true, say "DEBUG turn count track: [current-turns-after-placing] of [max-turns-after-placing].";
 	if current-turns-after-placing > max-turns-after-placing:
-		if enemy king is placed:
-			say "[line break]You hear a noise and look around. The enemy king, disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
+		if k5 is placed:
+			say "[line break]You hear a noise and look around. The [k5], disgusted at having his time wasted without meeting anyone, retreats. Perhaps he suspects something. Perhaps he does not.";
 		else:
 			say "[line break]You hear familiar moans. Your summoned compatriot[if number of placed pieces > 1]s have[else] has[end if] grown impatient. The whole operation was based on stealth, which you did not have this time.";
 		say "[line break]You did not succeed in your quest, and your king and queen will not be pleased ... unless we pretend this was just a practice run you planned in your head before the real thing. Yes, yes, let's do that. That's how it is.";
@@ -340,7 +340,7 @@ a piece has a room called cached-position. cached-position of a piece is usually
 
 a piece can be tutorial-held. a piece is usually not tutorial-held.
 
-description of a piece is usually "Right now, [the item described] looks ready to go chase an enemy king. But they may not wait too long. Better [if number of reserved pieces is 1]call your other allies and then [end if]call the enemy king soon."
+description of a piece is usually "Right now, [the item described] looks ready to go chase that [k5]. But they may not wait too long. Better [if number of reserved pieces is 1]call your other allies and then [end if]call [the k5] soon."
 
 check taking a piece:
 	say "No, you put [the noun] here. But don't worry, if you did things wrong, you can try again." instead;
@@ -348,17 +348,17 @@ check taking a piece:
 preferred-rook is a piece that varies.
 
 definition: a piece (called p) is offensive:
-	if p is enemy king, no;
+	if p is k5, no;
 	if p is irrelevant, no;
 	yes;
 
-the k12 is a piece. understand "k" and "kl" and "lk" and "kf" and "fk" and "k12" and "12k" as k12. short-text of k12 is "K". understand "my king" as k12. printed name of k12 is "Twelvebytwelvian King".
+the k12 is a piece. understand "k" and "kl" and "lk" and "kf" and "fk" and "k12" and "12k" and "twelvebytwelvian/king" and "twelvebytwelvian king"  as k12. short-text of k12 is "K". understand "my king" as k12. printed name of k12 is "Twelvebytwelvian King".
 
 summon-list of k12 is { false, true, true, false }.
 
-the enemy king is a piece. understand "k" and "k2" and "ek" as enemy king. short-text of enemy king is "K". understand "their king" as enemy king.
+the k5 is a piece. printed name of k5 is "Fivebyfivian King". understand "k" and "k5" and "5k" and "ek" and "ke" and "fivebyfivian/king" and "fivebyfivian king" as k5. short-text of k5 is "K". understand "their king" as k5.
 
-summon-list of enemy king is { true, true, true, false }.
+summon-list of k5 is { true, true, true, false }.
 
 the queen is a female piece. understand "q" as queen. short-text of queen is "Q".
 
@@ -385,7 +385,7 @@ the knight is a quasipiece. understand "n/kn/qn" as knight.
 chapter calling
 
 definition: a piece (called p) is not-last:
-	if p is enemy king, no;
+	if p is k5, no;
 	if p is reserved, yes;
 
 rule for supplying a missing noun when calling:
@@ -402,13 +402,13 @@ rule for supplying a missing noun when calling:
 		say "You need to specify which ally to summon of [the list of not-last pieces].";
 		reject the player's command.
 
-this is the enemy-king-placement rule:
+this is the k5-placement rule:
 	if number of reserved pieces > 1:
-		say "You probably don't want to summon the enemy king until last. He'd get really suspicious if you just made him wait around." instead;
+		say "You probably don't want to summon [the k5] until last. He'd get really suspicious if you just made him wait around." instead;
 	let ax be absval of (xval of location of player - xval of location of k12);
 	let ay be absval of (yval of location of player - yval of location of k12);
 	if  ax < 2 and ay < 2:
-		say "Wait, no, you can't put the enemy kings adjacent to each other[if ax is 1 and ay is 1], not even diagonally[end if]. They operate through intermediaries, apparently." instead;
+		say "Wait, no, you can't put opposing kings adjacent to each other[if ax is 1 and ay is 1], not even diagonally[end if]. They operate through intermediaries, apparently." instead;
 
 carry out calling:
 	if quest-index is 4, say "You're on your own now." instead;
@@ -421,13 +421,13 @@ carry out calling:
 		say "Right now [the noun] is not part of your maneuver. You can, however, call [the list of reserved pieces][if number of placed pieces > 0]. You've already placed [the list of placed pieces][end if]." instead;
 	if number of pieces in location of player > 0:
 		say "That would make things too crowded here at [location of player], since [the random piece in location of player] is already present." instead;
-	if noun is enemy king:
-		abide by the enemy-king-placement rule;
+	if noun is k5:
+		abide by the k5-placement rule;
 	say "You call [the noun] to [location of player].";
 	now need-to-hurry is true;
 	now noun is placed;
 	move noun to location of player;
-	if noun is not enemy king, update-guarded;
+	if noun is not k5, update-guarded;
 	show-the-board;
 	if number of reserved pieces > 0, the rule succeeds;
 	consider the takeit processing rule;
@@ -440,8 +440,8 @@ carry out calling:
 		the rule succeeds;
 	consider the checkmate processing rule;
 	if the rule failed:
-		if location of enemy king is not edgy:
-			say "The enemy king had a lot of places to run. Maybe you should've summoned him to an edge, instead.";
+		if location of k5 is not edgy:
+			say "The [k5] had a lot of places to run. Maybe you should've summoned him to an edge, instead.";
 		fail-and-reset instead;
 	if the rule succeeded:
 		quest-conclusion;
@@ -511,9 +511,9 @@ to show-the-board:
 	say "1[pie of a1][pie of b1][pie of c1][pie of d1][pie of e1] 1[line break]";
 	say "  a b c d e[variable letter spacing][paragraph break]";
 	if in-tutorial is true:
-		say "Q = queen, R = rook, k = enemy king, + = guarded square.";
+		say "Q = queen, R = rook, k = [k5], + = guarded square.";
 		continue the action;
-	say "[if in-tutorial is false]* = you, ^ = available in one move, [end if]+ = square is guarded[if k12 is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = enemy king.";
+	say "[if in-tutorial is false]* = you, ^ = available in one move, [end if]+ = square is guarded[if k12 is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = [k5].";
 
 to say pie of (r - a room):
 	say " ";
@@ -523,7 +523,7 @@ to say pie of (r - a room):
 		say "Q";
 	else if k12 is in r:
 		say "K";
-	else if enemy king is in r:
+	else if k5 is in r:
 		say "k";
 	else if r is location of player and in-tutorial is false:
 		say "*";
@@ -564,7 +564,7 @@ random-parchment-number is a number that varies.
 
 definition: a piece (called p) is accessory:
 	if p is irrelevant, no;
-	if p is enemy king, no;
+	if p is k5, no;
 	yes;
 
 to setup-next-puzzle:
@@ -584,7 +584,7 @@ to setup-next-puzzle:
 	if quest-index is 4:
 		say "No allies this time.";
 	else:
-		say "So, your quest: you need to coordinate your king with [the list of accessory pieces]. It's also shorthanded in the status line in the upper right."
+		say "So, your quest: you need to coordinate [the list of accessory pieces] to take down [the k5]. This will also be shorthanded in the status line in the upper right."
 
 max-turns-after-placing is a number that varies.
 
@@ -629,44 +629,44 @@ to reset-the-board:
 		now past-intro is true;
 
 this is the takeit processing rule:
-	let ek be the location of the enemy king;
+	let ek be the location of the k5;
 	repeat with mydir running through planar directions:
 		let newrm be the room mydir of ek;
 		if newrm is nowhere, next;
 		if newrm is not guarded and number of pieces in newrm > 0:
-			say "Oh dear! The enemy king walks up to [the random piece in newrm] on [mydir] and gives it a good thwacking. Looks like your plans failed somewhere.[paragraph break]Oops. But don't worry. We'll pretend that never happened. For [12b]. And, yes, your own health and standing there.";
+			say "Oh dear! The [k5] walks up to [the random piece in newrm] on [mydir] and gives it a good thwacking. Looks like your plans failed somewhere.[paragraph break]Oops. But don't worry. We'll pretend that never happened. For [12b]. And, yes, your own health and standing there.";
 			the rule succeeds;
 
 this is the stalemate processing rule:
-	unless the location of the enemy king is not checked and the location of the enemy king is surrounded, the rule fails;
-	say "The enemy king looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.[paragraph break]Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!";
+	unless the location of k5 is not checked and the location of the k5 is surrounded, the rule fails;
+	say "The [k5] looks around. He sighs in relief, safe at the moment. But he is a busy man! He needs to get up and do things. Every which way he looks, though, he realize he's being watched. He quickly looks from left to right but surrenders.[paragraph break]Since nobody was directly attacking him, nobody gets the kill. He's taken prisoner, where ... he is disappeared. Everyone else looks at you funny. All this roundabout capturing stuff just isn't in the spirit of classical warfare!";
 	now entry quest-index in stalemated is True;
 	the rule succeeds;
 
 definition: a room (called rm) is king-escape:
-	if (absval of xval of rm - xval of location of enemy king) > 1, no;
-	if (absval of yval of rm - yval of location of enemy king) > 1, no;
+	if (absval of xval of rm - xval of location of k5) > 1, no;
+	if (absval of yval of rm - yval of location of k5) > 1, no;
 	if rm is checked, no;
 	yes;
 
 this is the checkmate processing rule:
-	if the location of the enemy king is not checked:
-		say "The enemy king looks at you funny. What did you bring him here for? Time's a-wasting. He shuffles off back to his palace.";
+	if the location of the k5 is not checked:
+		say "The [k5] looks at you funny. What did you bring him here for? Time's a-wasting. He shuffles off back to his palace.";
 		the rule fails;
-	if the location of the enemy king is not surrounded:
-		say "The enemy king regards you suspiciously. He knows something is up. But then he runs away via [a random king-escape room]!";
+	if the location of k5 is not surrounded:
+		say "The [k5] regards you suspiciously. He knows something is up. But then he runs away via [a random king-escape room]!";
 		the rule fails;
 	if quest-index is 2:
-		let qx be absval of (xval of location of queen - xval of location of enemy king);
-		let qy be absval of (yval of location of queen - yval of location of enemy king);
+		let qx be absval of (xval of location of queen - xval of location of k5);
+		let qy be absval of (yval of location of queen - yval of location of k5);
 		if qx < 2 and qy < 2:
-			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid enemy king. You thought you had things planned out well, but--well, maybe there is another way to get people together. But not too close. Perhaps using your horse's quick movements will help find a properly spacious arrangement.";
+			say "Alas, a kink in your plans! The queen refuses, REFUSES to get close to that horrid [k5]. You thought you had things planned out well, but--well, maybe there is another way to get people together. But not too close. Perhaps using your horse's quick movements will help find a properly spacious arrangement.";
 			the rule fails;
-		if location of enemy king is cornery:
-			say "Before you can summon the enemy king over, though, your allies call you by. That's a good formation, but maybe you will use it better in the future. It won't be a surprise if you use it twice. You take notes.";
+		if location of k5 is cornery:
+			say "Before you can summon [the k5] over, though, your allies call you by. That's a good formation, but maybe you will use it better in the future. It won't be a surprise if you use it twice. You take notes.";
 			now got-rook-for-queen is true;
 			the rule fails;
-	say "The enemy king looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
+	say "The [k5] looks around, then runs one way, then another. Slowly it dawns on him. He is trapped! The end is not pretty.";
 	the rule succeeds;
 
 definition: a room (called r) is checked:
@@ -828,7 +828,7 @@ check taking inventory:
 section score trivia
 
 check requesting the score:
-	say "This game doesn't keep track of scores, but to give you an idea of your progress, you're on quest [quest-index] of [max-quests] right now." instead;
+	say "[this-game] doesn't keep track of scores, but to give you an idea of your progress, you're on quest [quest-index] of [max-quests] right now." instead;
 
 chapter abbing
 
@@ -842,7 +842,7 @@ show-short-dirs is a truth state that varies.
 chapter abouting
 
 carry out abouting:
-	say "This game was originally written for ParserComp 2021 and released at the end of June. Release 2 arrived in late August, a month after the competition ended. It fixed bugs and now allows you to type a square to move to it, instead of a direction, e.g. b1 instead of SSW.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where would the story be? I wasn't expecting anything to pop up.[paragraph break]The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]Then one evening, something came into form. And as ParserComp's deadline came up, my bigger planned game had stalled, so why not bail out?[paragraph break]I had some initial doubts, but I started to see how I could work around them. The result was something that worked technically, addressed an odd sort of position that always amused me, and it had the shell of a story, too. I'd also wanted to do some programming related to chess, so I had fun. And I hope you enjoy this, too, whether or not you play chess.[paragraph break]Comments and transcripts are welcomed if you find anything I can tweak. [paragraph break]Though ParserComp is over, I'd like to point you to the page to try out other games. There were some good ones! during ParserComp, please also check out the other games (17 others!) and try to leave a transcript. For Z-machine games, typing TRANSCRIPT helps--even if you can't find anything or leave comments, the programmer may notice certain things worth fixing from how you play, e.g. they wanted to make a hint more prominent. My address is [email].[paragraph break]ParserComp 2021 was a success, in my opinion. You can see all the games here: https://itch.io/jam/parsercomp-2021.[paragraph break][b]CREDITS[r]/[b]CR[r] has more information about specific people who helped me.";
+	say "[this-game] was originally written for ParserComp 2021 and released at the end of June. Release 2 arrived in late August, a month after the competition ended. It fixed bugs and now allows you to type a square to move to it, instead of a direction, e.g. b1 instead of SSW. Release 3 arrived in December, and it was largely a maintenance release, though the enemy king's name was more specific, and some parser abbreviations were added.[paragraph break]I'd always sort of had an idea to write up a game about chess, especially after playing Zork Zero, but I never quite found one that could be simple enough for people who didn't play and worthwhile enough for those who did. And even if it did balance these, where would the story be? I wasn't expecting anything to pop up.[paragraph break]The resurgence of chess online with COVID, along with tournaments like PogChamps, reminded me that there was a lot more to chess than twenty-move-deep theoretical slogs.[paragraph break]Then one evening, something came into form. And as ParserComp's deadline came up, my bigger planned game had stalled, so why not bail out?[paragraph break]I had some initial doubts, but I started to see how I could work around them. The result was something that worked technically, addressed an odd sort of position that always amused me, and it had the shell of a story, too. I'd also wanted to do some programming related to chess, so I had fun. And I hope you enjoy this, too, whether or not you play chess.[paragraph break]Comments and transcripts are welcomed if you find anything I can tweak. [paragraph break]Though ParserComp is over, I'd like to point you to the page to try out other games. There were some good ones! during ParserComp, please also check out the other games (17 others!) and try to leave a transcript. For Z-machine games, typing TRANSCRIPT helps--even if you can't find anything or leave comments, the programmer may notice certain things worth fixing from how you play, e.g. they wanted to make a hint more prominent. My address is [email].[paragraph break]ParserComp 2021 was a success, in my opinion. You can see all the games here: https://itch.io/jam/parsercomp-2021.[paragraph break][b]CREDITS[r]/[b]CR[r] has more information about specific people who helped me.";
 	the rule succeeds.
 
 chapter boarding
@@ -855,14 +855,14 @@ carry out boarding:
 chapter chessing
 
 carry out chessing:
-	say "Pawns and bishops do not appear in this game, so don't worry about them.";
+	say "Pawns and bishops do not appear in [this-game], so don't worry about them.";
 	say "Knights (that's you) move one square vertically and two squares horizontally.";
 	say "Rooks can move vertically or horizontally until there is an obstruction.";
 	say "Queens can move vertically or horizontally or diagonally until there is an obstruction.";
 	say "Kings can move one square adjacent, vertically or horizontally or diagonally, unless there is an obstruction.";
 	say "Check occurs when one piece is attacking your king.";
-	say "Checkmate is when you attack the enemy's king and he has no safe square nearby to flee to.";
-	say "Stalemate is when the enemy has no legal moves, but the king is not under attack.";
+	say "Checkmate is when you attack an opposing king, and he has no safe square nearby to flee to.";
+	say "Stalemate is when an opposing king has no legal moves, but he is not under attack.";
 	the rule succeeds.
 
 chapter creditsing
@@ -929,16 +929,16 @@ carry out reviewing:
 		choose row x in table of notes;
 		say "[line break]";
 		if entry x in stalemated is true:
-			say "You stalemated the enemy king with [stalemate-notes entry].";
+			say "You stalemated [the k5] with [stalemate-notes entry].";
 		else:
 			say "[checkmate-notes entry][line break]";
 	the rule succeeds.
 
 table of notes
 stalemate-notes	checkmate-notes
-"two rooks--in practical play, the most likely stalemate is one rook being diagonal from the corner, guarded by the other rook"	"You pinned the enemy king into the corner using the two rooks: one covering the side, one covering the row/column next to it. The process of cornering a king is known as a rook roll--the rooks start in adjacent rows, then one moves two over across the other, and so forth to the edge. Once you learn it, you're never gonna give it up."
-"king and queen--there are so many ways to do this! The queen can force the king in the corner, or you don't move the king the right way"	"You trapped the enemy king with a queen and king. In practical play, the queen alone can drive the enemy king into the corner where he only has two squares to move, then your king walks in. Your queen just sits three squares up and one square left (or some rotation/mirroring) from the corner."
-"king and rook--in practical play you probably won't see the position you got, and the only likely way is to have the rook, guarded by a king, diagonal from the corner"	"You trapped the king in the corner with your own king and rook. It's possible to trap the king on the edge and not the corner--your king is two squares from the enemy (called the opposition,) and the rook gives check. It's slower for the king and rook to corner an enemy king than for an enemy queen, though. Sometimes you have to move your king instead of your rook as you make the enemy king's rectangle smaller and smaller."
+"two rooks--in practical play, the most likely stalemate is one rook being diagonal from the corner, guarded by the other rook"	"You pinned [the k5] into the corner using the two rooks: one covering the side, one covering the row/column next to it. The process of cornering a king is known as a rook roll--the rooks start in adjacent rows, then one moves two over across the other, and so forth to the edge. Once you learn it, you're never gonna give it up."
+"king and queen--there are so many ways to do this! The queen can force the king in the corner, or you don't move the king the right way"	"You trapped [the k5] with a queen and king. In practical play, the queen alone can drive [the k5] into the corner where he only has two squares to move, then your king walks in. Your queen just sits three squares up and one square left (or some rotation/mirroring) from the corner."
+"king and rook--in practical play you probably won't see the position you got, and the only likely way is to have the rook, guarded by a king, diagonal from the corner"	"You trapped the king in the corner with your own king and rook. It's possible to trap the king on the edge and not the corner--your king is two squares from the enemy (called the opposition,) and the rook gives check. It's slower for a king and rook to corner an opposing king than for an enemy queen, though. Sometimes you have to move your king instead of your rook as you make [the k5]'s rectangle smaller and smaller."
 
 chapter statsing
 
@@ -1008,7 +1008,7 @@ carry out statsing:
 		say "Reserved pieces to (C)all: [list of reserved pieces].";
 		say "Pieces out on the board: [if number of placed pieces is 0]none, yet[else][list of placed pieces][end if].";
 	if quest-index is 3 and got-rook-for-queen is true:
-		say "[line break]You remember how you almost trapped the enemy king before: him in the corner, your king a knight-move away, your queen another knight-move away. That would work here, too.";
+		say "[line break]You remember how you almost trapped [the k5] before: him in the corner, your king a knight-move away, your queen another knight-move away. That would work here, too.";
 	the rule succeeds.
 
 after printing the name of a placed piece (called p) when statsing:
@@ -1042,7 +1042,7 @@ understand "tut" as tuting.
 carry out tuting:
 	if quest-index is 4, say "You no longer need to summon allies. This last bit is all about you traversing Fivebyfivia without retracing your steps. While I can give some hints, all you need to do is move yourself around. The game will give hints if you are unsuccessful." instead;
 	if screen-reader is true:
-		say "(Text maps bowdlerized for screen reader.) For checkmate with a queen and rook, you put a rook on the file next to the queen, then move the queen two right past the rook, then the rook two right past the queen, until the enemy king is up against the side of the board and attacked and cannot move.";
+		say "(Text maps bowdlerized for screen reader.) For checkmate with a queen and rook, you put a rook on the file next to the queen, then move the queen two right past the rook, then the rook two right past the queen, until [the k5] is up against the side of the board and attacked and cannot move.";
 		the rule succeeds;
 	now in-tutorial is true;
 	now queenside rook is tutorial-held;
@@ -1055,7 +1055,7 @@ carry out tuting:
 		increment my-row;
 		move queen to queen-pos entry;
 		move queenside rook to rook-pos entry;
-		move enemy king to king-pos entry;
+		move k5 to king-pos entry;
 		update-guarded;
 		show-the-board;
 		say "[blather entry][line break]";
@@ -1080,7 +1080,7 @@ queen-pos	rook-pos	king-pos	blather
 a5	b4	b1	"Here the rook attacks the king, who has to move to the c-file."
 c5	b4	c1	"Here the rook attacks the king, who has to move to the d-file."
 c5	d4	d1	"Again the rook attacks the king, who has to move to the e-file."
-e5	d4	e1	"The enemy king is trapped, since it can't move over. Maybe you can do the same with [if quest-index is 1]the two rooks[else]less material, but with the idea of pushing the enemy king against the edge."
+e5	d4	e1	"The [k5] is trapped, since it can't move over. Maybe you can do the same with [if quest-index is 1]the two rooks[else]less material, but with the idea of pushing [the k5] against the edge."
 
 chapter verbsing
 
@@ -1111,7 +1111,7 @@ does the player mean calling preferred-rook: it is likely. [ this is to avoid di
 
 does the player mean calling a reserved piece: it is very likely.
 
-does the player mean calling the enemy king when k12 is reserved: it is very unlikely.
+does the player mean calling the k5 when k12 is reserved: it is very unlikely.
 
 volume game-specific parser error details
 
