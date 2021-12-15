@@ -348,6 +348,23 @@ definition: a direction (called d) is viable:
 	if the room d from the location of player is offsite, no;
 	yes;
 
+to decide which direction is from-dir of (r1 - a room) and (r2 - a room):
+	let xdelt be xval of r2 - xval of r1;
+	let ydelt be xval of r2 - yval of r1;
+	if xdelt is 0:
+		if ydelt > 0, decide on north;
+		if ydelt < 0, decide on south;
+	if ydelt is 0:
+		if xdelt > 0, decide on east;
+		if xdelt < 0, decide on west;
+	if ydelt > 0:
+		if xdelt < 0, decide on northwest;
+		if xdelt > 0, decide on northeast;
+	if ydelt < 0:
+		if xdelt < 0, decide on southwest;
+		if xdelt > 0, decide on southeast;
+	decide on inside;
+
 volume object properties
 
 a piece is a kind of person. a piece can be reserved, irrelevant or placed. a piece is usually irrelevant.
