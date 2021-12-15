@@ -113,6 +113,9 @@ You pinned the enemy king into the corner using the two rooks:
 You pinned the enemy king into the corner using the two rooks:
 You trapped the enemy king with a queen and king.
 >try 4
+>tut
+You no longer need to summon allies. This last bit is all about you traversing Fivebyfivia without retracing your steps. While I can give some hints, all you need to do is move yourself around.
+
 >review
 You trapped the king in the corner with your own king and rook
 >hint
