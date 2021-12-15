@@ -24,6 +24,8 @@ volume basics and definitions
 
 include Chess Common by Andrew Schultz.
 
+include Fivebyfivia Tests by Andrew Schultz.
+
 series-number is 1.
 
 max-quests is a number that varies. max-quests is 4.
@@ -345,8 +347,6 @@ check taking a piece:
 
 preferred-rook is a piece that varies.
 
-does the player mean calling preferred-rook: it is likely. [ this is to avoid disambiguation that gets rejected either way e.g. "do you want the kingside or queenside rook?" / either / "That is not part of your maneuvers." ]
-
 definition: a piece (called p) is offensive:
 	if p is enemy king, no;
 	if p is irrelevant, no;
@@ -560,10 +560,6 @@ after printing the locale description when quest-index is 4:
 final-failed-yet is a truth state that varies.
 
 random-parchment-number is a number that varies.
-
-does the player mean calling a reserved piece: it is very likely.
-
-does the player mean calling the enemy king when friendly king is reserved: it is very unlikely.
 
 definition: a piece (called p) is accessory:
 	if p is irrelevant, no;
@@ -1099,6 +1095,14 @@ chapter xyzzying
 
 carry out xyzzying:
 	say "On the very east side of the world lie such repositories of hooliganism and pointless chance-taking as Backgammonton, Pokersfield or, worse, Yahtzeeburg. You dream of helping conquer them one day, but it is only a dream. A too-risky one at that.";
+
+volume does-the-player-mean rules
+
+does the player mean calling preferred-rook: it is likely. [ this is to avoid disambiguation that gets rejected either way e.g. "do you want the kingside or queenside rook?" / either / "That is not part of your maneuvers." ]
+
+does the player mean calling a reserved piece: it is very likely.
+
+does the player mean calling the enemy king when friendly king is reserved: it is very unlikely.
 
 volume game-specific parser error details
 
