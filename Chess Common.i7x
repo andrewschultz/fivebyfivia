@@ -75,8 +75,13 @@ the block swearing obscenely rule is not listed in any rulebook.
 
 the block swearing mildly rule is not listed in any rulebook.
 
-check swearing obscenely:
-	say "Not with the Twelvebytwelvian King around, and not until he uses profanity first. You're good at the whole swearing thing, or threatening to swear, to keep the troops in line. Pawns, knights, bishops, even rooks. But here, it wouldn't be prudent.";
+fourth-wall-swear is a truth state that varies.
+
+carry out swearing obscenely:
+	if fourth-wall-swear is false:
+		now fourth-wall-swear is true;
+		say "As Mr. Lewandowski, my high school chess coach, used to say: 'Chess is a gentleman's game, Mr. (not-Schultz).'[paragraph break]Or, alternatively, 'Mr. (not-Schultz,) chess is a gentleman's game!'[paragraph break]For those truly interested, there is an in-game response if you [i]must[r] curse again." instead;
+	say "For shame! You are on a diplomatic mission! Besides, it's just not done with the [12n] King anywhere near, and not until [i]he[r] uses profanity first. You're good at the whole swearing thing, or threatening to swear, to keep the troops in line. Pawns, knights, bishops, even rooks. But here, it wouldn't be prudent." instead;
 
 check swearing mildly:
 	try swearing obscenely instead;
