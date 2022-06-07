@@ -515,24 +515,25 @@ to show-the-board:
 		continue the action;
 	say "[if in-tutorial is false]* = you, ^ = available in one move, [end if]+ = square is guarded[if k12 is not irrelevant], K = your king[end if][if queenside rook is not irrelevant or kingside rook is not irrelevant], R = rook[end if][if queen is not irrelevant], Q = queen[end if], k = [k5].";
 
-to say pie of (r - a room):
-	say " ";
-	if kingside rook is in r or queenside rook is in r:
+to say pie of (rm - a room):
+	say " [inversing of rm]";
+	if kingside rook is in rm or queenside rook is in rm:
 		say "R";
-	else if queen is in r:
+	else if queen is in rm:
 		say "Q";
-	else if k12 is in r:
+	else if k12 is in rm:
 		say "K";
-	else if k5 is in r:
+	else if k5 is in rm:
 		say "k";
-	else if r is location of player and in-tutorial is false:
+	else if rm is location of player and in-tutorial is false:
 		say "*";
-	else if r is guarded:
+	else if rm is guarded:
 		say "+";
-	else if r is knight-movable and in-tutorial is false:
+	else if rm is knight-movable and in-tutorial is false:
 		say "^";
 	else:
-		say "-"
+		say "-";
+	say "[r]";
 
 to decide which number is stalemate-count:
 	let temp be 0;
@@ -959,16 +960,18 @@ definition: a room (called r) is knight-movable:
 		if the room D of location of player is r, yes;
 	no;
 
-to say vis of (r - a room):
+to say vis of (rm - a room):
 	say " ";
-	if location of player is r:
+	say "[inversing of rm]";
+	if location of player is rm:
 		say "+";
-	else if r is circle-visited:
+	else if rm is circle-visited:
 		say "*";
-	else if r is knight-movable:
+	else if rm is knight-movable:
 		say "?[no line break]";
 	else:
-		say " "
+		say " ";
+	say "[roman type]";
 
 definition: a room (called r) is circle-to-visit:
 	if r is offsite, no;

@@ -16,6 +16,8 @@ include Undo Output Control by Erik Temple.
 
 chapter variables and super common stubs
 
+section text
+
 to say email: say "blurglecruncheon@gmail.com"
 
 to say 12b: say "Twelvebytwelvia"
@@ -51,6 +53,13 @@ to say call: say "[b]C[r] or [b]CALL[r]"
 to say place: say "[b]P[r] or [b]PLACE[r]"
 
 to say cp: say "[call] or [place]"
+
+to invert-text: (- style reverse; -)
+
+to say inversing of (rm - a room):
+	if remainder after dividing (xval of rm + yval of rm) by 2 is 1, invert-text;
+
+section variables
 
 screen-reader is a truth state that varies.
 
