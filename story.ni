@@ -51,10 +51,10 @@ chapter start of play
 when play begins (this is the initial screen tweaks rule):
 	now right hand status line is "[entry quest-index of quest-quick-desc]";
 	if debug-state is true, continue the action; [we have an option to change this, and y/n questions get in the way of automated testing]
-	say "Fivebyfivia has some text-mapping options that may cause screen-readers to give useless output. Are you using a screen reader?";
+	say "Fivebyfivia has some text-mapping options that may cause screen readers to give useless output. Are you using a screen reader?";
 	if the player consents:
 		say "Potentially garbling options are now restricted.";
-		now screen-reader is true;
+		now screenread is true;
 
 when play begins (this is the start narration rule):
 	say "Peace treaties get old and boring and stuffy after a while, y'know? They don't exactly keep up with the times. History changes. Perhaps the wimps who got a CLEAR bargain from the peace treaty don't deserve it any more.[paragraph break]That's definitely the case with [5b]. They've had fun for long enough. Besides, [12b] was called Elshapium when the treaty was signed, and now annexing [5b] would just about make a nice new square tidy country, pleasing to look at on a map.[paragraph break]And if [12b] doesn't annex [5b], some far less civilized nation will. It's for their own good. Especially since gold and precious metals were discovered.[paragraph break]Thankfully, the [12b] spy ministry has devised a cunning plan to make sure things go as well as they can for [5b]. And you, a knight with a crazy (and crazy fast) horse, are just the person to help execute it! The old [5b]n king will never suspect you.[paragraph break]A solemn minister hands you a scroll entitled [FIVEBYFIVIA DELENDA EST]. And you're off!";
@@ -320,7 +320,7 @@ when play begins:
 				now re2 is mapped southeasteast of rn1;
 				now rn1 is mapped northwestwest of re2;
 	setup-next-puzzle;
-	say "[line break][bracket]NOTE: [5b] has different commands from standard adventures, including options that may make navigation easier. The [b]ABOUT[r]/[b]A[r] and [verbs] commands describe them.[close bracket][line break]";
+	say "[line break][i][bracket][b]NOTE[r][i]: [this-game][i] has different commands from standard adventures, including options that may make navigation easier. The [b]ABOUT[r]/[b]A[r] and [v-i] commands describe them.[close bracket][r][line break]";
 
 volume people and quests
 
@@ -488,13 +488,13 @@ to quest-conclusion:
 		say "The king is dead, cut down in his prime! Long live the young king. Any show of overwhelming force is likely to intimidate him, but etiquette demands he meet with your king -- and perhaps one of your rooks will trail along. You wonder what you can do with that.";
 	else if quest-index is 3:
 		say "The young king is dead! The last of his line. All that remains for you to do is the traditional dance of victory and domination over a weaker country. It is time to walk over each of Fivebyfivia's twenty-five counties without repeating, to show your kingdom's efficiency in both conquering and providing vital constituent services. Okay, mostly conquering.";
-		if screen-reader is false, now maps-in-description is true;
+		if screenread is false, now maps-in-description is true;
 	increment quest-index;
 	now just-solved is true;
 	setup-next-puzzle;
 
 to show-the-board:
-	if screen-reader is true:
+	if screenread is true:
 		if number of placed pieces is 0:
 			say "You haven't placed any pieces yet.";
 			continue the action;
@@ -582,8 +582,9 @@ to setup-next-puzzle:
 			now P is reserved;
 		else:
 			now P is irrelevant;
+	say "[line break]";
 	if quest-index is 4:
-		say "No allies this time.";
+		say "You have no allies this time. You alone will perform the victory dance!";
 	else:
 		say "So, your quest: you need to coordinate [the list of accessory pieces] to take down [the k5]. This will also be shorthanded in the status line in the upper right."
 
@@ -984,7 +985,7 @@ definition: a room (called r) is safe-knight-movable:
 	no;
 
 to show-visited:
-	if screen-reader is true:
+	if screenread is true:
 		if number of circle-visited rooms < 13:
 			say "You've visited [list of circle-visited rooms] so far.";
 		else:
@@ -1025,7 +1026,7 @@ after printing the name of a reserved piece (called p) when statsing:
 chapter toggleing
 
 carry out toggleing:
-	if screen-reader is true, say "Toggling maps in the room description would cause the screen reader to make strange outputs, so I'm restricting it." instead;
+	if screenread is true, say "Toggling maps in the room description would cause the screen reader to make strange outputs, so I'm restricting it." instead;
 	now maps-in-description is whether or not maps-in-description is false;
 	say "Toggling maps in the room description to [on-off of maps-in-description].";
 	the rule succeeds.
@@ -1044,7 +1045,7 @@ understand "tut" as tuting.
 
 carry out tuting:
 	if quest-index is 4, say "You no longer need to summon allies. This last bit is all about you traversing Fivebyfivia without retracing your steps. While I can give some hints, all you need to do is move yourself around. The game will give hints if you are unsuccessful." instead;
-	if screen-reader is true:
+	if screenread is true:
 		say "(Text maps bowdlerized for screen reader.) For checkmate with a queen and rook, you put a rook on the file next to the queen, then move the queen two right past the rook, then the rook two right past the queen, until [the k5] is up against the side of the board and attacked and cannot move.";
 		the rule succeeds;
 	now in-tutorial is true;
@@ -1089,19 +1090,23 @@ chapter verbsing
 
 carry out verbsing:
 	say "The main verbs you can use are about going places. You have 8 different diagonal directions, which you can see in detail with [b]DIRS[r]. You can also specify the county you wish to visit by name, e.g. [b]c3[r] will send you back to the center.";
-	say "You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. You can use one- or two-letter abbreviations for the allies you need to place, and in fact, you may not need a subject if relatively few places are left. These are all the commands you need to win.";
+	say "[line break]You can also [b]C[r]/[b]CALL[r] or [b]P[r]/[b]PLACE[r] allies or the [5b]n king. You can use one- or two-letter abbreviations for the allies you need to place, and in fact, you may not need a subject if relatively few places are left. These are all the commands you need to win.";
 	say "[line break][b]X[r] [delenda] details your current quest, including useful shorthand to refer to your allies. You can also [b]FAIL[r]/[b]F[r] to reset the current quest.";
-	say "[line break]But there are also meta-commands. Of these, [b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
-	say "General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]CR[r] for general game information and thanks.";
-	say "You also have the option of toggling abbreviations of long directions with [b]ABB[r].";
-	say "If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
+	say "[line break][metas] will give meta-commands.";
+
+section metaing
+
+carry out metaing:
+	say "[b]M[r] or [b]MAP[r] to see the map at any time is likely to be the most useful. It shows you where your allies are and what they are guarding. [b]B[r] or [b]BOARD[r] also works.";
+	say "[line break]General meta-commands include [b]ABOUT[r]/[b]A[r] and [b]CREDITS[r]/[b]CR[r] for general game information and thanks.";
+	say "[line break]You also have the option of toggling abbreviations of long directions with [b]ABB[r].";
+	say "[line break]If you want a rules refresher, [b]CHESS[r] or [b]CH[r] will teach you all you need to know. Don't worry--you won't be quizzed on en passant!";
 	if quest-index > 1:
-		say "You can also [b]REVIEW[r] or [b]R[r] what you've done so far, though that's more for general chess endgame knowledge.";
+		say "[line break]You can also [b]REVIEW[r] or [b]R[r] what you've done so far, though that's more for general chess endgame knowledge.";
 	else if quest-index < 4:
-		say "[b]TUT[r] provides a tutorial on how pieces move and how a queen and rook can trap the king, which may help you.";
-	else:
-		say "[b]T[r] toggles tour view for the quest between printing directions and printing a map.";
-	say "And of course, there's this command, too: [verbs].";
+		say "[line break][b]TUT[r] provides a tutorial on how pieces move and how a queen and rook can trap the king, which may help you.";
+	note-square-inversions;
+	say "[line break]And of course, there's this command, too: [verbs].";
 
 chapter xyzzying
 
