@@ -34,7 +34,17 @@ to say 4n: say "[4b]n"
 
 to say 4s: say "[4b]s"
 
+to say mne: say "[b]MNE[r]/[b]MN[r]"
+
+to say fofiv: say "[b]45[r] or [b]54[r]"
+
+to say mapm: say "[b]M[r] or [b]MAP[r]"
+
+to say metas: say "[b]ME[r] or [b]MET[r] or [b]META[r]"
+
 to say verbs: say "[b]V[r] or [b]VERB[r] or [b]VERBS[r]"
+
+to say v-i: say "[b]V[r][i] or [b]VERB[r][i] or [b]VERBS[r][i]"
 
 to say xbold: say "[b]X[r] or [b]EXAMINE[r]"
 
@@ -46,7 +56,7 @@ to say tog: say "[b]T[r] or [b]TOGGLE[r]".
 
 to say kick: say "[b]K[r] or [b]KICK[r]".
 
-to say credits: say "[b]C[r]/[b]CRE[r]/[b]CRED[r]/[b]CREDITS"
+to say credits: say "[b]C[r]/[b]CRE[r]/[b]CRED[r]/[b]CREDITS[r]"
 
 to say call: say "[b]C[r] or [b]CALL[r]"
 
@@ -57,17 +67,38 @@ to say cp: say "[call] or [place]"
 to invert-text: (- style reverse; -)
 
 to say inversing of (rm - a room):
-	if remainder after dividing (xval of rm + yval of rm) by 2 is 1, invert-text;
+	if invert-squares is true and remainder after dividing (xval of rm + yval of rm) by 2 is 1, invert-text;
+
+to say bwwb: say "[b]BW[r]/[b]WB[r]"
 
 section variables
 
-screen-reader is a truth state that varies.
+screenread is a truth state that varies.
 
 in-beta is a truth state that varies.
 
 debug-state is a truth state that varies.
 
 series-number is a number that varies. [ 1 for 5by5, 2 for 4by4 ]
+
+chapter toggle inverse text
+
+to note-square-inversions: if screenread is false, say "[line break][tog] toggles text maps in the room description. You can toggle black squares (inverse text) in text maps with [bwwb].";
+
+invert-squares is a truth state that varies. invert-squares is true.
+
+bwing is an action out of world.
+
+understand the command "bw" as something new.
+understand the command "wb" as something new.
+
+understand "bw" as bwing.
+understand "wb" as bwing.
+
+carry out bwing:
+	now invert-squares is whether or not invert-squares is false;
+	say "Chessboard effects for text maps is now [if invert-squares is true]on[else]off[end if].";
+	the rule succeeds;
 
 chapter swearing rules
 
@@ -542,6 +573,18 @@ understand the command "h" as something new.
 understand "hint" as helping.
 understand "help" as helping.
 understand "h" as helping.
+
+chapter metaing
+
+metaing is an action out of world.
+
+understand the command "meta" as something new.
+understand the command "met" as something new.
+understand the command "me" as something new.
+
+understand "meta" as metaing.
+understand "met" as metaing.
+understand "me" as metaing.
 
 chapter toggleing
 
